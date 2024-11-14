@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 
-
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,15 +11,15 @@ export default function Header() {
   };
 
   return (
-    <header className="p-4 bg-white shadow-md">
+    <header className="p-4 bg-white shadow-md relative">
       <div className="flex justify-between items-center">
-         {/* Logo and Text */}
-         <div className="flex items-center gap-2">
+        {/* Logo and Text */}
+        <div className="flex items-center gap-2">
           <Image
             src="/logo.svg"
             alt="Sudexpert Logo"
-            width={32}
-            height={32}
+            width={42}
+            height={42}
           />
           <h1 className="text-lg font-bold">Sudexpert</h1>
         </div>
@@ -52,26 +51,41 @@ export default function Header() {
       </div>
 
       {/* Mobile Menu */}
+      <div
+        className={`absolute top-full left-0 w-full bg-white shadow-md z-50 overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="flex flex-col items-end gap-6 p-4">
+          <li>
+            <a href="#home" className="block text-md text-black">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="#about" className="block text-md text-black">
+              About
+            </a>
+          </li>
+          <li>
+            <a href="#about" className="block text-md text-black">
+              Products
+            </a>
+          </li>
+          <li>
+            <a href="#contact" className="block text-md text-black">
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* Overlay */}
       {isOpen && (
-        <nav className="absolute top-16 left-0 w-full bg-gray-100 shadow-md">
-          <ul className="flex flex-col items-center gap-4 p-4">
-            <li>
-              <a href="#home" className="block text-lg text-gray-800">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#about" className="block text-lg text-gray-800">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="block text-lg text-gray-800">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-black/20 z-40"
+          onClick={() => setIsOpen(false)}
+        ></div>
       )}
     </header>
   );
