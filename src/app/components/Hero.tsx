@@ -44,7 +44,7 @@ export default function Hero() {
             <p className="text-md sm:text-lg text-white text-center">
               Trusted by Leading Industry Brands
             </p>
-            <div className="flex gap-1 text-white text-1xl text-teal-400">
+            <div className="flex gap-1 text-1xl text-teal-400">
               {"★ ★ ★ ★ ★".split(" ").map((star, index) => (
                 <span key={index}>{star}</span>
               ))}
