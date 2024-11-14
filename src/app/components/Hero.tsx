@@ -1,6 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 export default function Hero() {
+  useEffect(() => {
+    AOS.init({ duration: 500, once: true });
+  }, []);
+
   return (
     <section className="relative w-full h-min">
       {/* Video Background */}
@@ -21,7 +29,11 @@ export default function Hero() {
       {/* Content Wrapper */}
       <div className="relative z-10 flex flex-col items-start gap-20 p-6 pt-12 pb-4 text-white">
         {/* Text Content */}
-        <div className="flex flex-col gap-4 animate-fadeInUp">
+        <div
+          className="flex flex-col gap-4"
+          data-aos="fade-up"
+          data-aos-delay="0"
+        >
           <h1 className="text-4xl sm:text-6xl font-bold">
             Expert Welding Solutions for You
           </h1>
@@ -30,7 +42,11 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center w-full animate-fadeInUp delay-200">
+        <div
+          className="flex flex-col items-center w-full"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           {/* Button */}
           <a
             href="tel:+40735156317"
