@@ -6,7 +6,7 @@ import "aos/dist/aos.css";
 
 export default function Hero() {
   useEffect(() => {
-    AOS.init({ duration: 500, once: true });
+    AOS.init({ duration: 800, once: true });
   }, []);
 
   return (
@@ -30,23 +30,25 @@ export default function Hero() {
       <div className="relative z-10 flex flex-col items-start gap-20 p-6 pt-12 pb-4 text-white">
         {/* Text Content */}
         <div
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-2"
           data-aos="fade-up"
           data-aos-delay="0"
         >
+          <p className="text-base sm:text-lg text-gray-300 font-bold">
+            25+ Years of Experience in Welding Equipment Sales.
+          </p>
           <h1 className="text-4xl sm:text-6xl font-bold">
             Expert Welding Solutions for You
           </h1>
-          <p className="text-lg sm:text-xl text-gray-200">
-            25+ Years of Experience in Welding Equipment Sales.
-          </p>
+          <h2 className="text-lg sm:text-lg text-gray-200 pt-4">
+            At Sudexpert, we offer a large plathera of high-qualty of welding equipment
+          </h2>
         </div>
 
         <div
-          className="flex flex-col items-center w-full"
+          className="flex flex-col items-center w-full pt-2"
           data-aos="fade-up"
-          data-aos-delay="200"
-        >
+          data-aos-delay="200">
           {/* Button */}
           <a
             href="tel:+40735156317"
@@ -56,7 +58,7 @@ export default function Hero() {
           </a>
 
           {/* Trusted By Section */}
-          <div className="flex flex-col items-center gap-2 mt-6">
+          <div className="flex flex-col items-center gap-2 mt-4">
             <p className="text-md sm:text-lg text-white text-center">
               Trusted by Leading Industry Brands
             </p>
