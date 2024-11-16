@@ -31,7 +31,7 @@ export default function About() {
       <div
         className="absolute inset-0 bg-[linear-gradient(160deg,black,rgba(0,0,0,0.4)80%,rgba(200,0,0,0.2))]"
       ></div>
-      <div className="relative z-10 w-full h-full text-white p-6 pt-12 flex flex-col items-start justify-between">
+      <div className="relative z-10 w-full h-full text-white p-6 pt-14 pb-14 flex flex-col items-start justify-around">
         <div>
           <h1
             className="text-4xl sm:text-6xl font-bold mb-8 text-gray-200 underline decoration-teal-400 underline-offset-8"

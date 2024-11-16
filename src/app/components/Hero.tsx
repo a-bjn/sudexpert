@@ -27,7 +27,7 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
 
       {/* Content Wrapper */}
-      <div className="relative z-10 flex flex-col items-start gap-20 p-6 pt-12 pb-12 text-white">
+      <div className="relative z-10 flex flex-col items-start p-6 pt-14 pb-14 text-white gap-y-20 h-full justify-between">
         {/* Text Content */}
         <div
           className="flex flex-col gap-2"
@@ -41,14 +41,16 @@ export default function Hero() {
             Expert Welding Solutions for You
           </h1>
           <h2 className="text-lg sm:text-lg text-gray-200 pt-4">
-            At Sudexpert, we offer a wide range of high-qualty of welding equipment
+            At Sudexpert, we offer a wide range of high-quality welding equipment.
           </h2>
         </div>
 
+        {/* Call to Action Section */}
         <div
-          className="flex flex-col items-center w-full pt-2"
+          className="flex flex-col justify-between items-center w-full"
           data-aos="fade-up"
-          data-aos-delay="200">
+          data-aos-delay="200"
+        >
           {/* Button */}
           <a
             href="tel:+40735156317"
@@ -70,6 +72,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
     </section>
   );
 }
