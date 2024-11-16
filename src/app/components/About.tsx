@@ -18,7 +18,7 @@ export default function About() {
   }, []);
 
   return (
-    <section className="relative h-min flex justify-center">
+    <section className="relative h-screen flex justify-center">
       <div className="absolute inset-0 w-full h-full">
         <Image
           src="/welder.webp"
