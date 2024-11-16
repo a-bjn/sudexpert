@@ -52,7 +52,7 @@ export default function About() {
           </p>
         </div>
 
-        <div className="mb-4">
+        <div className="flex flex-col justify-between">
           <div
             className="flex flex-row gap-8 w-full justify-center"
             data-aos-delay="400"
