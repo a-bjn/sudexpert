@@ -54,7 +54,7 @@ export default function About() {
 
         <div className="flex flex-col justify-between">
           <div
-            className="flex flex-row gap-8 w-full justify-center"
+            className="flex flex-row gap-8 w-full justify-center mb-8"
             data-aos-delay="400"
           >
             <div 
