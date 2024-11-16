@@ -21,7 +21,11 @@ export default function Header() {
             width={42}
             height={42}
           />
-          <h1 className="text-lg font-bold">Sudexpert</h1>
+          <h1 
+            className="text-lg font-bold text-teal-400"
+            style={{ textShadow: "2px 2px 2px rgba(0, 0, 0, 0.1)" }}
+          >Sudexpert
+          </h1>
         </div>
 
         {/* Hamburger Menu */}

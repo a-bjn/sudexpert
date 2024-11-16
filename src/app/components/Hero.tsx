@@ -27,7 +27,7 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
 
       {/* Content Wrapper */}
-      <div className="relative z-10 flex flex-col items-start gap-20 p-6 pt-12 pb-4 text-white">
+      <div className="relative z-10 flex flex-col items-start gap-20 p-6 pt-12 pb-12 text-white">
         {/* Text Content */}
         <div
           className="flex flex-col gap-2"
@@ -41,7 +41,7 @@ export default function Hero() {
             Expert Welding Solutions for You
           </h1>
           <h2 className="text-lg sm:text-lg text-gray-200 pt-4">
-            At Sudexpert, we offer a large plathera of high-qualty of welding equipment
+            At Sudexpert, we offer a wide range of high-qualty of welding equipment
           </h2>
         </div>
 

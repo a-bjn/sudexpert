@@ -5,9 +5,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      clipPath: {
-        custom: "polygon(0 0, 60% 0, 40% 40%, 70% 100%, 0 100%)",
-      },
     },
   },
 
