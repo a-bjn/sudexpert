@@ -10,7 +10,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full h-[100vh]">
+    <section className="relative w-full h-[90vh]">
       {/* Video Background */}
       <video
         autoPlay
@@ -27,7 +27,7 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
 
       {/* Content Wrapper */}
-      <div className="relative z-10 flex flex-col items-start p-6 pt-14 pb-14 text-white gap-y-20 h-full justify-between">
+      <div className="relative z-10 flex flex-col items-start p-6 pt-14 pb-14 text-white h-full justify-between">
         {/* Text Content */}
         <div
           className="flex flex-col gap-2"
