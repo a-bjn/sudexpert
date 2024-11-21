@@ -54,7 +54,7 @@ export default function HeroSection() {
           {/* Button */}
           <a
             href="tel:+40735156317"
-            className="block w-full text-center px-8 py-3 border border-white text-white rounded-full text-lg hover:bg-white hover:text-black transition-all duration-300 max-w-md"
+            className="block w-full text-center px-8 py-3 border border-white text-white rounded-full text-lg hover:bg-white hover:text-black transition-all duration-300 max-w-md shadow-[0px_10px_30px_rgba(0,0,0,0.8)]"
           >
             +40 0735 156 317
           </a>
