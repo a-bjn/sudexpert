@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-export default function Hero() {
+export default function HeroSection() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
   }, []);
 
   return (
-    <section className="relative w-full h-[80vh]">
+    <section className="relative w-full h-screen">
       {/* Video Background */}
       <video
         autoPlay
@@ -27,7 +27,7 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
 
       {/* Content Wrapper */}
-      <div className="relative z-10 flex flex-col items-start p-6 pt-16 pb-16 text-white h-full justify-between">
+      <div className="relative z-10 flex flex-col items-start p-6 text-white h-full justify-around">
         {/* Text Content */}
         <div
           className="flex flex-col gap-2"
@@ -72,7 +72,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }
