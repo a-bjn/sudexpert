@@ -8,7 +8,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ icon, title, description }) => {
   return (
-    <div className="relative bg-white shadow-lg rounded-lg p-2 flex flex-col items-center overflow-hidden group">
+    <div className="relative bg-white shadow-lg rounded-lg p-2 flex flex-col overflow-hidden group">
       <div className="absolute inset-0 bg-zinc-800"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-zinc-700 to-zinc-900 opacity-50"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle,_transparent_20%,_#000_70%)] opacity-30"></div>

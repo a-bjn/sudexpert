@@ -45,9 +45,9 @@ export default function AboutSection() {
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            We are committed to providing top-notch services in welding and
-            metalworks. With years of experience, we aim to deliver quality and
-            precision in every project.
+            Suntem dedicați să oferim servicii de top în domeniul sudurii și
+            metalurgiei. Cu ani de experiență, ne propunem să oferim calitate și
+            precizie în fiecare proiect.
           </p>
         </div>
 

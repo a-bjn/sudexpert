@@ -44,17 +44,17 @@ export default function RecomendationSection() {
             description="25+ ani experienta in domeniu."
           />
           <Card
-            icon="/trophy-icon.svg"
+            icon="/weld-icon.svg"
             title="Calitate"
             description="Garantăm servicii care durează."
           />
           <Card
-            icon="/trophy-icon.svg"
+            icon="/shield-icon.svg"
             title="Incredere"
             description="Echipa noastră are experiență vastă."
           />
           <Card
-            icon="/trophy-icon.svg"
+            icon="/wrench-icon.svg"
             title="Promptitudine"
             description="Echipa noastră are experiență vastă."
           />
