@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -11,7 +11,7 @@ export default function HeroSection() {
 
   const [message, setMessage] = useState("");
 
-  const handleInputChange = (e: { target: { value: SetStateAction<string>; style: { height: string; }; scrollHeight: any; }; }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
