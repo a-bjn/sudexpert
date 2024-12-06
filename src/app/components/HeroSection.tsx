@@ -56,7 +56,7 @@ export default function HeroSection() {
             href="tel:+40724207132"
             className="block w-full text-center px-8 py-3 border border-white text-white rounded-full text-lg hover:bg-white hover:text-black transition-all duration-300 max-w-md shadow-[0px_10px_30px_rgba(0,0,0,0.8)]"
           >
-            +40 0724 207 132
+            +40 724 207 132
           </a>
 
           {/* Trusted By Section */}

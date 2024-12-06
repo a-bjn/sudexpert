@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 interface CardProps {
-  icon: string; // Path to the SVG or image
+  icon: string;
   title: string;
   description: string;
 }
