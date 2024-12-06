@@ -18,7 +18,7 @@ export default function HeroSection() {
   };
   
   return (
-    <section className="relative w-full h-[238vh]">
+    <section className="relative w-full h-[190vh]">
       {/* Video Background */}
       <video
         autoPlay
