@@ -14,7 +14,7 @@ export default function HeroSection() {
     consent: false,
   });
 
-  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -22,7 +22,7 @@ export default function HeroSection() {
     }));
   };
 
-  const handleCheckboxChange = (e: { target: { checked: any; }; }) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
       consent: e.target.checked,
