@@ -32,7 +32,7 @@ export default function HeroSection() {
     e.preventDefault();
     try {
       console.log(formData)
-      const response = await fetch(`https://sudexpert-backend.fly.dev/api/email`, {
+      const response = await fetch(`https://sudexpert-backend.fly.dev/email`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
