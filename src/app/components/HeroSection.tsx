@@ -11,7 +11,6 @@ export default function HeroSection() {
     email: "",
     subject: "",
     message: "",
-    consent: false,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -32,10 +31,6 @@ export default function HeroSection() {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
-    if (!formData.consent) {
-      alert("You must agree to the terms and conditions.");
-      return;
-    }
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/email`, {
@@ -57,7 +52,6 @@ export default function HeroSection() {
           email: "",
           subject: "",
           message: "",
-          consent: false,
         });
       } else {
         alert(data.message || "Failed to send message. Please try again.");
@@ -202,7 +196,6 @@ export default function HeroSection() {
                 <input
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                  checked={formData.consent}
                   onChange={handleCheckboxChange}
                 />
                 <label className="ml-2 text-sm text-white"> Sunt de acord cu termenii si conditiile </label>
