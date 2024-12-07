@@ -30,8 +30,7 @@ export default function HeroSection() {
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-
-
+    console.log(formData)
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/email`, {
         method: "POST",
