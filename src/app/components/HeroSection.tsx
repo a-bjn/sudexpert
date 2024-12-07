@@ -38,7 +38,7 @@ export default function HeroSection() {
     }
 
     try {
-      const response = await fetch("/api/email", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/email`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
