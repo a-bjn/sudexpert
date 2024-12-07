@@ -30,9 +30,9 @@ export default function HeroSection() {
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    console.log(formData)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/email`, {
+      console.log(formData)
+      const response = await fetch(`https://sudexpert-backend.fly.dev/api/email`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
