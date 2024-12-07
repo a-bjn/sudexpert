@@ -38,7 +38,7 @@ export default function HeroSection() {
     }
 
     try {
-      const response = await fetch("https://sudexpert-backend.fly.dev/api/email", {
+      const response = await fetch("/api/email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,8 +46,10 @@ export default function HeroSection() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        alert("Message sent successfully!");
+        alert(data.message);
         setFormData({
           firstName: "",
           lastName: "",
@@ -58,7 +60,7 @@ export default function HeroSection() {
           consent: false,
         });
       } else {
-        alert("Failed to send message. Please try again.");
+        alert(data.message || "Failed to send message. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
