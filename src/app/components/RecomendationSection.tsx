@@ -34,7 +34,7 @@ export default function RecomendationSection() {
           Ce ne recomanda?
         </h1>
         <div
-          className="grid grid-cols-2 sm:grid-cols-1 gap-2 w-full"
+          className="grid grid-cols-2 sm:grid-cols-1 gap-4 w-full"
           data-aos="fade-up"
           data-aos-delay="100"
         >
