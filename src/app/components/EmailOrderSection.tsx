@@ -40,12 +40,16 @@ export default function EmailOrderSection() {
     try {
       // Prepare form data for Netlify
       const formDataToSend = new FormData(e.currentTarget);
+      const formDataObj: Record<string, string> = {};
+      formDataToSend.forEach((value, key) => {
+        formDataObj[key] = value.toString();
+      });
       
       // Submit to Netlify Forms
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formDataToSend as any).toString(),
+        body: new URLSearchParams(formDataObj).toString(),
       });
 
       if (response.ok) {
