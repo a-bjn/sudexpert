@@ -101,8 +101,7 @@ export default function EmailOrderSection() {
           {/* Form Container */}
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/20" data-aos="fade-up" data-aos-delay="200">
             <div className="max-w-2xl mx-auto">
-              <form className="space-y-6" onSubmit={handleSubmit} data-netlify="true" name="contact">
-                <input type="hidden" name="form-name" value="contact" />
+              <form className="space-y-6" onSubmit={handleSubmit} name="contact" data-netlify="true">
                 {/* Name Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
