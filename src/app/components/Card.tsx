@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = ({ icon, title, description, gradient }) => {
       {gradient && (
         <div className={`absolute inset-0 bg-gradient-to-br ${gradient} rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-sm`}></div>
       )}
-      
+
       <div className="relative z-10">
         <div className="mb-4 flex justify-center">
           <div className={`p-3 rounded-full ${gradient ? `bg-gradient-to-br ${gradient}` : 'bg-primary/10'} group-hover:scale-110 transition-transform duration-300`}>
