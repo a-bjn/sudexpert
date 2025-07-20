@@ -38,17 +38,14 @@ export default function EmailOrderSection() {
     submitButton.disabled = true;
 
     try {
-      // Let Formspree handle the submission
-      const form = e.currentTarget;
-      const formData = new FormData(form);
+      // Prepare form data for Netlify
+      const formDataToSend = new FormData(e.currentTarget);
       
-      // Submit to Formspree
-      const response = await fetch(form.action, {
+      // Submit to Netlify Forms
+      const response = await fetch('/', {
         method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formDataToSend as any).toString(),
       });
 
       if (response.ok) {
@@ -100,7 +97,8 @@ export default function EmailOrderSection() {
           {/* Form Container */}
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/20" data-aos="fade-up" data-aos-delay="200">
             <div className="max-w-2xl mx-auto">
-              <form className="space-y-6" onSubmit={handleSubmit} action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+              <form className="space-y-6" onSubmit={handleSubmit} data-netlify="true" name="contact">
+                <input type="hidden" name="form-name" value="contact" />
                 {/* Name Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
