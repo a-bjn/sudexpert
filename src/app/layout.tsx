@@ -24,7 +24,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
-        className={`${nunito.className} antialiased bg-gray-50 text-gray-800`}
+        className={`${nunito.className} antialiased bg-background text-foreground`}
       >
         <Header />
         <main>{children}</main>

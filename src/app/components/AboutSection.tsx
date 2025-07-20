@@ -18,7 +18,7 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section className="relative h-screen flex justify-center">
+    <section className="relative h-screen flex justify-center overflow-hidden grid-background">
       <div className="absolute inset-0 w-full h-full">
         <Image
           src="/welder_about_bg.webp"
