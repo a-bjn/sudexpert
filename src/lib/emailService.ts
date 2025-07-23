@@ -118,6 +118,7 @@ export const sendTokenEmail = async (data: EmailData): Promise<{ success: boolea
 };
 
 // Validate email data
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validateEmailData = (data: any): { isValid: boolean; errors: string[] } => {
   const errors: string[] = [];
 

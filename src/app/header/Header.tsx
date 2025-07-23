@@ -27,24 +27,24 @@ export default function Header() {
         : 'bg-black/20 backdrop-blur-md border-b border-white/10'
     }`}>
       <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
-          {/* Logo and Text */}
+      <div className="flex justify-between items-center">
+        {/* Logo and Text */}
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Image
-                src="/logo.svg"
-                alt="Sudexpert Logo"
+          <Image
+            src="/logo.svg"
+            alt="Sudexpert Logo"
                 width={48}
                 height={48}
                 className="w-12 h-12 invert"
-              />
+          />
             </div>
             <h1 className="text-3xl font-bold">
               <span className="bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent">
-                Sudexpert
+            Sudexpert
               </span>
-            </h1>
-          </div>
+          </h1>
+        </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
@@ -103,40 +103,40 @@ export default function Header() {
           </nav>
 
           {/* Mobile Hamburger Menu */}
-          <button
-            onClick={toggleMenu}
+        <button
+          onClick={toggleMenu}
             className="lg:hidden relative w-8 h-8 flex flex-col justify-center items-center group"
-          >
-            {/* Top Bar */}
-            <span
+        >
+          {/* Top Bar */}
+          <span
               className={`block w-6 h-0.5 bg-white transform transition-all duration-300 ${
                 isOpen ? "rotate-45 translate-y-1.5" : "-translate-y-1"
-              }`}
-            ></span>
-            {/* Middle Bar */}
-            <span
+            }`}
+          ></span>
+          {/* Middle Bar */}
+          <span
               className={`block w-6 h-0.5 bg-white transition-opacity duration-300 ${
-                isOpen ? "opacity-0" : "opacity-100"
-              }`}
-            ></span>
-            {/* Bottom Bar */}
-            <span
+              isOpen ? "opacity-0" : "opacity-100"
+            }`}
+          ></span>
+          {/* Bottom Bar */}
+          <span
               className={`block w-6 h-0.5 bg-white transform transition-all duration-300 ${
                 isOpen ? "-rotate-45 -translate-y-1.5" : "translate-y-1"
-              }`}
-            ></span>
-          </button>
-        </div>
+            }`}
+          ></span>
+        </button>
+      </div>
 
-        {/* Mobile Menu */}
-        <div
+      {/* Mobile Menu */}
+      <div
           className={`lg:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-md border-b border-white/10 transition-all duration-300 ease-in-out ${
-            isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           } overflow-hidden`}
-        >
+      >
           <nav className="px-6 py-6">
             <ul className="space-y-4">
-              <li>
+          <li>
                 <a 
                   href="#home" 
                   className="block text-white hover:text-teal-400 transition-colors duration-300 font-medium py-2 border-b border-white/10"
@@ -147,9 +147,9 @@ export default function Header() {
                   }}
                 >
                   Acasă
-                </a>
-              </li>
-              <li>
+            </a>
+          </li>
+          <li>
                 <a 
                   href="#about" 
                   className="block text-white hover:text-teal-400 transition-colors duration-300 font-medium py-2 border-b border-white/10"
@@ -160,9 +160,9 @@ export default function Header() {
                   }}
                 >
                   Despre Noi
-                </a>
-              </li>
-              <li>
+            </a>
+          </li>
+          <li>
                 <a 
                   href="#services" 
                   className="block text-white hover:text-teal-400 transition-colors duration-300 font-medium py-2 border-b border-white/10"
@@ -173,9 +173,9 @@ export default function Header() {
                   }}
                 >
                   Servicii
-                </a>
-              </li>
-              <li>
+            </a>
+          </li>
+          <li>
                 <a 
                   href="#contact" 
                   className="block text-white hover:text-teal-400 transition-colors duration-300 font-medium py-2 border-b border-white/10"
@@ -185,9 +185,9 @@ export default function Header() {
                     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
-                  Contact
-                </a>
-              </li>
+              Contact
+            </a>
+          </li>
               <li className="pt-4">
                 <a
                   href="tel:+40724207132"
@@ -197,7 +197,7 @@ export default function Header() {
                   Sună Acum
                 </a>
               </li>
-            </ul>
+        </ul>
           </nav>
         </div>
       </div>

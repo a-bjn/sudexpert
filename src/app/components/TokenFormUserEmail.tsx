@@ -14,7 +14,7 @@ export default function TokenFormUserEmail() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -41,7 +41,6 @@ export default function TokenFormUserEmail() {
 
     try {
       const templateParams = {
-        to_email: "sudexpert@yahoo.com",
         from_name: formData.name,
         from_email: formData.email,
         phone: formData.phone,
@@ -57,7 +56,7 @@ export default function TokenFormUserEmail() {
         throw new Error("EmailJS service ID or template ID not found in environment variables");
       }
 
-      const response = await emailjs.send(
+      await emailjs.send(
         serviceId,
         templateId,
         templateParams

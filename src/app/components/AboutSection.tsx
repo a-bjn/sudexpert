@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+// import Image from "next/image";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -26,7 +26,7 @@ export default function AboutSection() {
                 Cu peste 30 de ani de experiență în domeniul sudurii și metalurgiei, 
                 suntem dedicați să oferim servicii de cea mai înaltă calitate. 
                 Fiecare proiect este realizat cu precizie și atenție la detalii.
-              </p>
+          </p>
               <p className="text-2xl font-base text-gray-300 leading-relaxed max-w-2xl">
                 Echipa noastră de specialiști folosește tehnologii moderne și 
                 echipamente de ultimă generație pentru a garanta rezultate 

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Card from "./Card";
+// import Card from "./Card";
 
 export default function RecommendationSection() {
   useEffect(() => {
@@ -13,19 +13,19 @@ export default function RecommendationSection() {
   return (
     <section id="services" className="relative py-10 px-8">
       <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-16" data-aos="fade-up">
+          <div className="text-center mb-16" data-aos="fade-up">
           <h2 className="text-5xl lg:text-6xl font-bold text-gray-200 mb-6">
             Ce ne{" "}
             <span className="bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent">
               recomandă
             </span>
             ?
-          </h2>
+            </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-cyan-500 rounded-full mx-auto mb-8"></div>
           <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
             Experiența noastră de peste 30 de ani în domeniul sudurii și dedicarea pentru excelență 
             ne permit să oferim servicii de cea mai înaltă calitate în industrie.
-          </p>
+            </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           <div data-aos="fade-up" data-aos-delay="100">
@@ -55,7 +55,7 @@ export default function RecommendationSection() {
               <p className="text-gray-300 leading-relaxed">Echipamente moderne și materiale de cea mai bună calitate.</p>
             </div>
           </div>
-          
+
           <div data-aos="fade-up" data-aos-delay="300">
             <div className="bg-zinc-600/10 backdrop-blur-sm rounded-2xl p-8 text-center h-full border border-white/10 hover:border-teal-400/50 transition-all duration-300">
               <div className="mb-6">
@@ -69,7 +69,7 @@ export default function RecommendationSection() {
               <p className="text-gray-300 leading-relaxed">Peste 500 de proiecte finalizate cu succes și clienți mulțumiți.</p>
             </div>
           </div>
-          
+
           <div data-aos="fade-up" data-aos-delay="400">
             <div className="bg-zinc-600/10 backdrop-blur-sm rounded-2xl p-8 text-center h-full border border-white/10 hover:border-teal-400/50 transition-all duration-300">
               <div className="mb-6">

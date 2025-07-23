@@ -25,11 +25,12 @@ const checkRateLimit = (ip: string): boolean => {
   return true;
 };
 
-export async function POST(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function POST(_request: NextRequest) {
   try {
     // Get client IP for rate limiting
-    const ip = request.headers.get('x-forwarded-for') || 
-               request.headers.get('x-real-ip') || 
+    const ip = _request.headers.get('x-forwarded-for') || 
+               _request.headers.get('x-real-ip') || 
                'unknown';
     
     // Check rate limit
@@ -44,10 +45,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse request body
-    const body = await request.json();
-    
+    const body = await _request.json();
+    console.log(body);
     // Validate input data
     const validation = validateEmailData(body);
+    console.log(validation);
+    console.log(body);
     if (!validation.isValid) {
       return NextResponse.json(
         { 
@@ -98,6 +101,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Handle OPTIONS request for CORS
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function OPTIONS(request: NextRequest) {
   return new NextResponse(null, {
     status: 200,
