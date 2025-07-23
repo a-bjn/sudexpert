@@ -6,7 +6,7 @@ import welderAnimation from "../../../public/welder-at-work.json";
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative h-[90vh] overflow-hidden mt-10">
+    <section id="home" className="relative h-[90vh] overflow-hidden mt-10 px-4">
       <div className="w-full max-w-screen-2xl mx-auto h-full flex items-center justify-center">
         <div className="flex flex-row w-min-6xl gap-20">
           <div className="flex flex-col items-center justify-center">
