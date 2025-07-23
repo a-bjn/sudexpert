@@ -81,7 +81,7 @@ export default function TokenFormUserEmail() {
   };
 
   return (
-    <section id="contact" className="relative px-2 sm:px-4 md:px-6">
+    <section id="contact" className="relative px-2 sm:px-4 md:px-6 pt-20 sm:pt-0">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(20,184,166,0.05),transparent_70%)]"></div>
       
