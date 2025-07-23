@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-      <footer className="p-4 text-center text-gray-500">
+      <footer className="bg-zinc-950 p-6 text-center text-gray-500">
         © 2024 Sudexpert. All rights reserved.
       </footer>
     );
