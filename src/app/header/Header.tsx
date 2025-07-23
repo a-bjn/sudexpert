@@ -41,7 +41,7 @@ export default function Header() {
             </div>
             <h1 className="text-3xl font-bold">
               <span className="bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent">
-            Sudexpert
+                Sudexpert Brăila
               </span>
           </h1>
         </div>
@@ -163,28 +163,28 @@ export default function Header() {
             </a>
           </li>
           <li>
-                <a 
-                  href="#services" 
-                  className="block text-white hover:text-teal-400 transition-colors duration-300 font-medium py-2 border-b border-white/10"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsOpen(false);
-                    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  Servicii
+            <a 
+              href="#services" 
+              className="block text-white hover:text-teal-400 transition-colors duration-300 font-medium py-2 border-b border-white/10"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsOpen(false);
+                document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Servicii
             </a>
           </li>
           <li>
-                <a 
-                  href="#contact" 
-                  className="block text-white hover:text-teal-400 transition-colors duration-300 font-medium py-2 border-b border-white/10"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsOpen(false);
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
+              <a 
+                href="#contact" 
+                className="block text-white hover:text-teal-400 transition-colors duration-300 font-medium py-2 border-b border-white/10"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsOpen(false);
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
               Contact
             </a>
           </li>

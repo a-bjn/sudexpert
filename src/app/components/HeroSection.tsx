@@ -29,7 +29,7 @@ export default function HeroSection() {
                   href="tel:+40724207132"
                       className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-cyan-500 text-gray-100 rounded-full text-2xl font-bold hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 shadow-[0px_10px_30px_rgba(0,0,0,0.8)] w-full"
                 >
-                  +40 724 207 132
+                  +40 724 207 132 - Inginer Bejan Laurentiu
                 </a>
                 </div>
               </div>
