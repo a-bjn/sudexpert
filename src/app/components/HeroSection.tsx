@@ -21,9 +21,18 @@ export default function HeroSection() {
                   </span> 
                   {" "} - Produse și Soluții Complete în Sudură
                 </h1>
-                  <h2 className="text-lg sm:text-2xl md:text-3xl text-gray-300 mt-2 font-semibold leading-relaxed text-center md:text-left">
+                <h2 className="text-lg sm:text-2xl md:text-3xl text-gray-300 mt-2 font-semibold leading-relaxed text-center md:text-left">
                   La Sudexpert oferim o gamă largă de produse de calitate pentru orice proiecte în sudură.
                 </h2>
+                {/* Lottie Animation above the button, visible on all screens */}
+                <div className="flex justify-center my-2">
+                  <Lottie
+                    animationData={welderAnimation}
+                    loop={true}
+                    autoplay={true}
+                    className="w-60 h-60 sm:w-80 sm:h-80 md:w-[28rem] md:h-[28rem] object-contain animate-float"
+                  />
+                </div>
                 <div className="flex flex-col gap-4 md:gap-6 mt-2 md:mt-4 w-full">
                   <a
                     href="tel:+40724207132"
@@ -36,16 +45,7 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-            <div className="relative w-full md:w-1/2 flex items-center justify-center mb-6 md:mb-0 hidden md:flex">
-              <Lottie
-                animationData={welderAnimation}
-                loop={true}
-                autoplay={true}
-                className="w-60 h-60 sm:w-80 sm:h-80 md:w-full md:h-full object-contain animate-float"
-                data-aos="fade-left"
-                data-aos-delay="200"
-              />
-            </div>
+            {/* Remove the right column Lottie animation */}
         </div>
       </div>
     </section>
