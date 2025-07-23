@@ -110,7 +110,7 @@ export default function Header() {
           {/* Top Bar */}
           <span
               className={`block w-6 h-0.5 bg-white transform transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-1.5" : "-translate-y-1"
+                isOpen ? "rotate-45 translate-y-1" : "-translate-y-1"
             }`}
           ></span>
           {/* Middle Bar */}
@@ -122,7 +122,7 @@ export default function Header() {
           {/* Bottom Bar */}
           <span
               className={`block w-6 h-0.5 bg-white transform transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-1.5" : "translate-y-1"
+                isOpen ? "-rotate-45 -translate-y-0.55" : "translate-y-1"
             }`}
           ></span>
         </button>
