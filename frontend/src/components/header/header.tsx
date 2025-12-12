@@ -12,7 +12,7 @@ export default function Header() {
   const { user, logout, isAuthenticated } = useAuth();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-neutral-800/70 bg-neutral-950 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-neutral-800/70 bg-neutral-950/90 backdrop-blur">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-3 h-20 items-center">
           {/* Logo - Left */}
@@ -119,7 +119,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-neutral-800/70 bg-neutral-950">
+          <div className="md:hidden py-4 border-t border-neutral-800/70 bg-neutral-950/95">
             <nav className="flex flex-col gap-4">
               <Link
                 href="/"
