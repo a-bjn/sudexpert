@@ -66,6 +66,13 @@ export default function CheckoutForm({ orderId, orderCode, onSuccess }: Checkout
             .catch(err => console.error("⚠️ Backend confirmation failed:", err));
         }
         
+        // Clear cart from localStorage before redirect
+        console.log("🛒 Clearing cart...");
+        localStorage.removeItem("cart");
+        
+        // Call onSuccess callback (for any additional cleanup)
+        onSuccess();
+        
         // Redirect IMMEDIATELY - no delay
         const successUrl = orderCode 
           ? `/checkout/success?orderCode=${orderCode}`
