@@ -24,6 +24,19 @@ interface DeliveryInfo {
   deliveryNotes: string;
 }
 
+interface OrderResponse {
+  id: number;
+  orderCode: string;
+  total: number;
+  status: string;
+  createdAt: string;
+}
+
+interface PaymentIntentResponse {
+  clientSecret: string;
+  paymentIntentId?: string;
+}
+
 export default function CheckoutPage() {
   const router = useRouter();
   const { user, token } = useAuth();
@@ -36,7 +49,7 @@ export default function CheckoutPage() {
   const [step, setStep] = useState<"delivery" | "payment">("delivery");
   
   const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfo>({
-    deliveryName: user?.firstname && user?.lastname ? `${user.firstname} ${user.lastname}` : "",
+    deliveryName: "",
     deliveryEmail: user?.email || "",
     deliveryPhone: "",
     deliveryAddress: "",
@@ -109,7 +122,7 @@ export default function CheckoutPage() {
       };
 
       console.log('Creating order with data:', orderData);
-      const order = await api.orders.create(orderData, token);
+      const order = await api.orders.create(orderData, token) as OrderResponse;
       console.log('Order created:', order);
       console.log('Order code:', order.orderCode);
       setOrderId(order.id);
@@ -127,7 +140,7 @@ export default function CheckoutPage() {
           orderId: order.id,
         },
         token!
-      );
+      ) as PaymentIntentResponse;
 
       setClientSecret(paymentIntent.clientSecret);
       setStep("payment");
@@ -170,7 +183,7 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-8">Finalizare Comandă</h1>
+        <h1 className="text-3xl font-bold mb-8 text-gray-900">Finalizare Comandă</h1>
 
         {/* Progress Steps */}
         <div className="flex items-center justify-center mb-8">
@@ -178,14 +191,14 @@ export default function CheckoutPage() {
             <div className={`flex items-center justify-center w-10 h-10 rounded-full ${step === "delivery" ? "bg-blue-600 text-white" : "bg-green-600 text-white"}`}>
               {step === "payment" ? "✓" : "1"}
             </div>
-            <span className="ml-2 font-medium">Livrare</span>
+            <span className="ml-2 font-medium text-gray-900">Livrare</span>
           </div>
           <div className="w-24 h-1 bg-gray-300 mx-4"></div>
           <div className="flex items-center">
             <div className={`flex items-center justify-center w-10 h-10 rounded-full ${step === "payment" ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-600"}`}>
               2
             </div>
-            <span className="ml-2 font-medium">Plată</span>
+            <span className="ml-2 font-medium text-gray-900">Plată</span>
           </div>
         </div>
 
@@ -199,21 +212,21 @@ export default function CheckoutPage() {
           {/* Order Summary - Always visible */}
           <div className="lg:col-span-1">
             <div className="bg-white p-6 rounded-lg shadow sticky top-4">
-              <h2 className="text-xl font-semibold mb-4">Sumar Comandă</h2>
+              <h2 className="text-xl font-semibold mb-4 text-gray-900">Sumar Comandă</h2>
               <div className="space-y-3">
                 {items.map((item) => (
                   <div key={item.id} className="flex justify-between text-sm">
                     <div className="flex-1">
-                      <p className="font-medium">{item.name}</p>
-                      <p className="text-gray-600">{item.quantity} × {item.price.toFixed(2)} RON</p>
+                      <p className="font-medium text-gray-900">{item.name}</p>
+                      <p className="text-gray-700">{item.quantity} × {item.price.toFixed(2)} RON</p>
                     </div>
-                    <p className="font-semibold">
+                    <p className="font-semibold text-gray-900">
                       {(item.price * item.quantity).toFixed(2)} RON
                     </p>
                   </div>
                 ))}
                 <div className="border-t pt-3 mt-3">
-                  <div className="flex justify-between text-lg font-bold">
+                  <div className="flex justify-between text-lg font-bold text-gray-900">
                     <span>Total</span>
                     <span>{totalPrice.toFixed(2)} RON</span>
                   </div>
@@ -227,29 +240,29 @@ export default function CheckoutPage() {
             {step === "delivery" ? (
               /* Delivery Form */
               <div className="bg-white p-8 rounded-lg shadow">
-                <h2 className="text-2xl font-semibold mb-6">Informații Livrare</h2>
+                <h2 className="text-2xl font-semibold mb-6 text-gray-900">Informații Livrare</h2>
                 <form onSubmit={handleDeliverySubmit} className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1">Nume complet *</label>
+                      <label className="block text-sm font-medium mb-1 text-gray-900">Nume complet *</label>
                       <input
                         type="text"
                         name="deliveryName"
                         value={deliveryInfo.deliveryName}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Email *</label>
+                      <label className="block text-sm font-medium mb-1 text-gray-900">Email *</label>
                       <input
                         type="email"
                         name="deliveryEmail"
                         value={deliveryInfo.deliveryEmail}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -263,7 +276,7 @@ export default function CheckoutPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="07XX XXX XXX"
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
 
@@ -276,40 +289,40 @@ export default function CheckoutPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="Strada, număr, bloc, scară, apartament"
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
 
                   <div className="grid md:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1">Oraș *</label>
+                      <label className="block text-sm font-medium mb-1 text-gray-900">Oraș *</label>
                       <input
                         type="text"
                         name="deliveryCity"
                         value={deliveryInfo.deliveryCity}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Județ</label>
+                      <label className="block text-sm font-medium mb-1 text-gray-900">Județ</label>
                       <input
                         type="text"
                         name="deliveryCounty"
                         value={deliveryInfo.deliveryCounty}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Cod poștal</label>
+                      <label className="block text-sm font-medium mb-1 text-gray-900">Cod poștal</label>
                       <input
                         type="text"
                         name="deliveryPostalCode"
                         value={deliveryInfo.deliveryPostalCode}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -322,7 +335,7 @@ export default function CheckoutPage() {
                       value={deliveryInfo.deliveryCountry}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
 
@@ -334,7 +347,7 @@ export default function CheckoutPage() {
                       onChange={handleInputChange}
                       rows={3}
                       placeholder="Instrucțiuni speciale pentru livrare..."
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
 
@@ -351,12 +364,7 @@ export default function CheckoutPage() {
               /* Payment Form */
               <div className="bg-white p-8 rounded-lg shadow">
                 <div className="mb-6">
-                  <h2 className="text-2xl font-semibold mb-2">Plată</h2>
-                  {orderCode && (
-                    <p className="text-sm text-gray-600">
-                      Număr comandă: <span className="font-mono font-semibold">{orderCode}</span>
-                    </p>
-                  )}
+                  <h2 className="text-2xl font-semibold mb-2 text-gray-900">Plată</h2>
                 </div>
                 {clientSecret && (
                   <Elements options={{ clientSecret, appearance: { theme: "stripe" as const } }} stripe={stripePromise}>
