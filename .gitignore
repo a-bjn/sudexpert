@@ -25,3 +25,15 @@ node_modules/
 target/
 dist/
 build/
+
+# Documentation files - not allowed in repository
+**/README*
+**/*README*
+**/*.md
+**/*SETUP*
+**/*GUIDE*
+**/*DOC*
+**/*.txt
+!**/jest.setup.js
+!**/package.json
+!**/tsconfig.json
