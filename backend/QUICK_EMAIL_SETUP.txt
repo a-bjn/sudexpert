@@ -1,0 +1,101 @@
+═══════════════════════════════════════════════════════════════
+  EMAIL SYSTEM - QUICK SETUP GUIDE (HOSTINGER)
+═══════════════════════════════════════════════════════════════
+
+✅ WHAT'S BEEN IMPLEMENTED:
+   • Order confirmation emails sent automatically after payment
+   • Professional HTML email template
+   • Hostinger SMTP integration
+   • Error handling and logging
+
+📋 SETUP STEPS (5 MINUTES):
+
+1. CREATE NOREPLY EMAIL IN HOSTINGER
+   • Log in to your Hostinger hPanel
+   • Go to: Email → Email Accounts
+   • Create new email: noreply@yourdomain.com
+   • Set a strong password (save it!)
+   • Note: Use the FULL email address as username
+
+2. GET SMTP SETTINGS
+   Hostinger SMTP Configuration:
+   • SMTP Host: smtp.hostinger.com
+   • SMTP Port: 587 (TLS) or 465 (SSL)
+   • Username: noreply@yourdomain.com (FULL email address)
+   • Password: The password you set for the email account
+   • Encryption: TLS (for port 587) or SSL (for port 465)
+
+3. UPDATE backend/.env FILE
+   Create or edit backend/.env file and add:
+   
+   MAIL_USERNAME=noreply@yourdomain.com
+   MAIL_PASSWORD=your-email-password
+
+   Replace:
+   - yourdomain.com with your actual domain
+   - your-email-password with the password you set
+
+4. RESTART BACKEND SERVER
+   The email system will now work automatically!
+
+═══════════════════════════════════════════════════════════════
+
+📧 WHEN EMAILS ARE SENT:
+   • Automatically after successful payment
+   • When order status changes to PROCESSING
+   • Sent to the delivery email provided at checkout
+
+📄 EMAIL INCLUDES:
+   • Order number (e.g., ORD-20241212-0001)
+   • Order date and status
+   • List of products with prices
+   • Total amount
+   • Delivery address
+   • Contact information
+
+═══════════════════════════════════════════════════════════════
+
+🧪 TEST IT:
+   1. Complete a test order on the website
+   2. Use Stripe test card: 4242 4242 4242 4242
+   3. Check the delivery email inbox
+   4. You should receive a confirmation email!
+
+═══════════════════════════════════════════════════════════════
+
+❌ TROUBLESHOOTING:
+
+Problem: "Authentication failed"
+Solution: 
+   • Make sure you're using the FULL email address as username
+   • Verify the password is correct (check for typos)
+   • Ensure the email account is active in Hostinger
+
+Problem: "Connection timeout"
+Solution: 
+   • Check firewall, ensure port 587 is not blocked
+   • Try port 465 with SSL instead (update application.properties)
+   • Verify smtp.hostinger.com is accessible
+
+Problem: Emails go to spam
+Solution: 
+   • Normal for test emails initially
+   • Set up SPF/DKIM records in Hostinger DNS
+   • Use a proper domain email (not free email services)
+   • Warm up the email address by sending a few test emails
+
+Problem: "Could not connect to SMTP host"
+Solution:
+   • Verify SMTP is enabled in Hostinger
+   • Check if your hosting plan includes email
+   • Contact Hostinger support if issues persist
+
+═══════════════════════════════════════════════════════════════
+
+📚 MORE INFO:
+   • Detailed setup: EMAIL_SETUP.md
+   • Implementation details: EMAIL_IMPLEMENTATION.md
+
+═══════════════════════════════════════════════════════════════
+
+

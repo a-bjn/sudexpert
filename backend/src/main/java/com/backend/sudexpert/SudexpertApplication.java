@@ -1,10 +1,9 @@
 package com.backend.sudexpert;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvEntry;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.Map;
 
 @SpringBootApplication
 public class SudexpertApplication {
@@ -25,8 +24,7 @@ public class SudexpertApplication {
 			
 			// Load all .env variables into system properties
 			// This makes them available to Spring's @Value annotations
-			Map<String, String> envMap = dotenv.entries();
-			for (Map.Entry<String, String> entry : envMap.entrySet()) {
+			for (DotenvEntry entry : dotenv.entries()) {
 				String key = entry.getKey();
 				String value = entry.getValue();
 				// Only set if not already set as system property (system properties take precedence)
