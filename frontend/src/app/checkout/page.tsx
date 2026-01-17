@@ -144,9 +144,9 @@ export default function CheckoutPage() {
 
       setClientSecret(paymentIntent.clientSecret);
       setStep("payment");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Checkout initialization error:", err);
-      const errorMessage = err.message || "Failed to initialize checkout";
+      const errorMessage = err instanceof Error ? err.message : "Failed to initialize checkout";
       
       // Check if it's an authentication error
       if (errorMessage.includes("403") || errorMessage.includes("Forbidden")) {
@@ -173,11 +173,6 @@ export default function CheckoutPage() {
 
   const appearance = {
     theme: "stripe" as const,
-  };
-
-  const options = {
-    clientSecret,
-    appearance,
   };
 
   return (
