@@ -76,7 +76,7 @@ export const api = {
     getByCode: (orderCode: string, token: string) => request(`/orders/code/${orderCode}`, "GET", undefined, token),
   },
   payments: {
-    createPaymentIntent: (data: { orderId: number; amount: number }, token: string) => 
+    createPaymentIntent: (data: { orderId: number; amount: number; currency?: string }, token: string) => 
       request("/payments/create-payment-intent", "POST", data, token),
     confirmSuccess: (paymentIntentId: string, token: string) => 
       request(`/payments/success?paymentIntentId=${paymentIntentId}`, "POST", undefined, token),
