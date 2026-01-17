@@ -3,7 +3,7 @@
 import HeroSection from "@/components/home/HeroSection";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import {
   ArrowRight,
   Shield,
@@ -523,7 +523,7 @@ function AboutSection() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
         >
-          {stats.map((stat, i) => (
+          {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="bebas-neue-regular text-4xl md:text-5xl text-slate-800 mb-2">
                 {stat.value}
@@ -606,7 +606,7 @@ function TestimonialsSection() {
 
                 {/* Content */}
                 <p className="text-slate-600 leading-relaxed mb-6">
-                  "{testimonial.content}"
+                  &ldquo;{testimonial.content}&rdquo;
                 </p>
 
                 {/* Rating */}

@@ -58,7 +58,7 @@ async function request<T>(
 
 export const api = {
   auth: {
-    register: (data: { username: string; email: string; password: string }) => request("/auth/register", "POST", data),
+    register: (data: { firstName: string; lastName: string; email: string; password: string }) => request("/auth/register", "POST", data),
     login: (data: { email: string; password: string }) => request("/auth/authenticate", "POST", data),
   },
   products: {

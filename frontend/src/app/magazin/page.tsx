@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { api } from "@/lib/api";
 import ProductCard from "@/components/ui/ProductCard";
 import { motion } from "framer-motion";
-import { Search, SlidersHorizontal, ChevronDown, Grid3X3, LayoutList, X, Sparkles, Package, Loader2 } from "lucide-react";
+import { Search, ChevronDown, Grid3X3, LayoutList, X, Sparkles, Package } from "lucide-react";
 
 type Category = {
   id: number;
@@ -45,7 +45,7 @@ export default function Magazin() {
         ]);
         setProducts(productsData as Product[]);
         setCategories(categoriesData as Category[]);
-      } catch (err: any) {
+      } catch (err: unknown) {
         setError("Nu s-au putut încărca produsele.");
         console.error(err);
       } finally {

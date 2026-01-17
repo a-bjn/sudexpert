@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import { api } from "@/lib/api";
 import { useCart } from "@/lib/cart-context";
 import {
@@ -51,7 +52,7 @@ export default function ProductDetails() {
       try {
         const data = await api.products.getById(params.id as string);
         setProduct(data as Product);
-      } catch (err: any) {
+      } catch (err: unknown) {
         setError("Nu s-a putut încărca produsul.");
         console.error(err);
       } finally {
@@ -182,12 +183,14 @@ export default function ProductDetails() {
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
           {/* Image Section */}
           <div className="relative">
-            <div className="aspect-square w-full overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-800">
+            <div className="aspect-square w-full overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-800 relative">
               {product.imageUrl ? (
-                <img
+                <Image
                   src={product.imageUrl}
                   alt={product.name}
-                  className="h-full w-full object-cover object-center"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center">

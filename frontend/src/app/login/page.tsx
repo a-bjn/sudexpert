@@ -24,8 +24,9 @@ export default function Login() {
     try {
       const response = await api.auth.login({ email, password });
       login(response.token, email);
-    } catch (err: any) {
-      setError(err.message || "Autentificare eșuată. Verifică datele și încearcă din nou.");
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Autentificare eșuată. Verifică datele și încearcă din nou.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

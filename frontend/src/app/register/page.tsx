@@ -44,8 +44,9 @@ export default function Register() {
         password,
       });
       login(response.token, email);
-    } catch (err: any) {
-      setError(err.message || "Înregistrare eșuată. Încearcă din nou.");
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Înregistrare eșuată. Încearcă din nou.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
