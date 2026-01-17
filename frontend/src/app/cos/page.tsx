@@ -2,16 +2,14 @@
 
 import { useCart } from "@/lib/cart-context";
 import { useAuth } from "@/lib/auth-context";
-import { api } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 import { Trash2, ArrowRight } from "lucide-react";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Cart() {
-  const { items, removeItem, totalPrice, clearCart } = useCart();
+  const { items, removeItem, totalPrice } = useCart();
   const { isAuthenticated, token } = useAuth();
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleCheckout = async () => {
@@ -54,13 +52,17 @@ export default function Cart() {
             <ul role="list" className="divide-y divide-gray-200 border-b border-t border-gray-200">
               {items.map((item) => (
                 <li key={item.id} className="flex py-6 sm:py-10">
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 relative">
                     {item.imageUrl ? (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.name}
-                        className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
-                      />
+                      <div className="h-24 w-24 sm:h-48 sm:w-48 relative rounded-md overflow-hidden">
+                        <Image
+                          src={item.imageUrl}
+                          alt={item.name}
+                          fill
+                          className="object-cover object-center"
+                          sizes="(max-width: 640px) 96px, 192px"
+                        />
+                      </div>
                     ) : (
                       <div className="h-24 w-24 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 sm:h-48 sm:w-48">
                         No Image

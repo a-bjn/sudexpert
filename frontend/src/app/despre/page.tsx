@@ -5,7 +5,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import {
   Zap, Award, Truck, Headphones, Shield, Users,
-  Clock, Target, Heart, ArrowRight, CheckCircle2,
+  Clock, Target, Heart, ArrowRight,
   Factory, Globe, TrendingUp
 } from "lucide-react";
 
@@ -268,7 +268,7 @@ export default function Despre() {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {values.map((value, index) => (
+            {values.map((value) => (
               <motion.div
                 key={value.title}
                 variants={itemVariants}

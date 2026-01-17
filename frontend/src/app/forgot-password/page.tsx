@@ -20,8 +20,9 @@ export default function ForgotPassword() {
       // Simulate API call - replace with actual password reset logic
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setSuccess(true);
-    } catch (err: any) {
-      setError(err.message || "Nu s-a putut trimite emailul. Încearcă din nou.");
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Nu s-a putut trimite emailul. Încearcă din nou.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

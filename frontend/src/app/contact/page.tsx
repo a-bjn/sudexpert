@@ -26,8 +26,9 @@ export default function Contact() {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setSuccess(true);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    } catch (err: any) {
-      setError(err.message || "Nu s-a putut trimite mesajul. Încearcă din nou.");
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Nu s-a putut trimite mesajul. Încearcă din nou.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -123,7 +124,7 @@ export default function Contact() {
             animate="visible"
             className="lg:col-span-1 space-y-4"
           >
-            {contactInfo.map((info, index) => (
+            {contactInfo.map((info) => (
               <motion.div
                 key={info.title}
                 variants={itemVariants}
