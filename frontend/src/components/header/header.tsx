@@ -44,7 +44,7 @@ export default function Header() {
               className="relative w-12 h-12"
             >
               <Image
-                src="/Sudexpert_Logo.png"
+                src="/Sudexpert Logo.png"
                 alt="Sudexpert Logo"
                 width={48}
                 height={48}
