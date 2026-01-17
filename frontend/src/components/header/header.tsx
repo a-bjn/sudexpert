@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Search, Menu, Zap, User, LogOut, X } from "lucide-react";
+import Image from "next/image";
+import { ShoppingCart, Search, Menu, User, LogOut, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/lib/cart-context";
 import { useAuth } from "@/lib/auth-context";
@@ -40,13 +41,16 @@ export default function Header() {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="relative"
+              className="relative w-9 h-9"
             >
-              <Zap
-                className="h-9 w-9 text-orange-500 transition-all group-hover:text-orange-600"
-                fill="currentColor"
+              <Image
+                src="/Sudexpert_Logo.png"
+                alt="Sudexpert Logo"
+                width={36}
+                height={36}
+                className="w-full h-full object-contain"
+                priority
               />
-              <div className="absolute inset-0 blur-lg bg-orange-500/20 group-hover:bg-orange-500/30 transition-all" />
             </motion.div>
             <span className="bebas-neue-regular text-2xl tracking-wider text-slate-800">
               SUDEXPERT

@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Zap, Mail, Lock, Eye, EyeOff, ArrowLeft, Loader2 } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowLeft, Loader2 } from "lucide-react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -57,8 +58,14 @@ export default function Login() {
             className="flex justify-center mb-8"
           >
             <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30">
-                <Zap className="w-8 h-8 text-white" fill="currentColor" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30 p-2">
+                <Image
+                  src="/Sudexpert_Logo.png"
+                  alt="Sudexpert Logo"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="absolute -inset-1 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl blur opacity-30" />
             </div>

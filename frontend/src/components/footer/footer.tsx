@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Zap, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Footer() {
@@ -37,12 +38,14 @@ export default function Footer() {
           {/* Company Info */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 group mb-6">
-              <div className="relative">
-                <Zap
-                  className="h-8 w-8 text-orange-500"
-                  fill="currentColor"
+              <div className="relative w-8 h-8">
+                <Image
+                  src="/Sudexpert_Logo.png"
+                  alt="Sudexpert Logo"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain"
                 />
-                <div className="absolute inset-0 blur-md bg-orange-500/20" />
               </div>
               <span className="bebas-neue-regular text-2xl tracking-wider text-slate-800">
                 SUDEXPERT
