@@ -50,7 +50,7 @@ export default function Login() {
       >
         {/* Card */}
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-100 p-8 md:p-10">
-          {/* Logo Icon */}
+          {/* Logo */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -58,16 +58,13 @@ export default function Login() {
             className="flex justify-center mb-8"
           >
             <div className="relative">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30 p-3">
-                <Image
-                  src="/Sudexpert Logo.png"
-                  alt="Sudexpert Logo"
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="absolute -inset-1 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl blur opacity-30" />
+              <Image
+                src="/sudexpert-logo.webp"
+                alt="Sudexpert Logo"
+                width={300}
+                height={75}
+                quality={100}
+              />
             </div>
           </motion.div>
 

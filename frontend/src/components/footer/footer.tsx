@@ -37,19 +37,16 @@ export default function Footer() {
         >
           {/* Company Info */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 group mb-6">
-              <div className="relative w-10 h-10">
+            <Link href="/" className="group mb-6 block">
+              <div className="relative">
                 <Image
-                  src="/Sudexpert Logo.png"
+                  src="/sudexpert-logo.webp"
                   alt="Sudexpert Logo"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-contain"
+                  width={180}
+                  height={45}
+                  quality={100}
                 />
               </div>
-              <span className="bebas-neue-regular text-2xl tracking-wider text-slate-800">
-                SUDEXPERT
-              </span>
             </Link>
             <p className="text-slate-600 leading-relaxed mb-6">
               Furnizor de încredere pentru electrozi și sârmă de sudură de calitate superioară din 1994.

@@ -30,31 +30,28 @@ export default function Header() {
       transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const }}
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-soft border-b border-slate-100"
+          ? "bg-white/60 backdrop-blur-md shadow-soft"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-24 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="group">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="relative w-12 h-12"
+              className="relative"
             >
               <Image
-                src="/Sudexpert Logo.png"
+                src="/sudexpert-logo.webp"
                 alt="Sudexpert Logo"
-                width={48}
-                height={48}
-                className="w-full h-full object-contain"
+                width={150}
+                height={38}
                 priority
+                quality={100}
               />
             </motion.div>
-            <span className="bebas-neue-regular text-2xl tracking-wider text-slate-800">
-              SUDEXPERT
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
