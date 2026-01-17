@@ -56,10 +56,16 @@ async function request<T>(
   return JSON.parse(text);
 }
 
+interface AuthResponse {
+  token: string;
+}
+
 export const api = {
   auth: {
-    register: (data: { firstName: string; lastName: string; email: string; password: string }) => request("/auth/register", "POST", data),
-    login: (data: { email: string; password: string }) => request("/auth/authenticate", "POST", data),
+    register: (data: { firstName: string; lastName: string; email: string; password: string }) => 
+      request<AuthResponse>("/auth/register", "POST", data),
+    login: (data: { email: string; password: string }) => 
+      request<AuthResponse>("/auth/authenticate", "POST", data),
   },
   products: {
     getAll: () => request("/products"),
