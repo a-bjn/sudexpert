@@ -52,8 +52,7 @@ export default function CheckoutForm({ orderCode, onSuccess }: CheckoutFormProps
           id: paymentIntent.id,
           status: paymentIntent.status,
           amount: paymentIntent.amount
-        } : null,
-        error: error ? error.message : null
+        } : null
       });
 
       if (paymentIntent && paymentIntent.status === "succeeded") {
