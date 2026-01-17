@@ -41,13 +41,13 @@ export default function Header() {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="relative w-9 h-9"
+              className="relative w-12 h-12"
             >
               <Image
                 src="/Sudexpert_Logo.png"
                 alt="Sudexpert Logo"
-                width={36}
-                height={36}
+                width={48}
+                height={48}
                 className="w-full h-full object-contain"
                 priority
               />

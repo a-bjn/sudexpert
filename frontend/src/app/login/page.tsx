@@ -58,12 +58,12 @@ export default function Login() {
             className="flex justify-center mb-8"
           >
             <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30 p-2">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30 p-3">
                 <Image
                   src="/Sudexpert_Logo.png"
                   alt="Sudexpert Logo"
-                  width={48}
-                  height={48}
+                  width={64}
+                  height={64}
                   className="w-full h-full object-contain"
                 />
               </div>
