@@ -6,37 +6,6 @@ import { gsap } from "gsap";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, Play, Shield, Truck, Award, Sparkles, ChevronDown, Zap } from "lucide-react";
 
-// Spark Particle Component
-function SparkParticle({ delay }: { delay: number }) {
-  return (
-    <motion.div
-      className="absolute w-1 h-1 bg-gradient-to-r from-orange-400 to-amber-300 rounded-full"
-      initial={{
-        opacity: 0,
-        scale: 0,
-        x: Math.random() * 100 - 50,
-        y: 0
-      }}
-      animate={{
-        opacity: [0, 1, 1, 0],
-        scale: [0, 1.5, 1, 0],
-        y: [0, -150 - Math.random() * 100],
-        x: [0, (Math.random() - 0.5) * 150]
-      }}
-      transition={{
-        duration: 2 + Math.random(),
-        delay,
-        repeat: Infinity,
-        repeatDelay: Math.random() * 2,
-        ease: "easeOut"
-      }}
-      style={{
-        boxShadow: "0 0 10px rgba(251, 191, 36, 0.8), 0 0 20px rgba(249, 115, 22, 0.5)"
-      }}
-    />
-  );
-}
-
 // Floating Badge Component
 function FloatingBadge({
   children,
@@ -219,11 +188,6 @@ export default function HeroSection() {
 
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_70%)]" />
-
-        {/* Decorative dots */}
-        <div className="absolute top-20 left-20 w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
-        <div className="absolute top-40 right-40 w-3 h-3 bg-blue-400/50 rounded-full animate-pulse" style={{ animationDelay: "0.5s" }} />
-        <div className="absolute bottom-40 left-1/4 w-2 h-2 bg-amber-400/60 rounded-full animate-pulse" style={{ animationDelay: "1s" }} />
       </div>
 
       {/* Main Content */}
@@ -368,13 +332,6 @@ export default function HeroSection() {
 
               {/* Overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-orange-900/30 via-transparent to-transparent" />
-
-              {/* Sparks Effect */}
-              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2">
-                {[...Array(8)].map((_, i) => (
-                  <SparkParticle key={i} delay={i * 0.3} />
-                ))}
-              </div>
             </motion.div>
 
             {/* Floating Badges */}
