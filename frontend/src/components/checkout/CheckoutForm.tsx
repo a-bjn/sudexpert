@@ -15,7 +15,7 @@ interface CheckoutFormProps {
   onSuccess: () => void;
 }
 
-export default function CheckoutForm({ orderId, orderCode, onSuccess }: CheckoutFormProps) {
+export default function CheckoutForm({ orderCode, onSuccess }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const { token } = useAuth();
@@ -89,9 +89,10 @@ export default function CheckoutForm({ orderId, orderCode, onSuccess }: Checkout
         console.log("⚠️ No payment intent returned");
         setIsLoading(false);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Payment error:", err);
-      setMessage(err.message || "An unexpected error occurred during payment.");
+      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred during payment.";
+      setMessage(errorMessage);
       setIsLoading(false);
     }
   };

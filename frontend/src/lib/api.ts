@@ -5,7 +5,7 @@ type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
 async function request<T>(
   endpoint: string,
   method: RequestMethod = "GET",
-  body?: any,
+  body?: unknown,
   token?: string
 ): Promise<T> {
   const headers: HeadersInit = {
@@ -58,8 +58,8 @@ async function request<T>(
 
 export const api = {
   auth: {
-    register: (data: any) => request("/auth/register", "POST", data),
-    login: (data: any) => request("/auth/authenticate", "POST", data),
+    register: (data: { username: string; email: string; password: string }) => request("/auth/register", "POST", data),
+    login: (data: { email: string; password: string }) => request("/auth/authenticate", "POST", data),
   },
   products: {
     getAll: () => request("/products"),
@@ -70,13 +70,13 @@ export const api = {
     getAll: () => request("/categories"),
   },
   orders: {
-    create: (data: any, token: string) => request("/orders", "POST", data, token),
+    create: (data: unknown, token: string) => request("/orders", "POST", data, token),
     getMyOrders: (token: string) => request("/orders", "GET", undefined, token),
     getById: (id: number, token: string) => request(`/orders/${id}`, "GET", undefined, token),
     getByCode: (orderCode: string, token: string) => request(`/orders/code/${orderCode}`, "GET", undefined, token),
   },
   payments: {
-    createPaymentIntent: (data: any, token: string) => 
+    createPaymentIntent: (data: { orderId: number; amount: number }, token: string) => 
       request("/payments/create-payment-intent", "POST", data, token),
     confirmSuccess: (paymentIntentId: string, token: string) => 
       request(`/payments/success?paymentIntentId=${paymentIntentId}`, "POST", undefined, token),
