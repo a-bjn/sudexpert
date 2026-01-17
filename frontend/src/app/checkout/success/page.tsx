@@ -67,9 +67,10 @@ export default function CheckoutSuccessPage() {
         const orderData = await api.orders.getByCode(orderCode, authToken);
         console.log("Order fetched successfully:", orderData);
         setOrder(orderData);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching order:", err);
-        setError(err.message || "Nu s-a putut încărca comanda");
+        const errorMessage = err instanceof Error ? err.message : "Nu s-a putut încărca comanda";
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
