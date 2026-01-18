@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Zap, Award, Truck, Headphones, Shield, Users,
   Clock, Target, Heart, ArrowRight,
@@ -204,16 +205,15 @@ export default function Despre() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 shadow-xl">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-500/30">
-                      <Zap className="w-12 h-12 text-white" fill="currentColor" />
-                    </div>
-                    <p className="bebas-neue-regular text-3xl text-slate-700">SUDEXPERT</p>
-                    <p className="text-slate-500">Din 1994</p>
-                  </div>
-                </div>
+              <div className="relative aspect-square rounded-3xl overflow-hidden shadow-xl">
+                <Image
+                  src="/welder.png"
+                  alt="Sudexpert - Echipamente de Sudură"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                  quality={90}
+                />
               </div>
               {/* Floating badges */}
               <motion.div

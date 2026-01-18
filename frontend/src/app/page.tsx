@@ -2,6 +2,7 @@
 
 import HeroSection from "@/components/home/HeroSection";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import {
@@ -429,13 +430,15 @@ function AboutSection() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-slate-200 to-slate-100 shadow-2xl">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <Zap className="w-24 h-24 text-slate-300 mx-auto mb-4" />
-                  <span className="text-slate-400 font-medium">Imagine Companie</span>
-                </div>
-              </div>
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+              <Image
+                src="/welder-2.png"
+                alt="Sudexpert - Echipamente de Sudură"
+                fill
+                className="object-cover object-center"
+                priority
+                quality={90}
+              />
               {/* Decorative overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent" />
             </div>
