@@ -25,6 +25,9 @@ export const metadata = {
     icon: "/sudexpert-logo-icon.webp",
     apple: "/sudexpert-logo-icon.webp",
   },
+  verification: {
+    google: "pX0gLmfn0Ovl3h1-DlSuMFxDAT0kef6FSzBmb2211sE",
+  },
   openGraph: {
     title: "Sudexpert - Electrozi și Sârmă de Sudură",
     description: "Echipamente de sudură premium pentru profesioniști",
