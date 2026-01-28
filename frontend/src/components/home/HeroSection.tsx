@@ -191,8 +191,8 @@ export default function HeroSection() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-4 md:px-8 lg:px-16 min-h-screen flex items-center">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full py-20">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 min-h-screen flex items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center w-full py-16 sm:py-20 pt-28 sm:pt-32 lg:pt-36">
 
           {/* Left Column - Text Content */}
           <motion.div
@@ -211,7 +211,7 @@ export default function HeroSection() {
 
             {/* Main Title */}
             <div className="overflow-hidden">
-              <h1 className="bebas-neue-regular text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-tight leading-[0.85]">
+              <h1 className="bebas-neue-regular text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-tight leading-[0.85]">
                 <span className="block text-slate-800">
                   {titleText.split("").map((char, i) => (
                     <motion.span
@@ -246,7 +246,7 @@ export default function HeroSection() {
             {/* Subtitle */}
             <motion.p
               variants={itemVariants}
-              className="text-lg md:text-xl text-slate-600 max-w-lg leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-slate-600 max-w-lg leading-relaxed"
             >
               Descoperă echipamente de sudură de înaltă calitate, alese de
               <span className="text-orange-600 font-semibold"> profesioniști</span> pentru
@@ -256,26 +256,26 @@ export default function HeroSection() {
             {/* CTA Buttons */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-wrap gap-4"
+              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
             >
-              <Link href="/magazin">
+              <Link href="/magazin" className="w-full sm:w-auto">
                 <motion.button
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-semibold text-lg shadow-orange btn-shine overflow-hidden"
+                  className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-semibold text-base sm:text-lg shadow-orange btn-shine overflow-hidden min-h-[48px]"
                 >
                   <span className="relative z-10">Explorează Magazinul</span>
                   <ArrowRight className="relative z-10 w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </motion.button>
               </Link>
 
-              <Link href="/despre">
+              <Link href="/despre" className="w-full sm:w-auto">
                 <motion.button
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-700 rounded-2xl font-semibold text-lg border-2 border-slate-200 hover:border-orange-300 hover:bg-orange-50 transition-colors shadow-soft"
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-slate-700 rounded-2xl font-semibold text-base sm:text-lg border-2 border-slate-200 hover:border-orange-300 hover:bg-orange-50 transition-colors shadow-soft min-h-[48px]"
                 >
-                  <Play className="w-5 h-5 text-orange-500" />
+                  <Play className="w-5 h-5 text-orange-500 flex-shrink-0" />
                   <span>Despre Noi</span>
                 </motion.button>
               </Link>
@@ -284,7 +284,7 @@ export default function HeroSection() {
             {/* Stats */}
             <motion.div
               variants={itemVariants}
-              className="grid grid-cols-3 gap-6 pt-8 border-t border-slate-200"
+              className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8 border-t border-slate-200"
             >
               {[
                 { value: 30, suffix: "+", label: "Ani Experiență" },
@@ -292,10 +292,10 @@ export default function HeroSection() {
                 { value: 1000, suffix: "+", label: "Clienți" },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="bebas-neue-regular text-3xl md:text-4xl text-slate-800">
+                  <div className="bebas-neue-regular text-2xl sm:text-3xl md:text-4xl text-slate-800">
                     <AnimatedNumber value={stat.value} suffix={stat.suffix} />
                   </div>
-                  <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+                  <div className="text-xs sm:text-sm text-slate-500 mt-0.5 sm:mt-1">{stat.label}</div>
                 </div>
               ))}
             </motion.div>
@@ -308,17 +308,17 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }}
             className="relative flex items-center justify-center"
           >
-            {/* Decorative Ring - CSS animation */}
-            <div className="absolute w-[110%] h-[110%] rounded-full border-2 border-dashed border-orange-200/50 animate-rotate-slow" />
+            {/* Decorative Ring - hidden on mobile */}
+            <div className="absolute w-[110%] h-[110%] rounded-full border-2 border-dashed border-orange-200/50 animate-rotate-slow hidden lg:block" />
 
             {/* Outer Glow */}
-            <div className="absolute w-[90%] h-[90%] bg-gradient-to-br from-orange-400/20 to-amber-300/10 rounded-full blur-2xl animate-pulse-glow" />
+            <div className="absolute w-[90%] h-[90%] bg-gradient-to-br from-orange-400/20 to-amber-300/10 rounded-full blur-2xl animate-pulse-glow hidden lg:block" />
 
-            {/* Image Container with Blob Shape - CSS animation for morphing */}
+            {/* Image Container with Blob Shape - full width on mobile */}
             <motion.div
               ref={imageRef}
               style={{ x: imageX, y: imageY }}
-              className="relative w-[85%] aspect-square overflow-hidden shadow-2xl animate-morph"
+              className="relative w-full max-w-md mx-auto lg:w-[85%] lg:max-w-none aspect-square overflow-hidden shadow-2xl animate-morph rounded-2xl lg:rounded-none"
             >
               {/* Image */}
               <motion.img
@@ -334,9 +334,9 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-orange-900/30 via-transparent to-transparent" />
             </motion.div>
 
-            {/* Floating Badges */}
+            {/* Floating Badges - hidden on mobile to avoid overflow */}
             <FloatingBadge
-              className="p-4 -left-8 top-[15%]"
+              className="p-4 -left-8 top-[15%] hidden lg:block"
               delay={1}
               x={-32}
               y={0}
@@ -353,7 +353,7 @@ export default function HeroSection() {
             </FloatingBadge>
 
             <FloatingBadge
-              className="p-4 -right-4 top-[35%]"
+              className="p-4 -right-4 top-[35%] hidden lg:block"
               delay={1.3}
               x={16}
               y={0}
@@ -370,7 +370,7 @@ export default function HeroSection() {
             </FloatingBadge>
 
             <FloatingBadge
-              className="p-4 -left-4 bottom-[20%]"
+              className="p-4 -left-4 bottom-[20%] hidden lg:block"
               delay={1.6}
               x={-16}
               y={0}
@@ -386,12 +386,12 @@ export default function HeroSection() {
               </div>
             </FloatingBadge>
 
-            {/* Corner Decoration */}
+            {/* Corner Decoration - hidden on mobile */}
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 2, duration: 0.5 }}
-              className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center shadow-orange rotate-12"
+              className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center shadow-orange rotate-12 hidden lg:flex"
             >
               <Zap className="w-10 h-10 text-white" />
             </motion.div>

@@ -38,20 +38,20 @@ function TrustedBySection() {
   ];
 
   return (
-    <section ref={ref} className="py-16 bg-white border-y border-slate-100">
-      <div className="container mx-auto px-4">
+    <section ref={ref} className="py-10 sm:py-14 md:py-16 bg-white border-y border-slate-100">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-6 sm:mb-10"
         >
-          <span className="text-sm font-semibold text-slate-400 uppercase tracking-widest">
+          <span className="text-xs sm:text-sm font-semibold text-slate-400 uppercase tracking-widest">
             Parteneri de încredere
           </span>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8 lg:gap-16">
           {partners.map((partner, i) => (
             <motion.div
               key={partner.name}
@@ -60,7 +60,7 @@ function TrustedBySection() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group"
             >
-              <div className="bebas-neue-regular text-2xl md:text-3xl text-slate-300 group-hover:text-orange-500 transition-colors duration-300 cursor-default">
+              <div className="bebas-neue-regular text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-300 group-hover:text-orange-500 transition-colors duration-300 cursor-default">
                 {partner.logo}
               </div>
             </motion.div>
@@ -114,20 +114,20 @@ function FeaturedProductsSection() {
   ];
 
   return (
-    <section ref={ref} className="py-24 bg-gradient-to-b from-white to-slate-50">
-      <div className="container mx-auto px-4">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-white to-slate-50">
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10 sm:mb-16">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 uppercase tracking-widest mb-4">
+            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-orange-600 uppercase tracking-widest mb-3 sm:mb-4">
               <Flame className="w-4 h-4" />
               Produse Recomandate
             </span>
-            <h2 className="bebas-neue-regular text-4xl md:text-5xl lg:text-6xl text-slate-800">
+            <h2 className="bebas-neue-regular text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800">
               Cele Mai Vândute
             </h2>
           </motion.div>
@@ -139,16 +139,16 @@ function FeaturedProductsSection() {
           >
             <Link
               href="/magazin"
-              className="group inline-flex items-center gap-2 text-slate-600 hover:text-orange-600 font-medium transition-colors"
+              className="group inline-flex items-center gap-2 text-slate-600 hover:text-orange-600 font-medium transition-colors text-sm sm:text-base"
             >
               Vezi toate produsele
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </Link>
           </motion.div>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {products.map((product, i) => (
             <motion.div
               key={product.id}
@@ -248,7 +248,7 @@ function CategoriesSection() {
   ];
 
   return (
-    <section ref={ref} className="py-24 bg-slate-900 relative overflow-hidden">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-900 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
@@ -258,21 +258,21 @@ function CategoriesSection() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
-          <span className="inline-flex items-center gap-2 text-sm font-semibold text-orange-500 uppercase tracking-widest mb-4">
+          <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-orange-500 uppercase tracking-widest mb-4">
             Explorează
           </span>
-          <h2 className="bebas-neue-regular text-4xl md:text-5xl lg:text-6xl text-white mb-4">
+          <h2 className="bebas-neue-regular text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4 px-2">
             Categorii Principale
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+          <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base px-2">
             Găsește exact ce ai nevoie din gama noastră completă de produse pentru sudură
           </p>
         </motion.div>
@@ -358,25 +358,25 @@ function FeaturesSection() {
   ];
 
   return (
-    <section ref={ref} className="py-24 bg-white">
-      <div className="container mx-auto px-4">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
-          <span className="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 uppercase tracking-widest mb-4">
+          <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-orange-600 uppercase tracking-widest mb-4">
             De ce să ne alegi
           </span>
-          <h2 className="bebas-neue-regular text-4xl md:text-5xl lg:text-6xl text-slate-800">
+          <h2 className="bebas-neue-regular text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800 px-2">
             Beneficiile Tale
           </h2>
         </motion.div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {features.map((feature, i) => (
             <motion.div
               key={feature.title}
@@ -420,9 +420,9 @@ function AboutSection() {
   ];
 
   return (
-    <section ref={ref} className="py-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
           {/* Image Side */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -430,7 +430,7 @@ function AboutSection() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
               <Image
                 src="/welder-2.png"
                 alt="Sudexpert - Echipamente de Sudură"
@@ -438,25 +438,26 @@ function AboutSection() {
                 className="object-cover object-center"
                 priority
                 quality={90}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               {/* Decorative overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent" />
             </div>
 
-            {/* Floating Stats Card */}
+            {/* Floating Stats Card - repositioned on mobile */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="absolute -bottom-8 -right-8 bg-white rounded-2xl shadow-xl p-6 border border-slate-100"
+              className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 lg:-bottom-8 lg:-right-8 bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 border border-slate-100"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
-                  <Award className="w-7 h-7 text-white" />
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center flex-shrink-0">
+                  <Award className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
                 </div>
                 <div>
-                  <div className="bebas-neue-regular text-3xl text-slate-800">30+</div>
-                  <div className="text-sm text-slate-500">Ani pe piață</div>
+                  <div className="bebas-neue-regular text-2xl sm:text-3xl text-slate-800">30+</div>
+                  <div className="text-xs sm:text-sm text-slate-500">Ani pe piață</div>
                 </div>
               </div>
             </motion.div>
@@ -468,13 +469,13 @@ function AboutSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 uppercase tracking-widest mb-4">
+            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-orange-600 uppercase tracking-widest mb-4">
               Despre Noi
             </span>
-            <h2 className="bebas-neue-regular text-4xl md:text-5xl text-slate-800 mb-6">
+            <h2 className="bebas-neue-regular text-3xl sm:text-4xl md:text-5xl text-slate-800 mb-4 sm:mb-6">
               Tradiție și Inovație în Sudură
             </h2>
-            <p className="text-lg text-slate-600 leading-relaxed mb-6">
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-4 sm:mb-6">
               Din 1994, Sudexpert s-a dedicat furnizării celor mai bune produse de sudură pentru
               profesioniști și entuziaști din România. Cu peste 30 de ani de experiență, am
               construit relații de încredere cu cei mai mari producători din lume.
@@ -486,7 +487,7 @@ function AboutSection() {
             </p>
 
             {/* Checkmarks */}
-            <div className="grid grid-cols-2 gap-4 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-8 sm:mb-10">
               {[
                 "Produse certificate",
                 "Prețuri competitive",
@@ -506,14 +507,14 @@ function AboutSection() {
               ))}
             </div>
 
-            <Link href="/despre">
+            <Link href="/despre" className="inline-block">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-slate-800 text-white rounded-xl font-semibold hover:bg-slate-700 transition-colors shadow-lg"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-slate-800 text-white rounded-xl font-semibold hover:bg-slate-700 transition-colors shadow-lg min-h-[48px]"
               >
                 Află Mai Multe
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 flex-shrink-0" />
               </motion.button>
             </Link>
           </motion.div>
@@ -524,14 +525,14 @@ function AboutSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
+          className="mt-12 sm:mt-16 lg:mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
         >
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="bebas-neue-regular text-4xl md:text-5xl text-slate-800 mb-2">
+              <div className="bebas-neue-regular text-3xl sm:text-4xl md:text-5xl text-slate-800 mb-1 sm:mb-2">
                 {stat.value}
               </div>
-              <div className="text-sm text-slate-500 font-medium uppercase tracking-wider">
+              <div className="text-xs sm:text-sm text-slate-500 font-medium uppercase tracking-wider">
                 {stat.label}
               </div>
             </div>
@@ -574,28 +575,28 @@ function TestimonialsSection() {
   ];
 
   return (
-    <section ref={ref} className="py-24 bg-slate-50">
-      <div className="container mx-auto px-4">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50">
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
-          <span className="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 uppercase tracking-widest mb-4">
+          <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-orange-600 uppercase tracking-widest mb-4">
             Recenzii
           </span>
-          <h2 className="bebas-neue-regular text-4xl md:text-5xl lg:text-6xl text-slate-800 mb-4">
+          <h2 className="bebas-neue-regular text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800 mb-4 px-2">
             Ce Spun Clienții
           </h2>
-          <p className="text-slate-500 max-w-2xl mx-auto">
+          <p className="text-slate-500 max-w-2xl mx-auto text-sm sm:text-base px-2">
             Peste 10.000 de clienți mulțumiți ne-au ales ca partener de încredere
           </p>
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {testimonials.map((testimonial, i) => (
             <motion.div
               key={testimonial.name}
@@ -603,25 +604,25 @@ function TestimonialsSection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.15 }}
             >
-              <div className="h-full bg-white rounded-2xl p-8 shadow-soft border border-slate-100 hover:shadow-lg hover:border-orange-100 transition-all">
+              <div className="h-full bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-soft border border-slate-100 hover:shadow-lg hover:border-orange-100 transition-all">
                 {/* Quote Icon */}
-                <Quote className="w-10 h-10 text-orange-200 mb-6" />
+                <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-orange-200 mb-4 sm:mb-6" />
 
                 {/* Content */}
-                <p className="text-slate-600 leading-relaxed mb-6">
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6 line-clamp-4 sm:line-clamp-none">
                   &ldquo;{testimonial.content}&rdquo;
                 </p>
 
                 {/* Rating */}
-                <div className="flex gap-1 mb-6">
+                <div className="flex gap-1 mb-4 sm:mb-6">
                   {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star key={j} className="w-5 h-5 text-amber-400 fill-amber-400" />
+                    <Star key={j} className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 fill-amber-400" />
                   ))}
                 </div>
 
                 {/* Author */}
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white font-bold">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white font-bold text-sm sm:text-base flex-shrink-0">
                     {testimonial.avatar}
                   </div>
                   <div>
@@ -646,7 +647,7 @@ function CTASection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-24 relative overflow-hidden">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500" />
 
@@ -659,37 +660,37 @@ function CTASection() {
       <div className="absolute -top-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
       <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <h2 className="bebas-neue-regular text-4xl md:text-5xl lg:text-6xl text-white mb-6">
+          <h2 className="bebas-neue-regular text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4 sm:mb-6 px-2">
             Pregătit Să Începi?
           </h2>
-          <p className="text-xl text-white/90 mb-10 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-10 leading-relaxed px-2">
             Descoperă gama completă de produse profesionale pentru sudură.
             Calitate garantată, prețuri competitive, livrare rapidă.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/magazin">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center sm:items-stretch">
+            <Link href="/magazin" className="w-full sm:w-auto max-w-sm sm:max-w-none">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-3 px-10 py-5 bg-white text-orange-600 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-shadow"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-white text-orange-600 rounded-xl font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-shadow min-h-[48px]"
               >
                 Explorează Magazinul
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 flex-shrink-0" />
               </motion.button>
             </Link>
-            <Link href="/contact">
+            <Link href="/contact" className="w-full sm:w-auto max-w-sm sm:max-w-none">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-3 px-10 py-5 bg-transparent text-white border-2 border-white/30 rounded-xl font-bold text-lg hover:bg-white/10 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-transparent text-white border-2 border-white/30 rounded-xl font-bold text-base sm:text-lg hover:bg-white/10 transition-colors min-h-[48px]"
               >
                 Contactează-ne
               </motion.button>
@@ -710,21 +711,21 @@ function NewsletterSection() {
   const [email, setEmail] = useState("");
 
   return (
-    <section ref={ref} className="py-20 bg-white">
-      <div className="container mx-auto px-4">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 bg-white">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="max-w-2xl mx-auto text-center"
         >
-          <div className="w-16 h-16 rounded-2xl bg-orange-50 flex items-center justify-center mx-auto mb-6">
-            <Mail className="w-8 h-8 text-orange-500" />
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-orange-50 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+            <Mail className="w-7 h-7 sm:w-8 sm:h-8 text-orange-500" />
           </div>
-          <h2 className="bebas-neue-regular text-3xl md:text-4xl text-slate-800 mb-4">
+          <h2 className="bebas-neue-regular text-2xl sm:text-3xl md:text-4xl text-slate-800 mb-3 sm:mb-4 px-2">
             Abonează-te la Newsletter
           </h2>
-          <p className="text-slate-500 mb-8">
+          <p className="text-slate-500 text-sm sm:text-base mb-6 sm:mb-8 px-2">
             Primește primii informații despre oferte speciale, produse noi și sfaturi de la experți.
           </p>
 
@@ -734,19 +735,19 @@ function NewsletterSection() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Adresa ta de email"
-              className="flex-1 h-14 px-6 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all"
+              className="flex-1 min-h-[48px] h-12 sm:h-14 px-4 sm:px-6 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-base placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all"
             />
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="h-14 px-8 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-orange hover:shadow-lg transition-shadow"
+              className="min-h-[48px] h-12 sm:h-14 px-6 sm:px-8 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-orange hover:shadow-lg transition-shadow text-sm sm:text-base"
             >
               Abonează-te
             </motion.button>
           </form>
 
-          <p className="text-xs text-slate-400 mt-4">
+          <p className="text-xs text-slate-400 mt-4 px-2">
             Prin abonare, ești de acord cu{" "}
             <Link href="/privacy" className="text-orange-500 hover:underline">
               Politica de Confidențialitate
