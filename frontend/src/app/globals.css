@@ -19,10 +19,16 @@
   scroll-behavior: smooth;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-roboto), system-ui, sans-serif;
   background: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: rgba(249, 115, 22, 0.15);
 }
 
 /* Bebas Neue utility class */
@@ -262,4 +268,13 @@ body {
 :focus-visible {
   outline: 2px solid #f97316;
   outline-offset: 2px;
+}
+
+/* Hide scrollbar but keep scroll (e.g. for horizontal breadcrumb on mobile) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

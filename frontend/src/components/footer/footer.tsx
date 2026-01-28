@@ -26,14 +26,14 @@ export default function Footer() {
       {/* Decorative top border gradient */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500" />
 
-      <div className="mx-auto max-w-7xl px-6 pt-16 pb-8 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-12 sm:pt-14 md:pt-16 pb-6 sm:pb-8 lg:px-8">
         {/* Main Footer Content */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-8 sm:gap-10 md:gap-12 md:grid-cols-2 lg:grid-cols-4"
         >
           {/* Company Info */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
@@ -90,7 +90,7 @@ export default function Footer() {
                   aria-label={social.name}
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-orange-500 hover:border-orange-200 hover:bg-orange-50 transition-all shadow-sm"
+                  className="min-w-[44px] min-h-[44px] w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-orange-500 hover:border-orange-200 hover:bg-orange-50 transition-all shadow-sm"
                 >
                   {social.icon}
                 </motion.a>
@@ -100,10 +100,10 @@ export default function Footer() {
 
           {/* Quick Links */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-6">
+            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 sm:mb-6">
               Link-uri Rapide
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-0 sm:space-y-3">
               {[
                 { href: "/", label: "Acasă" },
                 { href: "/magazin", label: "Magazin" },
@@ -113,9 +113,9 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="group flex items-center gap-2 text-slate-600 hover:text-orange-600 transition-colors"
+                    className="group flex items-center gap-2 text-slate-600 hover:text-orange-600 transition-colors py-2 sm:py-0 min-h-[44px] sm:min-h-0"
                   >
-                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-orange-500" />
+                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-orange-500 flex-shrink-0" />
                     <span>{link.label}</span>
                   </Link>
                 </li>
@@ -125,10 +125,10 @@ export default function Footer() {
 
           {/* Categories */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-6">
+            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 sm:mb-6">
               Categorii
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-0 sm:space-y-3">
               {[
                 { href: "/magazin?category=electrozi", label: "Electrozi de Sudură" },
                 { href: "/magazin?category=sarma", label: "Sârmă de Sudură" },
@@ -138,9 +138,9 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="group flex items-center gap-2 text-slate-600 hover:text-orange-600 transition-colors"
+                    className="group flex items-center gap-2 text-slate-600 hover:text-orange-600 transition-colors py-2 sm:py-0 min-h-[44px] sm:min-h-0"
                   >
-                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-orange-500" />
+                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-orange-500 flex-shrink-0" />
                     <span>{link.label}</span>
                   </Link>
                 </li>

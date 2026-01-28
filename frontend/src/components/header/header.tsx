@@ -34,14 +34,14 @@ export default function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex h-24 items-center justify-between">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 sm:h-20 lg:h-24 items-center justify-between gap-2">
           {/* Logo */}
-          <Link href="/" className="group">
+          <Link href="/" className="group flex-shrink-0 min-w-0 block w-[110px] sm:w-[130px] lg:w-[150px]">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="relative"
+              className="relative w-full"
             >
               <Image
                 src="/sudexpert-logo.webp"
@@ -50,6 +50,7 @@ export default function Header() {
                 height={38}
                 priority
                 quality={100}
+                className="w-full h-auto object-contain object-left"
               />
             </motion.div>
           </Link>
@@ -74,7 +75,7 @@ export default function Header() {
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
             {/* Search - Desktop */}
             <div className="hidden md:flex items-center">
               <div className="relative group">
@@ -88,7 +89,7 @@ export default function Header() {
             </div>
 
             {/* Cart */}
-            <Link href="/cos">
+            <Link href="/cos" className="flex items-center justify-center min-h-[44px] min-w-[44px]">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -143,7 +144,8 @@ export default function Header() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="lg:hidden h-11 w-11 flex items-center justify-center rounded-xl text-slate-600 hover:text-orange-600 hover:bg-orange-50 transition-all"
+              aria-label={isMenuOpen ? "Închide meniul" : "Deschide meniul"}
+              className="lg:hidden h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-slate-600 hover:text-orange-600 hover:bg-orange-50 transition-all"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
