@@ -91,7 +91,7 @@ export default function Despre() {
       <div className="absolute top-1/2 -left-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
 
       {/* Hero Section */}
-      <div className="relative pt-24 pb-16">
+      <div className="relative pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -103,18 +103,18 @@ export default function Despre() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-700 text-sm font-medium mb-6"
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-orange-100 text-orange-700 text-xs sm:text-sm font-medium mb-4 sm:mb-6"
             >
               <Factory className="w-4 h-4" />
               Din 1994 în serviciul dumneavoastră
             </motion.div>
-            <h1 className="bebas-neue-regular text-5xl md:text-7xl text-slate-800 mb-6">
+            <h1 className="bebas-neue-regular text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-slate-800 mb-4 sm:mb-6 px-2">
               Despre{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">
                 Sudexpert
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed px-2">
               Cu peste 30 de ani de experiență în industria sudării, Sudexpert s-a impus
               ca lider de piață în furnizarea de echipamente și consumabile de sudură de înaltă calitate.
             </p>
@@ -123,13 +123,13 @@ export default function Despre() {
       </div>
 
       {/* Stats Section */}
-      <div ref={statsRef} className="relative py-16">
+      <div ref={statsRef} className="relative py-10 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={statsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6"
           >
             {stats.map((stat, index) => (
               <motion.div
@@ -139,12 +139,12 @@ export default function Despre() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-all">
-                  <stat.icon className="w-8 h-8 text-orange-500 mx-auto mb-4" />
-                  <div className="bebas-neue-regular text-4xl md:text-5xl text-slate-800 mb-2">
+                <div className="bg-white/80 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-all">
+                  <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-orange-500 mx-auto mb-3 sm:mb-4" />
+                  <div className="bebas-neue-regular text-3xl sm:text-4xl md:text-5xl text-slate-800 mb-1 sm:mb-2">
                     {stat.value}
                   </div>
-                  <div className="text-slate-500 text-sm md:text-base">{stat.label}</div>
+                  <div className="text-slate-500 text-xs sm:text-sm md:text-base">{stat.label}</div>
                 </div>
               </motion.div>
             ))}

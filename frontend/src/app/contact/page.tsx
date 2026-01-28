@@ -96,26 +96,26 @@ export default function Contact() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative pt-24 pb-12 text-center"
+        className="relative pt-28 sm:pt-32 lg:pt-36 pb-8 sm:pb-12 text-center"
       >
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg shadow-orange-500/30 mb-6"
+          className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg shadow-orange-500/30 mb-4 sm:mb-6"
         >
-          <Building2 className="w-10 h-10 text-white" />
+          <Building2 className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
         </motion.div>
-        <h1 className="bebas-neue-regular text-5xl md:text-6xl text-slate-800 mb-4">
+        <h1 className="bebas-neue-regular text-4xl sm:text-5xl md:text-6xl text-slate-800 mb-3 sm:mb-4 px-2">
           Contactează-ne
         </h1>
-        <p className="text-lg text-slate-500 max-w-2xl mx-auto px-4">
+        <p className="text-base sm:text-lg text-slate-500 max-w-2xl mx-auto px-4">
           Suntem aici pentru a te ajuta cu orice întrebare despre produsele și serviciile noastre.
           Nu ezita să ne contactezi!
         </p>
       </motion.div>
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-24">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Info Cards */}
           <motion.div
@@ -184,7 +184,7 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-2"
           >
-            <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-100 p-8 md:p-10">
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-slate-100 p-4 sm:p-6 md:p-8 lg:p-10">
               {success ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
