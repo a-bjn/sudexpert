@@ -141,43 +141,45 @@ export default function ProductDetails() {
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       {/* Breadcrumb */}
-      <div className="bg-neutral-900/50 border-b border-neutral-800">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-neutral-500 hover:text-white transition-colors">
+      <div className="bg-neutral-900/50 border-b border-neutral-800 pt-24 sm:pt-28 lg:pt-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <nav className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm flex-wrap overflow-x-auto scrollbar-hide -mx-1 px-1">
+            <Link href="/" className="text-neutral-500 hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
               Acasă
             </Link>
-            <ChevronRight className="w-4 h-4 text-neutral-600" />
-            <Link href="/magazin" className="text-neutral-500 hover:text-white transition-colors">
+            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-neutral-600 flex-shrink-0" />
+            <Link href="/magazin" className="text-neutral-500 hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
               Magazin
             </Link>
             {product.category && (
               <>
-                <ChevronRight className="w-4 h-4 text-neutral-600" />
+                <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-neutral-600 flex-shrink-0" />
                 <Link
                   href={`/magazin?category=${product.category.id}`}
-                  className="text-neutral-500 hover:text-white transition-colors"
+                  className="text-neutral-500 hover:text-white transition-colors whitespace-nowrap flex-shrink-0"
                 >
                   {product.category.name}
                 </Link>
               </>
             )}
-            <ChevronRight className="w-4 h-4 text-neutral-600" />
-            <span className="text-orange-500 font-medium truncate max-w-[200px]">
+            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-neutral-600 flex-shrink-0" />
+            <span className="text-orange-500 font-medium truncate max-w-[120px] sm:max-w-[200px] flex-shrink-0">
               {product.name}
             </span>
           </nav>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
         {/* Back Button */}
         <button
+          type="button"
           onClick={() => router.back()}
-          className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors mb-8 group"
+          className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors mb-6 sm:mb-8 group min-h-[44px] min-w-[44px] -m-2 p-2 rounded-lg hover:bg-neutral-800/50"
+          aria-label="Înapoi"
         >
-          <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-          <span>Înapoi</span>
+          <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1 flex-shrink-0" />
+          <span className="text-sm sm:text-base">Înapoi</span>
         </button>
 
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
@@ -237,16 +239,16 @@ export default function ProductDetails() {
             )}
 
             {/* Title */}
-            <h1 className="text-3xl sm:text-4xl font-bold text-white bebas-neue-regular tracking-wide">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white bebas-neue-regular tracking-wide break-words">
               {product.name}
             </h1>
 
             {/* Price */}
-            <div className="mt-6 flex items-baseline gap-3">
-              <span className="text-4xl font-bold text-white">
+            <div className="mt-4 sm:mt-6 flex items-baseline gap-2 sm:gap-3 flex-wrap">
+              <span className="text-3xl sm:text-4xl font-bold text-white">
                 {product.price.toFixed(2)}
               </span>
-              <span className="text-xl text-neutral-500">RON</span>
+              <span className="text-lg sm:text-xl text-neutral-500">RON</span>
             </div>
 
             {/* Stock Status */}
@@ -284,23 +286,25 @@ export default function ProductDetails() {
             {/* Quantity & Add to Cart */}
             <div className="mt-10 space-y-4">
               {/* Quantity Selector */}
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-medium text-neutral-400">Cantitate:</span>
-                <div className="flex items-center bg-neutral-900 border border-neutral-800 rounded-xl">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                <span className="text-sm font-medium text-neutral-400 w-full sm:w-auto">Cantitate:</span>
+                <div className="flex items-center bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
                   <button
+                    type="button"
                     onClick={decrementQuantity}
                     disabled={quantity <= 1 || isOutOfStock}
-                    className="p-3 text-neutral-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="min-h-[48px] min-w-[48px] p-3 flex items-center justify-center text-neutral-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
                   >
                     <Minus className="w-5 h-5" />
                   </button>
-                  <span className="w-12 text-center text-white font-medium">
+                  <span className="w-12 min-h-[48px] flex items-center justify-center text-center text-white font-medium text-base">
                     {quantity}
                   </span>
                   <button
+                    type="button"
                     onClick={incrementQuantity}
                     disabled={quantity >= product.stock || isOutOfStock}
-                    className="p-3 text-neutral-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="min-h-[48px] min-w-[48px] p-3 flex items-center justify-center text-neutral-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
                   >
                     <Plus className="w-5 h-5" />
                   </button>
@@ -309,9 +313,10 @@ export default function ProductDetails() {
 
               {/* Add to Cart Button */}
               <button
+                type="button"
                 onClick={handleAddToCart}
                 disabled={isOutOfStock}
-                className={`w-full flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
+                className={`w-full min-h-[52px] flex items-center justify-center gap-3 px-6 sm:px-8 py-4 rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 touch-manipulation ${
                   isOutOfStock
                     ? "bg-neutral-800 text-neutral-500 cursor-not-allowed"
                     : justAdded

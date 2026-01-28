@@ -24,13 +24,13 @@ export default function Cart() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Coșul tău este gol</h1>
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center pt-28 sm:pt-32 lg:pt-36 px-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 text-center">Coșul tău este gol</h1>
         <Link
           href="/magazin"
-          className="text-orange-600 hover:text-orange-500 font-medium flex items-center"
+          className="text-orange-600 hover:text-orange-500 font-medium flex items-center gap-2 min-h-[48px] items-center justify-center"
         >
-          Mergi la magazin <ArrowRight className="ml-2 h-4 w-4" />
+          Mergi la magazin <ArrowRight className="h-4 w-4 flex-shrink-0" />
         </Link>
       </div>
     );
@@ -38,12 +38,12 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-8">
+      <div className="mx-auto max-w-7xl px-4 pt-28 sm:pt-32 lg:pt-36 py-8 sm:py-16 sm:px-6 lg:px-8">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-6 sm:mb-8">
           Coș de cumpărături
         </h1>
 
-        <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+        <div className="mt-8 sm:mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
           <section aria-labelledby="cart-heading" className="lg:col-span-7">
             <h2 id="cart-heading" className="sr-only">
               Items in your shopping cart
@@ -51,59 +51,52 @@ export default function Cart() {
 
             <ul role="list" className="divide-y divide-gray-200 border-b border-t border-gray-200">
               {items.map((item) => (
-                <li key={item.id} className="flex py-6 sm:py-10">
-                  <div className="flex-shrink-0 relative">
+                <li key={item.id} className="flex flex-col sm:flex-row gap-4 py-4 sm:py-6 md:py-10">
+                  <div className="flex-shrink-0 relative flex justify-center sm:justify-start">
                     {item.imageUrl ? (
-                      <div className="h-24 w-24 sm:h-48 sm:w-48 relative rounded-md overflow-hidden">
+                      <div className="h-24 w-24 sm:h-32 sm:w-32 md:h-48 md:w-48 relative rounded-lg overflow-hidden flex-shrink-0">
                         <Image
                           src={item.imageUrl}
                           alt={item.name}
                           fill
                           className="object-cover object-center"
-                          sizes="(max-width: 640px) 96px, 192px"
+                          sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 192px"
                         />
                       </div>
                     ) : (
-                      <div className="h-24 w-24 rounded-md bg-neutral-100 flex items-center justify-center text-neutral-400 sm:h-48 sm:w-48">
+                      <div className="h-24 w-24 sm:h-32 sm:w-32 md:h-48 md:w-48 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-400 text-sm flex-shrink-0">
                         No Image
                       </div>
                     )}
                   </div>
 
-                  <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                    <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                      <div>
-                        <div className="flex justify-between">
-                          <h3 className="text-sm">
+                  <div className="flex-1 min-w-0 flex flex-col sm:ml-4 md:ml-6">
+                    <div className="relative">
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-sm sm:text-base font-medium text-gray-800">
                             <Link
                               href={`/magazin/${item.id}`}
-                              className="font-medium text-gray-700 hover:text-gray-800"
+                              className="hover:text-orange-600 transition-colors line-clamp-2"
                             >
                               {item.name}
                             </Link>
                           </h3>
+                          <p className="mt-1 text-sm font-medium text-gray-900">
+                            {item.price} RON
+                          </p>
                         </div>
-                        <p className="mt-1 text-sm font-medium text-gray-900">
-                          {item.price} RON
-                        </p>
+                        <button
+                          type="button"
+                          onClick={() => removeItem(item.id)}
+                          className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors flex-shrink-0 -m-2 sm:m-0"
+                          aria-label={`Șterge ${item.name} din coș`}
+                        >
+                          <Trash2 className="h-5 w-5" aria-hidden="true" />
+                        </button>
                       </div>
-
-                      <div className="mt-4 sm:mt-0 sm:pr-9">
-                        <label htmlFor={`quantity-${item.id}`} className="sr-only">
-                          Quantity, {item.name}
-                        </label>
+                      <div className="mt-3 sm:mt-4">
                         <p className="text-sm text-gray-500">Cantitate: {item.quantity}</p>
-
-                        <div className="absolute right-0 top-0">
-                          <button
-                            type="button"
-                            className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
-                            onClick={() => removeItem(item.id)}
-                          >
-                            <span className="sr-only">Remove</span>
-                            <Trash2 className="h-5 w-5" aria-hidden="true" />
-                          </button>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -115,7 +108,7 @@ export default function Cart() {
           {/* Order summary */}
           <section
             aria-labelledby="summary-heading"
-            className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
+            className="mt-6 sm:mt-8 lg:mt-0 rounded-xl bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:p-8 sticky top-20 sm:top-24 lg:top-28"
           >
             <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
               Sumar comandă
@@ -132,13 +125,14 @@ export default function Cart() {
 
             <div className="mt-6">
               <button
+                type="button"
                 onClick={handleCheckout}
-                className="w-full rounded-md border border-transparent bg-orange-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                className="w-full min-h-[48px] rounded-xl border border-transparent bg-orange-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-50 transition-colors"
               >
                 Continuă la plată
               </button>
               {!isAuthenticated && (
-                <p className="mt-2 text-sm text-center text-gray-500">
+                <p className="mt-2 text-sm text-center text-gray-500 px-2">
                   Trebuie să fii autentificat pentru a plasa comanda.
                 </p>
               )}

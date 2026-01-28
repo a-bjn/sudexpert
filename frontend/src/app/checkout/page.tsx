@@ -172,24 +172,24 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-8 text-gray-900">Finalizare Comandă</h1>
+    <div className="min-h-screen bg-gray-50 pt-28 sm:pt-32 lg:pt-36 py-8 sm:py-12 overflow-x-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900">Finalizare Comandă</h1>
 
         {/* Progress Steps */}
-        <div className="flex items-center justify-center mb-8">
-          <div className="flex items-center">
-            <div className={`flex items-center justify-center w-10 h-10 rounded-full ${step === "delivery" ? "bg-blue-600 text-white" : "bg-green-600 text-white"}`}>
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
+          <div className="flex items-center gap-2">
+            <div className={`flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full flex-shrink-0 ${step === "delivery" ? "bg-blue-600 text-white" : "bg-green-600 text-white"}`}>
               {step === "payment" ? "✓" : "1"}
             </div>
-            <span className="ml-2 font-medium text-gray-900">Livrare</span>
+            <span className="text-sm sm:text-base font-medium text-gray-900">Livrare</span>
           </div>
-          <div className="w-24 h-1 bg-gray-300 mx-4"></div>
-          <div className="flex items-center">
-            <div className={`flex items-center justify-center w-10 h-10 rounded-full ${step === "payment" ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-600"}`}>
+          <div className="w-12 sm:w-24 h-1 bg-gray-300 flex-shrink-0"></div>
+          <div className="flex items-center gap-2">
+            <div className={`flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full flex-shrink-0 ${step === "payment" ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-600"}`}>
               2
             </div>
-            <span className="ml-2 font-medium text-gray-900">Plată</span>
+            <span className="text-sm sm:text-base font-medium text-gray-900">Plată</span>
           </div>
         </div>
 
@@ -199,10 +199,10 @@ export default function CheckoutPage() {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Order Summary - Always visible */}
-          <div className="lg:col-span-1">
-            <div className="bg-white p-6 rounded-lg shadow sticky top-4">
+          <div className="lg:col-span-1 order-2 lg:order-1">
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow sticky top-20 sm:top-24 lg:top-8">
               <h2 className="text-xl font-semibold mb-4 text-gray-900">Sumar Comandă</h2>
               <div className="space-y-3">
                 {items.map((item) => (
@@ -227,13 +227,13 @@ export default function CheckoutPage() {
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-1 lg:order-2">
             {step === "delivery" ? (
               /* Delivery Form */
-              <div className="bg-white p-8 rounded-lg shadow">
-                <h2 className="text-2xl font-semibold mb-6 text-gray-900">Informații Livrare</h2>
+              <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gray-900">Informații Livrare</h2>
                 <form onSubmit={handleDeliverySubmit} className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-1 text-gray-900">Nume complet *</label>
                       <input
@@ -242,7 +242,7 @@ export default function CheckoutPage() {
                         value={deliveryInfo.deliveryName}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full min-h-[44px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
@@ -253,7 +253,7 @@ export default function CheckoutPage() {
                         value={deliveryInfo.deliveryEmail}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full min-h-[44px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -267,7 +267,7 @@ export default function CheckoutPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="07XX XXX XXX"
-                      className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full min-h-[44px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
 
@@ -280,11 +280,11 @@ export default function CheckoutPage() {
                       onChange={handleInputChange}
                       required
                       placeholder="Strada, număr, bloc, scară, apartament"
-                      className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full min-h-[44px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
 
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-1 text-gray-900">Oraș *</label>
                       <input
@@ -293,7 +293,7 @@ export default function CheckoutPage() {
                         value={deliveryInfo.deliveryCity}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full min-h-[44px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
@@ -303,7 +303,7 @@ export default function CheckoutPage() {
                         name="deliveryCounty"
                         value={deliveryInfo.deliveryCounty}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full min-h-[44px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
@@ -313,7 +313,7 @@ export default function CheckoutPage() {
                         name="deliveryPostalCode"
                         value={deliveryInfo.deliveryPostalCode}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full min-h-[44px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -326,7 +326,7 @@ export default function CheckoutPage() {
                       value={deliveryInfo.deliveryCountry}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full min-h-[44px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
 
@@ -338,14 +338,14 @@ export default function CheckoutPage() {
                       onChange={handleInputChange}
                       rows={3}
                       placeholder="Instrucțiuni speciale pentru livrare..."
-                      className="w-full px-4 py-2 border rounded-lg text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full min-h-[80px] px-4 py-2.5 border rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                    className="w-full min-h-[48px] bg-blue-600 text-white py-3 px-6 rounded-xl font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base"
                   >
                     {loading ? "Se procesează..." : "Continuă la plată"}
                   </button>
@@ -353,7 +353,7 @@ export default function CheckoutPage() {
               </div>
             ) : (
               /* Payment Form */
-              <div className="bg-white p-8 rounded-lg shadow">
+              <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow">
                 <div className="mb-6">
                   <h2 className="text-2xl font-semibold mb-2 text-gray-900">Plată</h2>
                 </div>

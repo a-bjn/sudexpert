@@ -163,28 +163,28 @@ export default function Magazin() {
       <div className="absolute bottom-40 -left-40 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl" />
 
       {/* Hero Section */}
-      <div className="relative pt-24 pb-8">
+      <div className="relative pt-28 sm:pt-32 lg:pt-36 pb-6 sm:pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-3 sm:mb-4">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-700 text-sm font-medium"
+                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-orange-100 text-orange-700 text-xs sm:text-sm font-medium"
               >
                 <Sparkles className="w-4 h-4" />
                 Colecția noastră
               </motion.div>
             </div>
-            <h1 className="bebas-neue-regular text-5xl md:text-6xl text-slate-800 mb-4">
+            <h1 className="bebas-neue-regular text-4xl sm:text-5xl md:text-6xl text-slate-800 mb-3 sm:mb-4">
               Magazin
             </h1>
-            <p className="text-lg text-slate-500 max-w-2xl">
+            <p className="text-base sm:text-lg text-slate-500 max-w-2xl">
               Echipamente profesionale de sudură pentru toate nevoile tale. Calitate garantată și prețuri competitive.
             </p>
           </motion.div>
@@ -197,36 +197,38 @@ export default function Magazin() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="sticky top-20 z-30 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-4 bg-white/80 backdrop-blur-xl border-b border-slate-200"
+          className="sticky top-16 sm:top-20 lg:top-24 z-30 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-3 sm:py-4 bg-white/80 backdrop-blur-xl border-b border-slate-200"
         >
-          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+          <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 items-stretch lg:items-center justify-between">
             {/* Search */}
-            <div className="relative flex-1 max-w-md w-full">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <div className="relative flex-1 w-full min-w-0">
+              <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 pointer-events-none" />
               <input
                 type="text"
                 placeholder="Caută produse..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all"
+                className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-base placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all min-h-[44px]"
               />
               {searchQuery && (
                 <button
+                  type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors -mr-2"
+                  aria-label="Șterge căutarea"
                 >
                   <X className="w-4 h-4" />
                 </button>
               )}
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full lg:w-auto">
               {/* Category Filter */}
-              <div className="relative">
+              <div className="relative flex-1 sm:flex-initial min-w-0 sm:min-w-[160px]">
                 <select
                   value={selectedCategory ?? ""}
                   onChange={(e) => setSelectedCategory(e.target.value ? Number(e.target.value) : null)}
-                  className="appearance-none pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 cursor-pointer transition-all min-w-[160px]"
+                  className="w-full sm:w-auto appearance-none pl-4 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 cursor-pointer transition-all min-h-[44px] min-w-0"
                 >
                   <option value="">Toate categoriile</option>
                   {categories.map((cat) => (
@@ -239,11 +241,11 @@ export default function Magazin() {
               </div>
 
               {/* Sort */}
-              <div className="relative">
+              <div className="relative flex-1 sm:flex-initial min-w-0 sm:min-w-[180px]">
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="appearance-none pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 cursor-pointer transition-all min-w-[180px]"
+                  className="w-full sm:w-auto appearance-none pl-4 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 cursor-pointer transition-all min-h-[44px] min-w-0"
                 >
                   <option value="default">Sortare implicită</option>
                   <option value="price-asc">Preț: Mic → Mare</option>
@@ -256,10 +258,12 @@ export default function Magazin() {
               </div>
 
               {/* View Mode Toggle */}
-              <div className="flex items-center bg-slate-100 rounded-xl p-1">
+              <div className="flex items-center bg-slate-100 rounded-xl p-1 flex-shrink-0">
                 <button
+                  type="button"
                   onClick={() => setViewMode("grid")}
-                  className={`p-2.5 rounded-lg transition-all ${
+                  aria-label="Vizualizare grilă"
+                  className={`min-h-[44px] min-w-[44px] p-2.5 rounded-lg transition-all flex items-center justify-center ${
                     viewMode === "grid"
                       ? "bg-white text-orange-600 shadow-sm"
                       : "text-slate-400 hover:text-slate-600"
@@ -268,8 +272,10 @@ export default function Magazin() {
                   <Grid3X3 className="w-5 h-5" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => setViewMode("list")}
-                  className={`p-2.5 rounded-lg transition-all ${
+                  aria-label="Vizualizare listă"
+                  className={`min-h-[44px] min-w-[44px] p-2.5 rounded-lg transition-all flex items-center justify-center ${
                     viewMode === "list"
                       ? "bg-white text-orange-600 shadow-sm"
                       : "text-slate-400 hover:text-slate-600"
