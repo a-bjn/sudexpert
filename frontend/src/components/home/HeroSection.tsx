@@ -80,7 +80,7 @@ export default function HeroSection() {
 
   const LOOP_END_SECONDS = 5;
 
-  // Ensure hero video plays and loops at 7 seconds
+  // Ensure hero video plays when ready and loops at LOOP_END_SECONDS
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -88,6 +88,9 @@ export default function HeroSection() {
       video.play().catch(() => {});
     };
     play();
+    const onCanPlay = () => {
+      play();
+    };
     const onTimeUpdate = () => {
       if (video.currentTime >= LOOP_END_SECONDS) {
         video.currentTime = 0;
@@ -96,9 +99,11 @@ export default function HeroSection() {
     const onVisibilityChange = () => {
       if (document.visibilityState === "visible") play();
     };
+    video.addEventListener("canplay", onCanPlay);
     video.addEventListener("timeupdate", onTimeUpdate);
     document.addEventListener("visibilitychange", onVisibilityChange);
     return () => {
+      video.removeEventListener("canplay", onCanPlay);
       video.removeEventListener("timeupdate", onTimeUpdate);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
@@ -338,6 +343,7 @@ export default function HeroSection() {
                 disablePictureInPicture
                 className="w-full h-full object-cover scale-x-[-1]"
                 aria-hidden
+                style={{ backgroundColor: "var(--color-slate-100, #f1f5f9)" }}
               />
             </div>
 
