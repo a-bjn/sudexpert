@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Play, Shield, Truck, Award, Sparkles, ChevronDown, Zap } from "lucide-react";
 
 // Floating Badge Component
@@ -76,26 +76,33 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const cursorX = useMotionValue(0);
-  const cursorY = useMotionValue(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Smooth spring physics for cursor following (reduced range for smoother effect)
-  const springConfig = { damping: 30, stiffness: 120 };
-  const imageX = useSpring(useTransform(cursorX, [0, 1], [-8, 8]), springConfig);
-  const imageY = useSpring(useTransform(cursorY, [0, 1], [-8, 8]), springConfig);
+  const LOOP_END_SECONDS = 5;
 
-  // Track mouse position
+  // Ensure hero video plays and loops at 7 seconds
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      cursorX.set((e.clientX - rect.left) / rect.width);
-      cursorY.set((e.clientY - rect.top) / rect.height);
+    const video = videoRef.current;
+    if (!video) return;
+    const play = () => {
+      video.play().catch(() => {});
     };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [cursorX, cursorY]);
+    play();
+    const onTimeUpdate = () => {
+      if (video.currentTime >= LOOP_END_SECONDS) {
+        video.currentTime = 0;
+      }
+    };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") play();
+    };
+    video.addEventListener("timeupdate", onTimeUpdate);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      video.removeEventListener("timeupdate", onTimeUpdate);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, []);
 
   // GSAP Animations
   useEffect(() => {
@@ -314,25 +321,25 @@ export default function HeroSection() {
             {/* Outer Glow */}
             <div className="absolute w-[90%] h-[90%] bg-gradient-to-br from-orange-400/20 to-amber-300/10 rounded-full blur-2xl animate-pulse-glow hidden lg:block" />
 
-            {/* Image Container with Blob Shape - full width on mobile */}
-            <motion.div
+            {/* Video – flipped horizontally, no overlays */}
+            <div
               ref={imageRef}
-              style={{ x: imageX, y: imageY }}
-              className="relative w-full max-w-md mx-auto lg:w-[85%] lg:max-w-none aspect-square overflow-hidden shadow-2xl animate-morph rounded-2xl lg:rounded-none"
+              className="relative w-full max-w-md mx-auto lg:w-[85%] lg:max-w-none aspect-square overflow-hidden rounded-2xl shadow-xl animate-morph"
             >
-              {/* Image */}
-              <motion.img
-                src="/hero-background.png"
-                alt="Professional welder at work"
-                className="w-full h-full object-cover"
-                initial={{ scale: 1.2 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
+              <video
+                ref={videoRef}
+                src="/welder-scene.mp4"
+                poster="/hero-background.png"
+                muted
+                loop
+                playsInline
+                autoPlay
+                preload="auto"
+                disablePictureInPicture
+                className="w-full h-full object-cover scale-x-[-1]"
+                aria-hidden
               />
-
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-orange-900/30 via-transparent to-transparent" />
-            </motion.div>
+            </div>
 
             {/* Floating Badges - hidden on mobile to avoid overflow */}
             <FloatingBadge

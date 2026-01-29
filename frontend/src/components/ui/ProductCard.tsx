@@ -37,11 +37,11 @@ function GridCard({ product }: { product: Product }) {
           y: -8,
           transition: { duration: 0.3, ease: "easeOut" }
         }}
-        className="relative overflow-hidden rounded-2xl
+        className="relative overflow-hidden rounded-xl
           bg-white/60 backdrop-blur-xl
           border border-white/80
-          shadow-[0_8px_32px_rgba(0,0,0,0.04),0_2px_8px_rgba(0,0,0,0.02)]
-          hover:shadow-[0_20px_40px_rgba(0,0,0,0.08),0_0_0_1px_rgba(251,146,60,0.15)]
+          shadow-[0_6px_24px_rgba(0,0,0,0.04),0_1px_6px_rgba(0,0,0,0.02)]
+          hover:shadow-[0_16px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(251,146,60,0.15)]
           transition-shadow duration-500"
       >
         {/* Top light reflection */}
@@ -51,7 +51,7 @@ function GridCard({ product }: { product: Product }) {
         <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-orange-50/20 pointer-events-none" />
 
         {/* Image Container */}
-        <div className="relative m-3 aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 to-slate-100/80">
+        <div className="relative m-2 aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-slate-50 to-slate-100/80">
           {/* Image highlight overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/30 z-10 pointer-events-none" />
 
@@ -69,8 +69,8 @@ function GridCard({ product }: { product: Product }) {
 
           {/* Category badge */}
           {product.category && (
-            <div className="absolute top-3 left-3 z-20">
-              <span className="px-2.5 py-1 text-xs font-medium rounded-full
+            <div className="absolute top-1.5 left-1.5 z-20">
+              <span className="px-2 py-0.5 text-[10px] font-medium rounded-full
                 bg-white/80 backdrop-blur-md text-slate-600
                 border border-white/50 shadow-sm">
                 {product.category.name}
@@ -80,21 +80,21 @@ function GridCard({ product }: { product: Product }) {
         </div>
 
         {/* Content */}
-        <div className="relative px-4 pb-4 pt-1">
-          <h3 className="text-base font-semibold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-1">
+        <div className="relative px-2.5 pb-2.5 pt-0.5">
+          <h3 className="text-sm font-semibold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-1">
             {product.name}
           </h3>
-          <p className="mt-1 text-sm text-slate-500 line-clamp-2 leading-relaxed">
+          <p className="mt-0.5 text-xs text-slate-500 line-clamp-2 leading-snug">
             {product.description}
           </p>
 
-          <div className="mt-4 flex items-center justify-between">
+          <div className="mt-2.5 flex items-center justify-between gap-1">
             {/* Price Badge */}
-            <div className="px-3 py-1.5 rounded-full
+            <div className="px-2 py-1 rounded-full
               bg-gradient-to-r from-orange-500/10 to-amber-500/10
               backdrop-blur-sm border border-orange-200/50">
-              <span className="text-lg font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                {product.price} <span className="text-sm font-semibold">RON</span>
+              <span className="text-sm font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                {product.price} <span className="text-xs font-semibold">RON</span>
               </span>
             </div>
 
@@ -106,19 +106,19 @@ function GridCard({ product }: { product: Product }) {
                 e.preventDefault();
                 // Add to cart logic
               }}
-              className="w-11 h-11 rounded-full flex items-center justify-center
+              className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0
                 bg-gradient-to-br from-orange-500 to-orange-600
                 shadow-lg shadow-orange-500/25
                 hover:shadow-orange-500/40
                 transition-shadow duration-300"
             >
-              <ShoppingCart className="w-5 h-5 text-white" />
+              <ShoppingCart className="w-4 h-4 text-white" />
             </motion.button>
           </div>
         </div>
 
         {/* Bottom edge highlight */}
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-200/40 to-transparent" />
       </motion.div>
     </Link>
   );
