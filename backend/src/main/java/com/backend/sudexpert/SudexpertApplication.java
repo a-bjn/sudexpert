@@ -11,8 +11,48 @@ public class SudexpertApplication {
 	public static void main(String[] args) {
 		// Load .env file before Spring Boot starts
 		loadDotenv();
-		
+		// Convert Fly.io DATABASE_URL (postgres://) to Spring datasource properties (jdbc:postgresql://)
+		applyFlyDatabaseUrl();
 		SpringApplication.run(SudexpertApplication.class, args);
+	}
+
+	/**
+	 * When running on Fly.io, postgres attach sets DATABASE_URL as postgres://...
+	 * Spring Boot needs jdbc:postgresql:// and separate username/password.
+	 */
+	private static void applyFlyDatabaseUrl() {
+		String databaseUrl = System.getenv("DATABASE_URL");
+		if (databaseUrl == null) {
+			databaseUrl = System.getProperty("DATABASE_URL");
+		}
+		if (databaseUrl == null || databaseUrl.startsWith("jdbc:")) {
+			return;
+		}
+		try {
+			// postgres://user:password@host:port/dbname -> jdbc:postgresql://host:port/dbname
+			String url = databaseUrl;
+			if (url.startsWith("postgres://")) {
+				url = "jdbc:postgresql://" + url.substring("postgres://".length());
+			} else if (url.startsWith("postgresql://")) {
+				url = "jdbc:" + url;
+			} else {
+				return;
+			}
+			// Parse user:password@host:port/db
+			int at = url.indexOf('@');
+			if (at == -1) return;
+			String userInfo = url.substring("jdbc:postgresql://".length(), at);
+			String hostPart = url.substring(at + 1);
+			String[] userPass = userInfo.split(":", 2);
+			String username = userPass.length > 0 ? userPass[0] : "postgres";
+			String password = userPass.length > 1 ? userPass[1] : "";
+			// JDBC URL is jdbc:postgresql://host:port/db (no user/pass in URL)
+			System.setProperty("spring.datasource.url", "jdbc:postgresql://" + hostPart);
+			System.setProperty("spring.datasource.username", username);
+			System.setProperty("spring.datasource.password", password);
+		} catch (Exception e) {
+			System.err.println("Could not parse DATABASE_URL: " + e.getMessage());
+		}
 	}
 
 	private static void loadDotenv() {
