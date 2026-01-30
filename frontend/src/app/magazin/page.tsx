@@ -3,8 +3,9 @@
 import { useEffect, useState, useMemo } from "react";
 import { api } from "@/lib/api";
 import ProductCard from "@/components/ui/ProductCard";
+import ShopSidebar from "@/components/ui/ShopSidebar";
 import { motion } from "framer-motion";
-import { Search, ChevronDown, Grid3X3, LayoutList, X, Sparkles, Package } from "lucide-react";
+import { Search, ChevronDown, Grid3X3, LayoutList, X, Sparkles, Package, Menu } from "lucide-react";
 
 type Category = {
   id: number;
@@ -35,6 +36,9 @@ export default function Magazin() {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("default");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
+  const [stockFilter, setStockFilter] = useState<"all" | "in-stock" | "low-stock">("all");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,6 +79,18 @@ export default function Magazin() {
       result = result.filter((p) => p.category?.id === selectedCategory);
     }
 
+    // Filter by price range
+    if (priceRange !== null) {
+      result = result.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1]);
+    }
+
+    // Filter by stock status
+    if (stockFilter === "in-stock") {
+      result = result.filter((p) => p.stock && p.stock > 5);
+    } else if (stockFilter === "low-stock") {
+      result = result.filter((p) => p.stock && p.stock > 0 && p.stock <= 5);
+    }
+
     // Sort products
     switch (sortBy) {
       case "price-asc":
@@ -100,15 +116,17 @@ export default function Magazin() {
     }
 
     return result;
-  }, [products, searchQuery, selectedCategory, sortBy]);
+  }, [products, searchQuery, selectedCategory, priceRange, stockFilter, sortBy]);
 
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedCategory(null);
     setSortBy("default");
+    setPriceRange(null);
+    setStockFilter("all");
   };
 
-  const hasActiveFilters = searchQuery || selectedCategory !== null || sortBy !== "default";
+  const hasActiveFilters = searchQuery || selectedCategory !== null || sortBy !== "default" || priceRange !== null || stockFilter !== "all";
 
   if (loading) {
     return (
@@ -181,208 +199,211 @@ export default function Magazin() {
                 Colecția noastră
               </motion.div>
             </div>
-            <h1 className="bebas-neue-regular text-4xl sm:text-5xl md:text-6xl text-slate-800 mb-3 sm:mb-4">
-              Magazin
-            </h1>
-            <p className="text-base sm:text-lg text-slate-500 max-w-2xl">
-              Echipamente profesionale de sudură pentru toate nevoile tale. Calitate garantată și prețuri competitive.
-            </p>
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <h1 className="bebas-neue-regular text-4xl sm:text-5xl md:text-6xl text-slate-800 mb-3 sm:mb-4">
+                  Magazin
+                </h1>
+                <p className="text-base sm:text-lg text-slate-500 max-w-2xl">
+                  Echipamente profesionale de sudură pentru toate nevoile tale. Calitate garantată și prețuri competitive.
+                </p>
+              </div>
+              {/* Mobile Filter Button */}
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="lg:hidden flex items-center gap-2 px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-50 transition-all shadow-sm min-h-[44px]"
+                aria-label="Deschide filtre"
+              >
+                <Menu className="w-5 h-5" />
+                <span className="text-sm font-medium">Filtre</span>
+              </button>
+            </div>
           </motion.div>
         </div>
       </div>
 
+      {/* Main Content with Sidebar */}
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
-        {/* Filters Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="sticky top-16 sm:top-20 lg:top-24 z-30 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-3 sm:py-4 bg-white/80 backdrop-blur-xl border-b border-slate-200"
-        >
-          <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 items-stretch lg:items-center justify-between">
-            {/* Search */}
-            <div className="relative flex-1 w-full min-w-0">
-              <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 pointer-events-none" />
-              <input
-                type="text"
-                placeholder="Caută produse..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-base placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all min-h-[44px]"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors -mr-2"
-                  aria-label="Șterge căutarea"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
+        <div className="flex gap-8">
+          {/* Sidebar */}
+          <ShopSidebar
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            priceRange={priceRange}
+            onPriceRangeChange={setPriceRange}
+            stockFilter={stockFilter}
+            onStockFilterChange={setStockFilter}
+            isOpen={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+          />
 
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full lg:w-auto">
-              {/* Category Filter */}
-              <div className="relative flex-1 sm:flex-initial min-w-0 sm:min-w-[160px]">
-                <select
-                  value={selectedCategory ?? ""}
-                  onChange={(e) => setSelectedCategory(e.target.value ? Number(e.target.value) : null)}
-                  className="w-full sm:w-auto appearance-none pl-4 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 cursor-pointer transition-all min-h-[44px] min-w-0"
-                >
-                  <option value="">Toate categoriile</option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+          {/* Main Content Area */}
+          <div className="flex-1 min-w-0">
+            {/* Filters Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="sticky top-16 sm:top-20 lg:top-24 z-30 py-3 sm:py-4 bg-white/80 backdrop-blur-xl border-b border-slate-200 -mx-4 px-4 sm:-mx-6 sm:px-6 mb-6"
+            >
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-between">
+                {/* Search */}
+                <div className="relative flex-1 w-full min-w-0">
+                  <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 pointer-events-none" />
+                  <input
+                    type="text"
+                    placeholder="Caută produse..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-base placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all min-h-[44px]"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors -mr-2"
+                      aria-label="Șterge căutarea"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                  {/* Sort */}
+                  <div className="relative flex-1 sm:flex-initial min-w-0 sm:min-w-[180px]">
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value as SortOption)}
+                      className="w-full sm:w-auto appearance-none pl-4 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 cursor-pointer transition-all min-h-[44px] min-w-0"
+                    >
+                      <option value="default">Sortare implicită</option>
+                      <option value="price-asc">Preț: Mic → Mare</option>
+                      <option value="price-desc">Preț: Mare → Mic</option>
+                      <option value="name-asc">Nume: A → Z</option>
+                      <option value="name-desc">Nume: Z → A</option>
+                      <option value="newest">Cele mai noi</option>
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+                  </div>
+
+                  {/* View Mode Toggle */}
+                  <div className="flex items-center bg-slate-100 rounded-xl p-1 flex-shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setViewMode("grid")}
+                      aria-label="Vizualizare grilă"
+                      className={`min-h-[44px] min-w-[44px] p-2.5 rounded-lg transition-all flex items-center justify-center ${
+                        viewMode === "grid"
+                          ? "bg-white text-orange-600 shadow-sm"
+                          : "text-slate-400 hover:text-slate-600"
+                      }`}
+                    >
+                      <Grid3X3 className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setViewMode("list")}
+                      aria-label="Vizualizare listă"
+                      className={`min-h-[44px] min-w-[44px] p-2.5 rounded-lg transition-all flex items-center justify-center ${
+                        viewMode === "list"
+                          ? "bg-white text-orange-600 shadow-sm"
+                          : "text-slate-400 hover:text-slate-600"
+                      }`}
+                    >
+                      <LayoutList className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
               </div>
+            </motion.div>
 
-              {/* Sort */}
-              <div className="relative flex-1 sm:flex-initial min-w-0 sm:min-w-[180px]">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="w-full sm:w-auto appearance-none pl-4 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 cursor-pointer transition-all min-h-[44px] min-w-0"
-                >
-                  <option value="default">Sortare implicită</option>
-                  <option value="price-asc">Preț: Mic → Mare</option>
-                  <option value="price-desc">Preț: Mare → Mic</option>
-                  <option value="name-asc">Nume: A → Z</option>
-                  <option value="name-desc">Nume: Z → A</option>
-                  <option value="newest">Cele mai noi</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
-              </div>
+            {/* Results Info */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="mb-6 flex items-center justify-between"
+            >
+              <p className="text-slate-500">
+                {filteredProducts.length === 0 ? (
+                  "Nu s-au găsit produse"
+                ) : (
+                  <>
+                    <span className="text-slate-800 font-semibold">{filteredProducts.length}</span>
+                    {filteredProducts.length === 1 ? " produs" : " produse"}
+                    {hasActiveFilters && " găsite"}
+                  </>
+                )}
+              </p>
+            </motion.div>
 
-              {/* View Mode Toggle */}
-              <div className="flex items-center bg-slate-100 rounded-xl p-1 flex-shrink-0">
-                <button
-                  type="button"
-                  onClick={() => setViewMode("grid")}
-                  aria-label="Vizualizare grilă"
-                  className={`min-h-[44px] min-w-[44px] p-2.5 rounded-lg transition-all flex items-center justify-center ${
-                    viewMode === "grid"
-                      ? "bg-white text-orange-600 shadow-sm"
-                      : "text-slate-400 hover:text-slate-600"
-                  }`}
-                >
-                  <Grid3X3 className="w-5 h-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setViewMode("list")}
-                  aria-label="Vizualizare listă"
-                  className={`min-h-[44px] min-w-[44px] p-2.5 rounded-lg transition-all flex items-center justify-center ${
-                    viewMode === "list"
-                      ? "bg-white text-orange-600 shadow-sm"
-                      : "text-slate-400 hover:text-slate-600"
-                  }`}
-                >
-                  <LayoutList className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Clear Filters */}
-              {hasActiveFilters && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  onClick={clearFilters}
-                  className="flex items-center gap-2 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-600 hover:bg-red-100 transition-all"
-                >
-                  <X className="w-4 h-4" />
-                  <span className="text-sm font-medium">Șterge filtrele</span>
-                </motion.button>
-              )}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Results Info */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-6 mb-8 flex items-center justify-between"
-        >
-          <p className="text-slate-500">
+            {/* Products Grid/List */}
             {filteredProducts.length === 0 ? (
-              "Nu s-au găsit produse"
-            ) : (
-              <>
-                <span className="text-slate-800 font-semibold">{filteredProducts.length}</span>
-                {filteredProducts.length === 1 ? " produs" : " produse"}
-                {hasActiveFilters && " găsite"}
-              </>
-            )}
-          </p>
-        </motion.div>
-
-        {/* Products Grid/List */}
-        {filteredProducts.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-16"
-          >
-            <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-slate-100 flex items-center justify-center">
-              <Package className="w-12 h-12 text-slate-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-slate-800 mb-2">Nu s-au găsit produse</h3>
-            <p className="text-slate-500 mb-6 max-w-md mx-auto">
-              Încearcă să modifici criteriile de căutare sau să ștergi filtrele pentru a vedea mai multe produse.
-            </p>
-            {hasActiveFilters && (
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={clearFilters}
-                className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
-              >
-                Șterge toate filtrele
-              </motion.button>
-            )}
-          </motion.div>
-        ) : viewMode === "grid" ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-          >
-            {filteredProducts.map((product, index) => (
               <motion.div
-                key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
+                className="text-center py-16"
               >
-                <ProductCard product={product} />
+                <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-slate-100 flex items-center justify-center">
+                  <Package className="w-12 h-12 text-slate-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-800 mb-2">Nu s-au găsit produse</h3>
+                <p className="text-slate-500 mb-6 max-w-md mx-auto">
+                  Încearcă să modifici criteriile de căutare sau să ștergi filtrele pentru a vedea mai multe produse.
+                </p>
+                {hasActiveFilters && (
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={clearFilters}
+                    className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
+                  >
+                    Șterge toate filtrele
+                  </motion.button>
+                )}
               </motion.div>
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col gap-4"
-          >
-            {filteredProducts.map((product, index) => (
+            ) : viewMode === "grid" ? (
               <motion.div
-                key={product.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.05 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5"
               >
-                <ProductCard product={product} viewMode="list" />
+                {filteredProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <ProductCard product={product} />
+                  </motion.div>
+                ))}
               </motion.div>
-            ))}
-          </motion.div>
-        )}
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="flex flex-col gap-4"
+              >
+                {filteredProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <ProductCard product={product} viewMode="list" />
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
