@@ -1,16 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import {
-  Accordion,
-  AccordionItem,
-  Button,
-  Listbox,
-  ListboxItem,
-  Card,
-  CardBody,
-} from "@heroui/react";
-import {
+  ChevronDown,
   ChevronRight,
   Tag,
   DollarSign,
@@ -47,6 +40,19 @@ export default function ShopSidebar({
   isOpen = true,
   onClose,
 }: ShopSidebarProps) {
+  const [expandedSections, setExpandedSections] = useState({
+    categories: true,
+    price: true,
+    stock: true,
+  });
+
+  const toggleSection = (section: keyof typeof expandedSections) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
   const priceRanges = [
     { label: "Sub 100 RON", value: [0, 100] as [number, number] },
     { label: "100 - 500 RON", value: [100, 500] as [number, number] },
@@ -104,201 +110,267 @@ export default function ShopSidebar({
               <h2 className="bebas-neue-regular text-2xl text-slate-800">Filtrare</h2>
             </div>
             {onClose && (
-              <Button
-                isIconOnly
-                variant="light"
-                onPress={onClose}
-                className="lg:hidden"
+              <button
+                type="button"
+                onClick={onClose}
+                className="lg:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
                 aria-label="Închide meniul"
               >
                 <X className="w-5 h-5 text-slate-600" />
-              </Button>
+              </button>
             )}
           </div>
 
           {/* Clear Filters */}
           {hasActiveFilters && (
-            <motion.div
+            <motion.button
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
+              onClick={clearAllFilters}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-50 hover:bg-red-100 border border-red-200 rounded-xl text-red-600 text-sm font-medium transition-all"
             >
-              <Button
-                color="danger"
-                variant="flat"
-                onPress={clearAllFilters}
-                startContent={<X className="w-4 h-4" />}
-                className="w-full"
-              >
-                Șterge toate filtrele
-              </Button>
-            </motion.div>
+              <X className="w-4 h-4" />
+              Șterge toate filtrele
+            </motion.button>
           )}
 
-          {/* Accordion for Filters */}
-          <Accordion
-            defaultExpandedKeys={["categories", "price", "stock"]}
-            selectionMode="multiple"
-            variant="splitted"
-            className="px-0"
-          >
-            {/* Categories Section */}
-            <AccordionItem
-              key="categories"
-              aria-label="Categorii"
-              startContent={<Tag className="w-5 h-5 text-orange-600" />}
-              title={<span className="font-semibold text-slate-800">Categorii</span>}
-              classNames={{
-                base: "shadow-none border border-slate-200",
-                title: "text-slate-800",
-                trigger: "hover:bg-slate-50",
-                content: "pt-0",
-              }}
+          {/* Categories Section */}
+          <div className="space-y-3">
+            <button
+              type="button"
+              onClick={() => toggleSection("categories")}
+              className="w-full flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors group"
             >
-              <Listbox
-                aria-label="Categorii produse"
-                variant="flat"
-                selectionMode="single"
-                selectedKeys={selectedCategory !== null ? [String(selectedCategory)] : ["all"]}
-                onSelectionChange={(keys) => {
-                  const key = Array.from(keys)[0] as string;
-                  onCategoryChange(key === "all" ? null : Number(key));
-                }}
-                classNames={{
-                  list: "gap-1",
-                }}
-                items={[
-                  { key: "all", label: "Toate categoriile" },
-                  ...categories.map((c) => ({ key: String(c.id), label: c.name })),
-                ]}
+              <div className="flex items-center gap-3">
+                <Tag className="w-5 h-5 text-slate-600 group-hover:text-orange-600 transition-colors" />
+                <span className="font-semibold text-slate-800">Categorii</span>
+              </div>
+              <motion.div
+                animate={{ rotate: expandedSections.categories ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
               >
-                {(item) => (
-                  <ListboxItem
-                    key={item.key}
-                    className="data-[selected=true]:bg-orange-50 data-[selected=true]:text-orange-700"
-                  >
-                    {item.label}
-                  </ListboxItem>
-                )}
-              </Listbox>
-            </AccordionItem>
+                <ChevronDown className="w-5 h-5 text-slate-400" />
+              </motion.div>
+            </button>
 
-            {/* Price Range Section */}
-            <AccordionItem
-              key="price"
-              aria-label="Preț"
-              startContent={<DollarSign className="w-5 h-5 text-orange-600" />}
-              title={<span className="font-semibold text-slate-800">Preț</span>}
-              classNames={{
-                base: "shadow-none border border-slate-200",
-                title: "text-slate-800",
-                trigger: "hover:bg-slate-50",
-                content: "pt-0",
-              }}
+            <AnimatePresence>
+              {expandedSections.categories && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className="pl-4 pr-2 space-y-1">
+                    {/* All Categories Option */}
+                    <button
+                      type="button"
+                      onClick={() => onCategoryChange(null)}
+                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all ${
+                        selectedCategory === null
+                          ? "bg-orange-50 text-orange-700 font-semibold"
+                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                      }`}
+                    >
+                      <span>Toate categoriile</span>
+                      {selectedCategory === null && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2 h-2 bg-orange-500 rounded-full"
+                        />
+                      )}
+                    </button>
+
+                    {/* Category List */}
+                    {categories.map((category) => (
+                      <button
+                        key={category.id}
+                        type="button"
+                        onClick={() => onCategoryChange(category.id)}
+                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all ${
+                          selectedCategory === category.id
+                            ? "bg-orange-50 text-orange-700 font-semibold"
+                            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                        }`}
+                      >
+                        <span>{category.name}</span>
+                        {selectedCategory === category.id && (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="w-2 h-2 bg-orange-500 rounded-full"
+                          />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Price Range Section */}
+          <div className="space-y-3 pt-4 border-t border-slate-100">
+            <button
+              type="button"
+              onClick={() => toggleSection("price")}
+              className="w-full flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors group"
             >
-              <Listbox
-                aria-label="Intervale de preț"
-                variant="flat"
-                selectionMode="single"
-                selectedKeys={
-                  priceRange !== null
-                    ? [`${priceRange[0]}-${priceRange[1]}`]
-                    : ["all"]
-                }
-                onSelectionChange={(keys) => {
-                  const key = Array.from(keys)[0] as string;
-                  if (key === "all") {
-                    onPriceRangeChange(null);
-                  } else {
-                    const range = priceRanges.find(
-                      (r) => `${r.value[0]}-${r.value[1]}` === key
-                    );
-                    if (range) onPriceRangeChange(range.value);
-                  }
-                }}
-                classNames={{
-                  list: "gap-1",
-                }}
-                items={[
-                  { key: "all", label: "Toate prețurile" },
-                  ...priceRanges.map((r) => ({
-                    key: `${r.value[0]}-${r.value[1]}`,
-                    label: r.label,
-                  })),
-                ]}
+              <div className="flex items-center gap-3">
+                <DollarSign className="w-5 h-5 text-slate-600 group-hover:text-orange-600 transition-colors" />
+                <span className="font-semibold text-slate-800">Preț</span>
+              </div>
+              <motion.div
+                animate={{ rotate: expandedSections.price ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
               >
-                {(item) => (
-                  <ListboxItem
-                    key={item.key}
-                    className="data-[selected=true]:bg-orange-50 data-[selected=true]:text-orange-700"
-                  >
-                    {item.label}
-                  </ListboxItem>
-                )}
-              </Listbox>
-            </AccordionItem>
+                <ChevronDown className="w-5 h-5 text-slate-400" />
+              </motion.div>
+            </button>
 
-            {/* Stock Status Section */}
-            <AccordionItem
-              key="stock"
-              aria-label="Disponibilitate"
-              startContent={<Package className="w-5 h-5 text-orange-600" />}
-              title={<span className="font-semibold text-slate-800">Disponibilitate</span>}
-              classNames={{
-                base: "shadow-none border border-slate-200",
-                title: "text-slate-800",
-                trigger: "hover:bg-slate-50",
-                content: "pt-0",
-              }}
+            <AnimatePresence>
+              {expandedSections.price && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className="pl-4 pr-2 space-y-1">
+                    {/* All Prices Option */}
+                    <button
+                      type="button"
+                      onClick={() => onPriceRangeChange(null)}
+                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all ${
+                        priceRange === null
+                          ? "bg-orange-50 text-orange-700 font-semibold"
+                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                      }`}
+                    >
+                      <span>Toate prețurile</span>
+                      {priceRange === null && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2 h-2 bg-orange-500 rounded-full"
+                        />
+                      )}
+                    </button>
+
+                    {/* Price Range List */}
+                    {priceRanges.map((range, index) => {
+                      const isSelected =
+                        priceRange &&
+                        priceRange[0] === range.value[0] &&
+                        priceRange[1] === range.value[1];
+
+                      return (
+                        <button
+                          key={index}
+                          type="button"
+                          onClick={() => onPriceRangeChange(range.value)}
+                          className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all ${
+                            isSelected
+                              ? "bg-orange-50 text-orange-700 font-semibold"
+                              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                          }`}
+                        >
+                          <span>{range.label}</span>
+                          {isSelected && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="w-2 h-2 bg-orange-500 rounded-full"
+                            />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Stock Status Section */}
+          <div className="space-y-3 pt-4 border-t border-slate-100">
+            <button
+              type="button"
+              onClick={() => toggleSection("stock")}
+              className="w-full flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors group"
             >
-              <Listbox
-                aria-label="Filtre disponibilitate"
-                variant="flat"
-                selectionMode="single"
-                selectedKeys={[stockFilter]}
-                onSelectionChange={(keys) => {
-                  const key = Array.from(keys)[0] as "all" | "in-stock" | "low-stock";
-                  onStockFilterChange(key);
-                }}
-                classNames={{
-                  list: "gap-1",
-                }}
-                items={stockOptions.map((o) => ({ key: o.value, label: o.label }))}
+              <div className="flex items-center gap-3">
+                <Package className="w-5 h-5 text-slate-600 group-hover:text-orange-600 transition-colors" />
+                <span className="font-semibold text-slate-800">Disponibilitate</span>
+              </div>
+              <motion.div
+                animate={{ rotate: expandedSections.stock ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
               >
-                {(item) => (
-                  <ListboxItem
-                    key={item.key}
-                    className="data-[selected=true]:bg-orange-50 data-[selected=true]:text-orange-700"
-                  >
-                    {item.label}
-                  </ListboxItem>
-                )}
-              </Listbox>
-            </AccordionItem>
-          </Accordion>
+                <ChevronDown className="w-5 h-5 text-slate-400" />
+              </motion.div>
+            </button>
 
-          {/* Info Card */}
+            <AnimatePresence>
+              {expandedSections.stock && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className="pl-4 pr-2 space-y-1">
+                    {stockOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => onStockFilterChange(option.value)}
+                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all ${
+                          stockFilter === option.value
+                            ? "bg-orange-50 text-orange-700 font-semibold"
+                            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                        }`}
+                      >
+                        <span>{option.label}</span>
+                        {stockFilter === option.value && (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="w-2 h-2 bg-orange-500 rounded-full"
+                          />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Info Box */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
+            className="mt-8 p-4 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100 rounded-xl"
           >
-            <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100">
-              <CardBody className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-white rounded-lg shadow-sm">
-                    <ChevronRight className="w-4 h-4 text-orange-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-800 mb-1">
-                      Ai nevoie de ajutor?
-                    </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Contactează-ne pentru consultanță gratuită în alegerea produselor potrivite.
-                    </p>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
+            <div className="flex items-start gap-3">
+              <div className="p-2 bg-white rounded-lg shadow-sm">
+                <ChevronRight className="w-4 h-4 text-orange-600" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-slate-800 mb-1">
+                  Ai nevoie de ajutor?
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Contactează-ne pentru consultanță gratuită în alegerea produselor potrivite.
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </motion.aside>
