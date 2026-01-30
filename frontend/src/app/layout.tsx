@@ -4,6 +4,7 @@ import { Roboto, Bebas_Neue } from "next/font/google";
 import Footer from "@/components/footer/footer";
 import { CartProvider } from "@/lib/cart-context";
 import { AuthProvider } from "@/lib/auth-context";
+import { HeroUIProvider } from "@heroui/react";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -42,13 +43,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ro">
       <body className={`${roboto.variable} ${bebasNeue.variable} antialiased`}>
-        <CartProvider>
-          <AuthProvider>
-            <Header />
-            {children}
-            <Footer />
-          </AuthProvider>
-        </CartProvider>
+        <HeroUIProvider>
+          <CartProvider>
+            <AuthProvider>
+              <Header />
+              {children}
+              <Footer />
+            </AuthProvider>
+          </CartProvider>
+        </HeroUIProvider>
       </body>
     </html>
   );
