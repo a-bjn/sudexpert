@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ShoppingCart } from "lucide-react";
-import { getProductPlaceholder } from "@/lib/product-placeholders";
+import { ShoppingCart, Package } from "lucide-react";
 
 type Product = {
   id: number;
@@ -51,11 +50,11 @@ function GridCard({ product }: { product: Product }) {
         <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-orange-50/20 pointer-events-none" />
 
         {/* Image Container */}
-        <div className="relative m-2 aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-slate-50 to-slate-100/80">
+        <div className="relative m-3 aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-slate-100 to-slate-200/80">
           {/* Image highlight overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/30 z-10 pointer-events-none" />
 
-          {product.imageUrl ? (
+          {product.imageUrl && !product.imageUrl.includes("placeholder") ? (
             <motion.img
               src={product.imageUrl}
               alt={product.name}
@@ -64,7 +63,9 @@ function GridCard({ product }: { product: Product }) {
               transition={{ duration: 0.5, ease: "easeOut" }}
             />
           ) : (
-            <PlaceholderImage category={product.category?.name} />
+            <div className="h-full w-full flex items-center justify-center text-slate-400">
+              <Package className="w-1/3 h-1/3" strokeWidth={1.25} />
+            </div>
           )}
 
           {/* Category badge */}
@@ -80,20 +81,20 @@ function GridCard({ product }: { product: Product }) {
         </div>
 
         {/* Content */}
-        <div className="relative px-2.5 pb-2.5 pt-0.5">
-          <h3 className="text-sm font-semibold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-1">
+        <div className="relative px-3 pb-3 pt-1">
+          <h3 className="text-base font-semibold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-2">
             {product.name}
           </h3>
-          <p className="mt-0.5 text-xs text-slate-500 line-clamp-2 leading-snug">
+          <p className="mt-1 text-sm text-slate-500 line-clamp-2 leading-snug">
             {product.description}
           </p>
 
-          <div className="mt-2.5 flex items-center justify-between gap-1">
+          <div className="mt-3 flex items-center justify-between gap-2">
             {/* Price Badge */}
-            <div className="px-2 py-1 rounded-full
+            <div className="px-2.5 py-1.5 rounded-full
               bg-gradient-to-r from-orange-500/10 to-amber-500/10
               backdrop-blur-sm border border-orange-200/50">
-              <span className="text-sm font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              <span className="text-base font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                 {product.price} <span className="text-xs font-semibold">RON</span>
               </span>
             </div>
@@ -106,13 +107,13 @@ function GridCard({ product }: { product: Product }) {
                 e.preventDefault();
                 // Add to cart logic
               }}
-              className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0
+              className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0
                 bg-gradient-to-br from-orange-500 to-orange-600
                 shadow-lg shadow-orange-500/25
                 hover:shadow-orange-500/40
                 transition-shadow duration-300"
             >
-              <ShoppingCart className="w-4 h-4 text-white" />
+              <ShoppingCart className="w-5 h-5 text-white" />
             </motion.button>
           </div>
         </div>
@@ -124,7 +125,7 @@ function GridCard({ product }: { product: Product }) {
   );
 }
 
-// List View - Liquid Glass Card
+// List View
 function ListCard({ product }: { product: Product }) {
   return (
     <Link href={`/magazin/${product.id}`} className="group block">
@@ -148,11 +149,11 @@ function ListCard({ product }: { product: Product }) {
         <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-orange-50/10 pointer-events-none" />
 
         {/* Image Container */}
-        <div className="relative m-3 sm:m-4 w-full sm:w-40 h-40 sm:h-auto sm:aspect-square flex-shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 to-slate-100/80">
+        <div className="relative m-3 sm:m-4 w-full sm:w-44 h-44 sm:h-auto sm:aspect-square flex-shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-100 to-slate-200/80">
           {/* Image highlight overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/20 z-10 pointer-events-none" />
 
-          {product.imageUrl ? (
+          {product.imageUrl && !product.imageUrl.includes("placeholder") ? (
             <motion.img
               src={product.imageUrl}
               alt={product.name}
@@ -161,7 +162,9 @@ function ListCard({ product }: { product: Product }) {
               transition={{ duration: 0.4, ease: "easeOut" }}
             />
           ) : (
-            <PlaceholderImage category={product.category?.name} />
+            <div className="h-full w-full flex items-center justify-center text-slate-400">
+              <Package className="w-1/4 h-1/4" strokeWidth={1.25} />
+            </div>
           )}
 
           {/* Category badge */}
@@ -239,15 +242,5 @@ function ListCard({ product }: { product: Product }) {
         <div className="absolute left-0 inset-y-0 w-px bg-gradient-to-b from-transparent via-orange-300/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </motion.div>
     </Link>
-  );
-}
-
-// Placeholder Image Component
-function PlaceholderImage({ category }: { category?: string }) {
-  const Placeholder = getProductPlaceholder(category);
-  return (
-    <div className="h-full w-full">
-      <Placeholder className="w-full h-full" />
-    </div>
   );
 }
