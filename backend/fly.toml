@@ -1,5 +1,5 @@
 # Fly.io App Configuration for Sudexpert Backend
-app = "sudexpert-api-backend"
+app = "sudexpert-backend"
 primary_region = "iad"
 
 [build]
@@ -8,6 +8,7 @@ primary_region = "iad"
 [env]
   PORT = "8080"
   JAVA_OPTS = "-Xmx512m -Xms256m"
+  SPRING_PROFILES_ACTIVE = "postgres"
 
 [[services]]
   protocol = "tcp"
