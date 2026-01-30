@@ -192,50 +192,6 @@ export default function Magazin() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-          {/* Left sidebar - Category navigation */}
-          <motion.aside
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.15 }}
-            className="lg:w-56 flex-shrink-0"
-          >
-            <div className="sticky top-24 lg:top-28 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-4">
-              <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2">
-                Categorii
-              </h3>
-              <nav className="flex flex-row lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-2 px-2 lg:mx-0 lg:px-0">
-                <button
-                  type="button"
-                  onClick={() => setSelectedCategory(null)}
-                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-left text-sm font-medium whitespace-nowrap transition-colors ${
-                    selectedCategory === null
-                      ? "bg-orange-500 text-white shadow-md shadow-orange-500/25"
-                      : "text-slate-600 hover:bg-slate-100"
-                  }`}
-                >
-                  Toate
-                </button>
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => setSelectedCategory(cat.id)}
-                    className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-left text-sm font-medium whitespace-nowrap transition-colors ${
-                      selectedCategory === cat.id
-                        ? "bg-orange-500 text-white shadow-md shadow-orange-500/25"
-                        : "text-slate-600 hover:bg-slate-100"
-                    }`}
-                  >
-                    {cat.name}
-                  </button>
-                ))}
-              </nav>
-            </div>
-          </motion.aside>
-
-          {/* Main content: filters + products */}
-          <div className="flex-1 min-w-0">
         {/* Filters Bar */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -267,6 +223,23 @@ export default function Magazin() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full lg:w-auto">
+              {/* Category Filter */}
+              <div className="relative flex-1 sm:flex-initial min-w-0 sm:min-w-[160px]">
+                <select
+                  value={selectedCategory ?? ""}
+                  onChange={(e) => setSelectedCategory(e.target.value ? Number(e.target.value) : null)}
+                  className="w-full sm:w-auto appearance-none pl-4 pr-10 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 cursor-pointer transition-all min-h-[44px] min-w-0"
+                >
+                  <option value="">Toate categoriile</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+              </div>
+
               {/* Sort */}
               <div className="relative flex-1 sm:flex-initial min-w-0 sm:min-w-[180px]">
                 <select
@@ -410,8 +383,6 @@ export default function Magazin() {
             ))}
           </motion.div>
         )}
-          </div>
-        </div>
       </div>
     </div>
   );
