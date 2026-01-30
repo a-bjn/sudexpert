@@ -47,11 +47,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Allow localhost for development and Vercel domain for production
-        configuration.setAllowedOrigins(Arrays.asList(
+        // Allowed origins: localhost, Vercel, and production domain
+        configuration.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:3000",
             "https://sudura.vercel.app",
-            "https://*.vercel.app"
+            "https://*.vercel.app",
+            "https://www.sudexpertbraila.com",
+            "https://sudexpertbraila.com"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
