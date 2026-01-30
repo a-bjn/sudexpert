@@ -166,21 +166,19 @@ export default function ShopSidebar({
                 classNames={{
                   list: "gap-1",
                 }}
+                items={[
+                  { key: "all", label: "Toate categoriile" },
+                  ...categories.map((c) => ({ key: String(c.id), label: c.name })),
+                ]}
               >
-                <ListboxItem
-                  key="all"
-                  className="data-[selected=true]:bg-orange-50 data-[selected=true]:text-orange-700"
-                >
-                  Toate categoriile
-                </ListboxItem>
-                {categories.map((category) => (
+                {(item) => (
                   <ListboxItem
-                    key={String(category.id)}
+                    key={item.key}
                     className="data-[selected=true]:bg-orange-50 data-[selected=true]:text-orange-700"
                   >
-                    {category.name}
+                    {item.label}
                   </ListboxItem>
-                ))}
+                )}
               </Listbox>
             </AccordionItem>
 
@@ -220,21 +218,22 @@ export default function ShopSidebar({
                 classNames={{
                   list: "gap-1",
                 }}
+                items={[
+                  { key: "all", label: "Toate prețurile" },
+                  ...priceRanges.map((r) => ({
+                    key: `${r.value[0]}-${r.value[1]}`,
+                    label: r.label,
+                  })),
+                ]}
               >
-                <ListboxItem
-                  key="all"
-                  className="data-[selected=true]:bg-orange-50 data-[selected=true]:text-orange-700"
-                >
-                  Toate prețurile
-                </ListboxItem>
-                {priceRanges.map((range, index) => (
+                {(item) => (
                   <ListboxItem
-                    key={`${range.value[0]}-${range.value[1]}`}
+                    key={item.key}
                     className="data-[selected=true]:bg-orange-50 data-[selected=true]:text-orange-700"
                   >
-                    {range.label}
+                    {item.label}
                   </ListboxItem>
-                ))}
+                )}
               </Listbox>
             </AccordionItem>
 
@@ -263,15 +262,16 @@ export default function ShopSidebar({
                 classNames={{
                   list: "gap-1",
                 }}
+                items={stockOptions.map((o) => ({ key: o.value, label: o.label }))}
               >
-                {stockOptions.map((option) => (
+                {(item) => (
                   <ListboxItem
-                    key={option.value}
+                    key={item.key}
                     className="data-[selected=true]:bg-orange-50 data-[selected=true]:text-orange-700"
                   >
-                    {option.label}
+                    {item.label}
                   </ListboxItem>
-                ))}
+                )}
               </Listbox>
             </AccordionItem>
           </Accordion>
