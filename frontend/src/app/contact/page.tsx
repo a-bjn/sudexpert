@@ -55,9 +55,9 @@ export default function Contact() {
     {
       icon: Phone,
       title: "Telefon",
-      content: "+40 722 123 456",
+      content: "0724 207 132",
       subContent: "Luni - Vineri: 8:00 - 17:00",
-      href: "tel:+40722123456",
+      href: "tel:+40724207132",
     },
     {
       icon: Mail,
