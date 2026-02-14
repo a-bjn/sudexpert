@@ -162,7 +162,7 @@ export default function Magazin() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
+            className="px-6 py-3 bg-orange-500 text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
           >
             Încearcă din nou
           </motion.button>
@@ -359,7 +359,7 @@ export default function Magazin() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={clearFilters}
-                    className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
+                    className="px-6 py-3 bg-orange-500 text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
                   >
                     Șterge toate filtrele
                   </motion.button>

@@ -92,9 +92,9 @@ function GridCard({ product }: { product: Product }) {
           <div className="mt-3 flex items-center justify-between gap-2">
             {/* Price Badge */}
             <div className="px-2.5 py-1.5 rounded-full
-              bg-gradient-to-r from-orange-500/10 to-amber-500/10
+              bg-orange-50
               backdrop-blur-sm border border-orange-200/50">
-              <span className="text-base font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              <span className="text-base font-bold text-orange-600">
                 {product.price} <span className="text-xs font-semibold">RON</span>
               </span>
             </div>
@@ -108,7 +108,7 @@ function GridCard({ product }: { product: Product }) {
                 // Add to cart logic
               }}
               className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0
-                bg-gradient-to-br from-orange-500 to-orange-600
+                bg-orange-500
                 shadow-lg shadow-orange-500/25
                 hover:shadow-orange-500/40
                 transition-shadow duration-300"
@@ -196,7 +196,7 @@ function ListCard({ product }: { product: Product }) {
                   // Add to cart logic
                 }}
                 className="hidden sm:flex w-10 h-10 rounded-full items-center justify-center flex-shrink-0
-                  bg-gradient-to-br from-orange-500 to-orange-600
+                  bg-orange-500
                   shadow-lg shadow-orange-500/25
                   hover:shadow-orange-500/40
                   transition-shadow duration-300"
@@ -212,9 +212,9 @@ function ListCard({ product }: { product: Product }) {
           <div className="mt-4 flex items-center justify-between">
             {/* Price Badge */}
             <div className="px-4 py-2 rounded-full
-              bg-gradient-to-r from-orange-500/10 to-amber-500/10
+              bg-orange-50
               backdrop-blur-sm border border-orange-200/50">
-              <span className="text-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold text-orange-600">
                 {product.price} <span className="text-sm font-semibold">RON</span>
               </span>
             </div>
@@ -228,7 +228,7 @@ function ListCard({ product }: { product: Product }) {
                 // Add to cart logic
               }}
               className="sm:hidden w-11 h-11 rounded-full flex items-center justify-center
-                bg-gradient-to-br from-orange-500 to-orange-600
+                bg-orange-500
                 shadow-lg shadow-orange-500/25
                 hover:shadow-orange-500/40
                 transition-shadow duration-300"

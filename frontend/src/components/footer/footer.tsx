@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <footer className="relative bg-slate-50 border-t border-slate-200">
       {/* Decorative top border gradient */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-orange-500" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-12 sm:pt-14 md:pt-16 pb-6 sm:pb-8 lg:px-8">
         {/* Main Footer Content */}

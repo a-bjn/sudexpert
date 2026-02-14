@@ -39,37 +39,37 @@ export default function Despre() {
       icon: Award,
       title: "Calitate Superioară",
       description: "Oferim doar echipamente și consumabile de la producători de top, garantând durabilitate și performanță excepțională în fiecare produs.",
-      color: "from-orange-500 to-amber-500",
+      color: "bg-orange-500",
     },
     {
       icon: Truck,
       title: "Livrare Rapidă",
       description: "Înțelegem importanța timpului tău. Asigurăm livrare rapidă în toată țara pentru a-ți menține proiectele în mișcare fără întreruperi.",
-      color: "from-blue-500 to-cyan-500",
+      color: "bg-blue-500",
     },
     {
       icon: Zap,
       title: "Expertiză Tehnică",
       description: "Echipa noastră de specialiști este pregătită să ofere consultanță tehnică pentru a alege soluția optimă pentru nevoile tale specifice.",
-      color: "from-emerald-500 to-green-500",
+      color: "bg-emerald-500",
     },
     {
       icon: Headphones,
       title: "Suport Dedicat",
       description: "Suntem alături de tine înainte, în timpul și după achiziție. Echipa noastră de suport este mereu disponibilă pentru orice întrebare.",
-      color: "from-purple-500 to-violet-500",
+      color: "bg-purple-500",
     },
     {
       icon: Shield,
       title: "Garanție Extinsă",
       description: "Toate produsele noastre beneficiază de garanție extinsă și politică de returnare flexibilă pentru liniștea ta.",
-      color: "from-rose-500 to-pink-500",
+      color: "bg-rose-500",
     },
     {
       icon: Target,
       title: "Prețuri Competitive",
       description: "Oferim cele mai bune prețuri de pe piață fără a face compromisuri în ceea ce privește calitatea produselor și serviciilor.",
-      color: "from-amber-500 to-yellow-500",
+      color: "bg-amber-500",
     },
   ];
 
@@ -190,7 +190,7 @@ export default function Despre() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
+                  className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
                 >
                   Contactează-ne
                   <ArrowRight className="w-5 h-5" />
@@ -276,7 +276,7 @@ export default function Despre() {
                 className="group"
               >
                 <div className="h-full bg-white/80 backdrop-blur-xl rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${value.color} flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
+                  <div className={`w-14 h-14 rounded-xl ${value.color} flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
                     <value.icon className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 mb-3">{value.title}</h3>
@@ -364,7 +364,7 @@ export default function Despre() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
+                    className="px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all"
                   >
                     Vezi Produsele
                   </motion.button>

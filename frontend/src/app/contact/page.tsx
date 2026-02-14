@@ -102,7 +102,7 @@ export default function Contact() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg shadow-orange-500/30 mb-4 sm:mb-6"
+          className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-orange-500 shadow-lg shadow-orange-500/30 mb-4 sm:mb-6"
         >
           <Building2 className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
         </motion.div>
@@ -135,7 +135,7 @@ export default function Contact() {
                   <a href={info.href} target={info.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
                     <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-lg hover:border-orange-200 transition-all">
                       <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-100 to-amber-100 flex items-center justify-center group-hover:from-orange-500 group-hover:to-amber-500 transition-all">
+                        <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center group-hover:bg-orange-500 transition-all">
                           <info.icon className="w-6 h-6 text-orange-600 group-hover:text-white transition-colors" />
                         </div>
                         <div>
@@ -149,7 +149,7 @@ export default function Contact() {
                 ) : (
                   <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-slate-100 shadow-sm">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-100 to-amber-100 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center">
                         <info.icon className="w-6 h-6 text-orange-600" />
                       </div>
                       <div>
@@ -204,7 +204,7 @@ export default function Contact() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setSuccess(false)}
-                    className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30"
+                    className="px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30"
                   >
                     Trimite Alt Mesaj
                   </motion.button>
@@ -339,7 +339,7 @@ export default function Contact() {
                       whileTap={{ scale: 0.99 }}
                       type="submit"
                       disabled={loading}
-                      className="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="w-full py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       {loading ? (
                         <>

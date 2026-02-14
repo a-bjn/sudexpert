@@ -139,7 +139,7 @@ export default function ProductDetails() {
           <p className="text-slate-600 mb-8 leading-relaxed">{error || "Acest produs nu există sau a fost șters."}</p>
           <Link
             href="/magazin"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-orange-500/30 hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-orange-500/30 hover:shadow-xl"
           >
             <ArrowLeft className="w-5 h-5" />
             Înapoi la magazin
@@ -232,7 +232,7 @@ export default function ProductDetails() {
                     <motion.span
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="px-4 py-2 text-xs font-bold bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full flex items-center gap-2 shadow-lg shadow-orange-500/30"
+                      className="px-4 py-2 text-xs font-bold bg-orange-500 text-white rounded-full flex items-center gap-2 shadow-lg shadow-orange-500/30"
                     >
                       <Sparkles className="w-4 h-4" />
                       NOU
@@ -375,7 +375,7 @@ export default function ProductDetails() {
                     ? "bg-slate-200 text-slate-400 cursor-not-allowed"
                     : justAdded
                     ? "bg-emerald-500 text-white shadow-xl shadow-emerald-500/30"
-                    : "bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40"
+                    : "bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40"
                 }`}
               >
                 {justAdded ? (

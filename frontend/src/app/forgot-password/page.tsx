@@ -89,7 +89,7 @@ export default function ForgotPassword() {
                 <motion.button
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
-                  className="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30"
+                  className="w-full py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30/30"
                 >
                   Înapoi la Autentificare
                 </motion.button>
@@ -146,7 +146,7 @@ export default function ForgotPassword() {
                   whileTap={{ scale: 0.99 }}
                   type="submit"
                   disabled={loading}
-                  className="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30/30 hover:shadow-xl hover:shadow-orange-500/30/40 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
