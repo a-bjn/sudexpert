@@ -21,6 +21,14 @@
 
 html {
   overflow-x: hidden;
+  /* Scale up on large viewports (1920px+) so 2560x1440 doesn’t look smaller than 1080p */
+  font-size: 14px;
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: min(18px, calc(15px + (100vw - 1920px) * 0.005));
+  }
 }
 
 body {
@@ -75,6 +83,33 @@ body {
 @keyframes rotate-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* Hero orb animations - GPU-friendly, replaces GSAP */
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, -30px) scale(1.2); }
+}
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-40px, 40px) scale(0.9); }
+}
+@keyframes orb-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, 50px) scale(1.1); }
+}
+.animate-orb-1 { animation: orb-float-1 8s ease-in-out infinite; }
+.animate-orb-2 { animation: orb-float-2 10s ease-in-out infinite; }
+.animate-orb-3 { animation: orb-float-3 12s ease-in-out infinite; }
+
+/* Right-to-left infinite marquee (e.g. partner logos) */
+@keyframes marquee-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-rtl {
+  animation: marquee-rtl 25s linear infinite;
 }
 
 @keyframes scale-pulse {

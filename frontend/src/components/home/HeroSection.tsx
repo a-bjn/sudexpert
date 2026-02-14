@@ -2,45 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { gsap } from "gsap";
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Shield, Truck, Award, Sparkles, ChevronDown, Zap } from "lucide-react";
+import { ArrowRight, Play, Shield, Truck, Award, Sparkles, ChevronDown } from "lucide-react";
 
-// Floating Badge Component
+// Floating Badge - uses CSS animation instead of Framer Motion infinite loop
 function FloatingBadge({
   children,
   className = "",
-  delay = 0,
-  x = 0,
-  y = 0
+  delay = 0
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  x?: number;
-  y?: number;
 }) {
   return (
     <motion.div
-      className={`absolute glass rounded-2xl shadow-soft-lg ${className}`}
-      initial={{ opacity: 0, scale: 0.8, x: x - 20, y: y + 20 }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-        x,
-        y: [y, y - 10, y],
-      }}
-      transition={{
-        opacity: { duration: 0.6, delay },
-        scale: { duration: 0.6, delay },
-        x: { duration: 0.6, delay },
-        y: {
-          duration: 4 + Math.random() * 2,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: delay + 0.6
-        }
-      }}
+      className={`absolute glass rounded-2xl shadow-soft-lg animate-float ${className}`}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, delay }}
     >
       {children}
     </motion.div>
@@ -77,75 +57,48 @@ export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-
   const LOOP_END_SECONDS = 5;
 
-  // Ensure hero video plays when ready and loops at LOOP_END_SECONDS
+  // Lazy video: load src and play only when hero enters viewport (saves initial bandwidth/CPU)
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
-    const play = () => {
-      video.play().catch(() => {});
-    };
-    play();
-    const onCanPlay = () => {
-      play();
-    };
+    const container = containerRef.current;
+    if (!video || !container) return;
+
+    let hasLoaded = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!hasLoaded) {
+              video.src = "/welder-scene.mp4";
+              hasLoaded = true;
+            }
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { rootMargin: "100px", threshold: 0.01 }
+    );
+    observer.observe(container);
+
     const onTimeUpdate = () => {
-      if (video.currentTime >= LOOP_END_SECONDS) {
-        video.currentTime = 0;
-      }
+      if (video.currentTime >= LOOP_END_SECONDS) video.currentTime = 0;
     };
     const onVisibilityChange = () => {
-      if (document.visibilityState === "visible") play();
+      if (document.visibilityState === "visible") video.play().catch(() => {});
+      else video.pause();
     };
-    video.addEventListener("canplay", onCanPlay);
     video.addEventListener("timeupdate", onTimeUpdate);
     document.addEventListener("visibilitychange", onVisibilityChange);
+
     return () => {
-      video.removeEventListener("canplay", onCanPlay);
+      observer.disconnect();
       video.removeEventListener("timeupdate", onTimeUpdate);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, []);
-
-  // GSAP Animations
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Background gradient orbs animation
-      gsap.to(".gradient-orb-1", {
-        x: 50,
-        y: -30,
-        scale: 1.2,
-        duration: 8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-
-      gsap.to(".gradient-orb-2", {
-        x: -40,
-        y: 40,
-        scale: 0.9,
-        duration: 10,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-
-      gsap.to(".gradient-orb-3", {
-        x: 30,
-        y: 50,
-        scale: 1.1,
-        duration: 12,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-
-    }, containerRef);
-
-    return () => ctx.revert();
   }, []);
 
   // Text animation variants
@@ -169,22 +122,20 @@ export default function HeroSection() {
     }
   };
 
-  const letterVariants = {
-    hidden: { opacity: 0, y: 100, rotateX: -90 },
+  const wordVariants = {
+    hidden: { opacity: 0, y: 24 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      rotateX: 0,
       transition: {
-        duration: 0.8,
-        delay: i * 0.03,
+        duration: 0.6,
+        delay: i * 0.15,
         ease: [0.25, 0.46, 0.45, 0.94] as const
       }
     })
   };
 
-  const titleText = "EXCELENȚĂ";
-  const subtitleText = "ÎN SUDURĂ";
+  const titleWords = ["EXCELENȚĂ", "ÎN SUDURĂ"];
 
   return (
     <section
@@ -193,10 +144,10 @@ export default function HeroSection() {
     >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Gradient Orbs */}
-        <div className="gradient-orb-1 absolute -top-40 -left-40 w-[500px] h-[500px] bg-gradient-to-br from-orange-200/40 to-amber-100/30 rounded-full blur-3xl" />
-        <div className="gradient-orb-2 absolute top-1/3 -right-32 w-[400px] h-[400px] bg-gradient-to-bl from-blue-100/30 to-sky-50/20 rounded-full blur-3xl" />
-        <div className="gradient-orb-3 absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-gradient-to-t from-orange-100/30 to-transparent rounded-full blur-3xl" />
+        {/* Gradient Orbs - CSS animations (no GSAP) */}
+        <div className="gradient-orb-1 animate-orb-1 absolute -top-40 -left-40 w-[500px] h-[500px] bg-gradient-to-br from-orange-200/40 to-amber-100/30 rounded-full blur-2xl will-change-transform" />
+        <div className="gradient-orb-2 animate-orb-2 absolute top-1/3 -right-32 w-[400px] h-[400px] bg-gradient-to-bl from-blue-100/30 to-sky-50/20 rounded-full blur-2xl will-change-transform" />
+        <div className="gradient-orb-3 animate-orb-3 absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-gradient-to-t from-orange-100/30 to-transparent rounded-full blur-2xl will-change-transform" />
 
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_70%)]" />
@@ -204,7 +155,7 @@ export default function HeroSection() {
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 min-h-screen flex items-center">
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center w-full py-16 sm:py-20 pt-28 sm:pt-32 lg:pt-36">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center w-full py-16 sm:py-20">
 
           {/* Left Column - Text Content */}
           <motion.div
@@ -221,37 +172,21 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Main Title */}
+            {/* Main Title - word-level animation (lighter than per-letter) */}
             <div className="overflow-hidden">
               <h1 className="bebas-neue-regular text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-tight leading-[0.85]">
-                <span className="block text-slate-800">
-                  {titleText.split("").map((char, i) => (
-                    <motion.span
-                      key={i}
-                      custom={i}
-                      variants={letterVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className="inline-block"
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </span>
-                <span className="block gradient-text mt-2">
-                  {subtitleText.split("").map((char, i) => (
-                    <motion.span
-                      key={i}
-                      custom={i}
-                      variants={letterVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className="inline-block"
-                    >
-                      {char === " " ? "\u00A0" : char}
-                    </motion.span>
-                  ))}
-                </span>
+                {titleWords.map((word, i) => (
+                  <motion.span
+                    key={i}
+                    custom={i}
+                    variants={wordVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className={`block ${i === 1 ? "gradient-text mt-2" : "text-slate-800"}`}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
               </h1>
             </div>
 
@@ -274,7 +209,7 @@ export default function HeroSection() {
                 <motion.button
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-semibold text-base sm:text-lg shadow-orange btn-shine overflow-hidden min-h-[48px]"
+                  className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-orange-500 text-white rounded-2xl font-semibold text-base sm:text-lg shadow-orange overflow-hidden min-h-[48px]"
                 >
                   <span className="relative z-10">Explorează Magazinul</span>
                   <ArrowRight className="relative z-10 w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -313,12 +248,12 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Creative Image */}
+          {/* Right Column - Creative Image (hidden on mobile) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, x: 50 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-            className="relative flex items-center justify-center"
+            className="relative hidden lg:flex items-center justify-center"
           >
             {/* Decorative Ring - hidden on mobile */}
             <div className="absolute w-[110%] h-[110%] rounded-full border-2 border-dashed border-orange-200/50 animate-rotate-slow hidden lg:block" />
@@ -333,13 +268,11 @@ export default function HeroSection() {
             >
               <video
                 ref={videoRef}
-                src="/welder-scene.mp4"
                 poster="/hero-background.png"
                 muted
                 loop
                 playsInline
-                autoPlay
-                preload="auto"
+                preload="metadata"
                 disablePictureInPicture
                 className="w-full h-full object-cover scale-x-[-1]"
                 aria-hidden
@@ -351,11 +284,9 @@ export default function HeroSection() {
             <FloatingBadge
               className="p-4 -left-8 top-[15%] hidden lg:block"
               delay={1}
-              x={-32}
-              y={0}
             >
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center shadow-lg">
                   <Shield className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -368,11 +299,9 @@ export default function HeroSection() {
             <FloatingBadge
               className="p-4 -right-4 top-[35%] hidden lg:block"
               delay={1.3}
-              x={16}
-              y={0}
             >
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center shadow-lg">
                   <Truck className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -385,11 +314,9 @@ export default function HeroSection() {
             <FloatingBadge
               className="p-4 -left-4 bottom-[20%] hidden lg:block"
               delay={1.6}
-              x={-16}
-              y={0}
             >
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 rounded-xl bg-amber-500 flex items-center justify-center shadow-lg">
                   <Award className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -398,16 +325,6 @@ export default function HeroSection() {
                 </div>
               </div>
             </FloatingBadge>
-
-            {/* Corner Decoration - hidden on mobile */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 2, duration: 0.5 }}
-              className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center shadow-orange rotate-12 hidden lg:flex"
-            >
-              <Zap className="w-10 h-10 text-white" />
-            </motion.div>
           </motion.div>
         </div>
       </div>
