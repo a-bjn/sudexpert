@@ -22,7 +22,6 @@ class UserRepositoryTest {
 
     @Test
     void findByEmail_WhenUserExists_ShouldReturnUser() {
-        // Arrange
         User user = User.builder()
                 .email("test@example.com")
                 .password("password")
@@ -33,10 +32,8 @@ class UserRepositoryTest {
         entityManager.persist(user);
         entityManager.flush();
 
-        // Act
         Optional<User> foundUser = userRepository.findByEmail("test@example.com");
 
-        // Assert
         assertTrue(foundUser.isPresent());
         assertEquals("test@example.com", foundUser.get().getEmail());
         assertEquals("John", foundUser.get().getFirstName());
@@ -44,16 +41,13 @@ class UserRepositoryTest {
 
     @Test
     void findByEmail_WhenUserDoesNotExist_ShouldReturnEmpty() {
-        // Act
         Optional<User> foundUser = userRepository.findByEmail("nonexistent@example.com");
 
-        // Assert
         assertFalse(foundUser.isPresent());
     }
 
     @Test
     void save_ShouldPersistUser() {
-        // Arrange
         User user = User.builder()
                 .email("new@example.com")
                 .password("password123")
@@ -62,10 +56,8 @@ class UserRepositoryTest {
                 .role(Role.USER)
                 .build();
 
-        // Act
         User savedUser = userRepository.save(user);
 
-        // Assert
         assertNotNull(savedUser.getId());
         assertEquals("new@example.com", savedUser.getEmail());
         assertEquals("Jane", savedUser.getFirstName());
@@ -74,7 +66,6 @@ class UserRepositoryTest {
 
     @Test
     void save_WithUniqueEmail_ShouldSucceed() {
-        // Arrange
         User user1 = User.builder()
                 .email("user1@example.com")
                 .password("password")
@@ -87,11 +78,9 @@ class UserRepositoryTest {
                 .role(Role.USER)
                 .build();
 
-        // Act
         User savedUser1 = userRepository.save(user1);
         User savedUser2 = userRepository.save(user2);
 
-        // Assert
         assertNotNull(savedUser1.getId());
         assertNotNull(savedUser2.getId());
         assertNotEquals(savedUser1.getId(), savedUser2.getId());
