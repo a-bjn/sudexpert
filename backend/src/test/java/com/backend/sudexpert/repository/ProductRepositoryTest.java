@@ -39,7 +39,6 @@ class ProductRepositoryTest {
 
     @Test
     void findByCategoryId_ShouldReturnProductsInCategory() {
-        // Arrange
         Product product1 = Product.builder()
                 .name("Electrozi E6013")
                 .description("Electrozi de calitate")
@@ -60,10 +59,8 @@ class ProductRepositoryTest {
         entityManager.persist(product2);
         entityManager.flush();
 
-        // Act
         List<Product> products = productRepository.findByCategoryId(testCategory.getId());
 
-        // Assert
         assertNotNull(products);
         assertEquals(2, products.size());
         assertTrue(products.stream().allMatch(p -> p.getCategory().getId().equals(testCategory.getId())));
@@ -71,17 +68,14 @@ class ProductRepositoryTest {
 
     @Test
     void findByCategoryId_WhenNoCategoryProducts_ShouldReturnEmptyList() {
-        // Act
         List<Product> products = productRepository.findByCategoryId(999L);
 
-        // Assert
         assertNotNull(products);
         assertTrue(products.isEmpty());
     }
 
     @Test
     void save_ShouldPersistProduct() {
-        // Arrange
         Product product = Product.builder()
                 .name("Test Product")
                 .description("Test Description")
@@ -90,10 +84,8 @@ class ProductRepositoryTest {
                 .category(testCategory)
                 .build();
 
-        // Act
         Product savedProduct = productRepository.save(product);
 
-        // Assert
         assertNotNull(savedProduct.getId());
         assertEquals("Test Product", savedProduct.getName());
         assertEquals(new BigDecimal("100.00"), savedProduct.getPrice());
@@ -101,7 +93,6 @@ class ProductRepositoryTest {
 
     @Test
     void findById_WhenProductExists_ShouldReturnProduct() {
-        // Arrange
         Product product = Product.builder()
                 .name("Test Product")
                 .price(new BigDecimal("100.00"))
@@ -110,17 +101,14 @@ class ProductRepositoryTest {
         Product savedProduct = entityManager.persist(product);
         entityManager.flush();
 
-        // Act
         Optional<Product> foundProduct = productRepository.findById(savedProduct.getId());
 
-        // Assert
         assertTrue(foundProduct.isPresent());
         assertEquals("Test Product", foundProduct.get().getName());
     }
 
     @Test
     void findAll_ShouldReturnAllProducts() {
-        // Arrange
         Product product1 = Product.builder()
                 .name("Product 1")
                 .price(new BigDecimal("100.00"))
@@ -137,10 +125,8 @@ class ProductRepositoryTest {
         entityManager.persist(product2);
         entityManager.flush();
 
-        // Act
         List<Product> products = productRepository.findAll();
 
-        // Assert
         assertNotNull(products);
         assertTrue(products.size() >= 2);
     }

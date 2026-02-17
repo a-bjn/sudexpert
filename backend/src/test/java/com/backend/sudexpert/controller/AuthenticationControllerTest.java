@@ -61,11 +61,9 @@ class AuthenticationControllerTest {
 
     @Test
     void register_ShouldReturnTokenWhenSuccessful() throws Exception {
-        // Arrange
         when(authenticationService.register(any(RegisterRequest.class)))
                 .thenReturn(authenticationResponse);
 
-        // Act & Assert
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(registerRequest)))
@@ -78,11 +76,9 @@ class AuthenticationControllerTest {
 
     @Test
     void register_ShouldAcceptAllRequiredFields() throws Exception {
-        // Arrange
         when(authenticationService.register(any(RegisterRequest.class)))
                 .thenReturn(authenticationResponse);
 
-        // Act & Assert
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(registerRequest)))
@@ -98,11 +94,9 @@ class AuthenticationControllerTest {
 
     @Test
     void authenticate_ShouldReturnTokenWhenCredentialsValid() throws Exception {
-        // Arrange
         when(authenticationService.authenticate(any(AuthenticationRequest.class)))
                 .thenReturn(authenticationResponse);
 
-        // Act & Assert
         mockMvc.perform(post("/api/auth/authenticate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(authenticationRequest)))
@@ -115,11 +109,9 @@ class AuthenticationControllerTest {
 
     @Test
     void authenticate_ShouldPassEmailAndPassword() throws Exception {
-        // Arrange
         when(authenticationService.authenticate(any(AuthenticationRequest.class)))
                 .thenReturn(authenticationResponse);
 
-        // Act & Assert
         mockMvc.perform(post("/api/auth/authenticate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(authenticationRequest)))

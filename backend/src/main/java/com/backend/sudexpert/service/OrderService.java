@@ -38,8 +38,7 @@ public class OrderService {
     @Transactional
     public OrderResponse createOrder(OrderRequest request, String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
-        
-        // Create order
+
         Order order = Order.builder()
                 .user(user)
                 .total(request.getTotal())
@@ -55,8 +54,7 @@ public class OrderService {
                 .deliveryCountry(request.getDeliveryCountry())
                 .deliveryNotes(request.getDeliveryNotes())
                 .build();
-        
-        // Create order items
+
         List<OrderItem> orderItems = request.getItems().stream().map(itemRequest -> {
             Product product = productRepository.findById(itemRequest.getProduct().getId())
                     .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -102,10 +100,7 @@ public class OrderService {
     }
 
     private String generateOrderCode() {
-        // Format: ORD-YYYYMMDD-XXXX (e.g., ORD-20231211-0001)
         String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        
-        // Find the last order code for today
         String prefix = "ORD-" + dateStr + "-";
         List<Order> todayOrders = repository.findAll().stream()
                 .filter(o -> o.getOrderCode() != null && o.getOrderCode().startsWith(prefix))

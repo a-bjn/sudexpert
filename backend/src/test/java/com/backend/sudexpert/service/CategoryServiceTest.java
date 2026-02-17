@@ -38,7 +38,6 @@ class CategoryServiceTest {
 
     @Test
     void getAllCategories_ShouldReturnAllCategories() {
-        // Arrange
         Category category2 = Category.builder()
                 .id(2L)
                 .name("Sârmă de sudură")
@@ -46,10 +45,8 @@ class CategoryServiceTest {
         List<Category> expectedCategories = Arrays.asList(testCategory, category2);
         when(categoryRepository.findAll()).thenReturn(expectedCategories);
 
-        // Act
         List<Category> actualCategories = categoryService.getAllCategories();
 
-        // Assert
         assertNotNull(actualCategories);
         assertEquals(2, actualCategories.size());
         assertEquals(expectedCategories, actualCategories);
@@ -58,13 +55,10 @@ class CategoryServiceTest {
 
     @Test
     void createCategory_ShouldSaveAndReturnCategory() {
-        // Arrange
         when(categoryRepository.save(any(Category.class))).thenReturn(testCategory);
 
-        // Act
         Category savedCategory = categoryService.createCategory(testCategory);
 
-        // Assert
         assertNotNull(savedCategory);
         assertEquals(testCategory.getName(), savedCategory.getName());
         verify(categoryRepository, times(1)).save(testCategory);
@@ -72,13 +66,10 @@ class CategoryServiceTest {
 
     @Test
     void getCategoryById_WhenCategoryExists_ShouldReturnCategory() {
-        // Arrange
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(testCategory));
 
-        // Act
         Category foundCategory = categoryService.getCategoryById(1L);
 
-        // Assert
         assertNotNull(foundCategory);
         assertEquals(testCategory.getId(), foundCategory.getId());
         assertEquals(testCategory.getName(), foundCategory.getName());
@@ -87,10 +78,8 @@ class CategoryServiceTest {
 
     @Test
     void getCategoryById_WhenCategoryDoesNotExist_ShouldThrowException() {
-        // Arrange
         when(categoryRepository.findById(999L)).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             categoryService.getCategoryById(999L);
         });

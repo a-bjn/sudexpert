@@ -21,8 +21,7 @@ public class OrderResponse {
     private BigDecimal total;
     private OrderStatus status;
     private LocalDateTime createdAt;
-    
-    // Delivery Information
+
     private String deliveryName;
     private String deliveryEmail;
     private String deliveryPhone;
