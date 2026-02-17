@@ -108,10 +108,7 @@ function GridCard({ product }: { product: Product }) {
                 // Add to cart logic
               }}
               className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0
-                bg-orange-500
-                shadow-lg shadow-orange-500/25
-                hover:shadow-orange-500/40
-                transition-shadow duration-300"
+                bg-orange-500"
             >
               <ShoppingCart className="w-5 h-5 text-white" />
             </motion.button>
@@ -196,10 +193,7 @@ function ListCard({ product }: { product: Product }) {
                   // Add to cart logic
                 }}
                 className="hidden sm:flex w-10 h-10 rounded-full items-center justify-center flex-shrink-0
-                  bg-orange-500
-                  shadow-lg shadow-orange-500/25
-                  hover:shadow-orange-500/40
-                  transition-shadow duration-300"
+                  bg-orange-500"
               >
                 <ShoppingCart className="w-5 h-5 text-white" />
               </motion.button>
@@ -228,10 +222,7 @@ function ListCard({ product }: { product: Product }) {
                 // Add to cart logic
               }}
               className="sm:hidden w-11 h-11 rounded-full flex items-center justify-center
-                bg-orange-500
-                shadow-lg shadow-orange-500/25
-                hover:shadow-orange-500/40
-                transition-shadow duration-300"
+                bg-orange-500"
             >
               <ShoppingCart className="w-5 h-5 text-white" />
             </motion.button>
