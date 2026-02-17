@@ -100,11 +100,9 @@ class OrderControllerTest {
     @Test
     @WithMockUser(username = "test@example.com")
     void getMyOrders_ShouldReturnUserOrders() throws Exception {
-        // Arrange
         List<Order> orders = Arrays.asList(testOrder);
         when(orderService.getOrdersByUser("test@example.com")).thenReturn(orders);
 
-        // Act & Assert
         mockMvc.perform(get("/api/orders"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -120,7 +118,6 @@ class OrderControllerTest {
     @Test
     @WithMockUser(username = "test@example.com")
     void createOrder_ShouldReturnCreatedOrder() throws Exception {
-        // Arrange
         OrderRequest orderRequest = OrderRequest.builder()
                 .items(Arrays.asList(
                         OrderRequest.OrderItemRequest.builder()
@@ -142,7 +139,6 @@ class OrderControllerTest {
         when(orderService.createOrder(any(OrderRequest.class), eq("test@example.com")))
                 .thenReturn(testOrderResponse);
 
-        // Act & Assert
         mockMvc.perform(post("/api/orders")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)

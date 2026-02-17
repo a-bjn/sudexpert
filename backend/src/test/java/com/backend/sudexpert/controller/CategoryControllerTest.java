@@ -49,7 +49,6 @@ class CategoryControllerTest {
 
     @Test
     void getAllCategories_ShouldReturnCategoryList() throws Exception {
-        // Arrange
         Category category2 = Category.builder()
                 .id(2L)
                 .name("Sârmă de sudură")
@@ -57,7 +56,6 @@ class CategoryControllerTest {
         List<Category> categories = Arrays.asList(testCategory, category2);
         when(categoryService.getAllCategories()).thenReturn(categories);
 
-        // Act & Assert
         mockMvc.perform(get("/api/categories"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -73,7 +71,6 @@ class CategoryControllerTest {
 
     @Test
     void createCategory_ShouldReturnCreatedCategory() throws Exception {
-        // Arrange
         Category newCategory = Category.builder()
                 .name("New Category")
                 .build();
@@ -85,7 +82,6 @@ class CategoryControllerTest {
 
         when(categoryService.createCategory(any(Category.class))).thenReturn(savedCategory);
 
-        // Act & Assert
         mockMvc.perform(post("/api/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCategory)))
@@ -98,10 +94,8 @@ class CategoryControllerTest {
 
     @Test
     void getCategoryById_WhenCategoryExists_ShouldReturnCategory() throws Exception {
-        // Arrange
         when(categoryService.getCategoryById(1L)).thenReturn(testCategory);
 
-        // Act & Assert
         mockMvc.perform(get("/api/categories/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

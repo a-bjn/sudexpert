@@ -53,7 +53,6 @@ class OrderRepositoryTest {
 
     @Test
     void findByUserId_ShouldReturnUserOrders() {
-        // Arrange
         Order order1 = Order.builder()
                 .user(testUser)
                 .total(new BigDecimal("200.00"))
@@ -72,10 +71,8 @@ class OrderRepositoryTest {
         entityManager.persist(order2);
         entityManager.flush();
 
-        // Act
         List<Order> orders = orderRepository.findByUserId(testUser.getId());
 
-        // Assert
         assertNotNull(orders);
         assertEquals(2, orders.size());
         assertTrue(orders.stream().allMatch(o -> o.getUser().getId().equals(testUser.getId())));
@@ -83,17 +80,14 @@ class OrderRepositoryTest {
 
     @Test
     void findByUserId_WhenNoOrders_ShouldReturnEmptyList() {
-        // Act
         List<Order> orders = orderRepository.findByUserId(testUser.getId());
 
-        // Assert
         assertNotNull(orders);
         assertTrue(orders.isEmpty());
     }
 
     @Test
     void save_ShouldPersistOrder() {
-        // Arrange
         Order order = Order.builder()
                 .user(testUser)
                 .total(new BigDecimal("500.00"))
@@ -101,10 +95,8 @@ class OrderRepositoryTest {
                 .orderCode("ORD-20231211-0003")
                 .build();
 
-        // Act
         Order savedOrder = orderRepository.save(order);
 
-        // Assert
         assertNotNull(savedOrder.getId());
         assertEquals(testUser.getId(), savedOrder.getUser().getId());
         assertEquals(new BigDecimal("500.00"), savedOrder.getTotal());
@@ -113,7 +105,6 @@ class OrderRepositoryTest {
 
     @Test
     void save_WithOrderItems_ShouldPersistOrderAndItems() {
-        // Arrange
         Order order = Order.builder()
                 .user(testUser)
                 .total(new BigDecimal("200.00"))
@@ -130,10 +121,8 @@ class OrderRepositoryTest {
 
         order.setItems(List.of(item));
 
-        // Act
         Order savedOrder = orderRepository.save(order);
 
-        // Assert
         assertNotNull(savedOrder.getId());
         assertNotNull(savedOrder.getItems());
         assertEquals(1, savedOrder.getItems().size());

@@ -65,7 +65,6 @@ class ProductControllerTest {
     @Test
     @WithMockUser
     void getAllProducts_ShouldReturnProductList() throws Exception {
-        // Arrange
         Product product2 = Product.builder()
                 .id(2L)
                 .name("Sârmă sudură")
@@ -74,7 +73,6 @@ class ProductControllerTest {
         List<Product> products = Arrays.asList(testProduct, product2);
         when(productService.getAllProducts()).thenReturn(products);
 
-        // Act & Assert
         mockMvc.perform(get("/api/products"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -91,10 +89,8 @@ class ProductControllerTest {
     @Test
     @WithMockUser
     void getProductById_WhenProductExists_ShouldReturnProduct() throws Exception {
-        // Arrange
         when(productService.getProductById(1L)).thenReturn(testProduct);
 
-        // Act & Assert
         mockMvc.perform(get("/api/products/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -110,17 +106,12 @@ class ProductControllerTest {
     @Test
     @WithMockUser
     void getProductById_WhenProductDoesNotExist_ShouldThrowException() throws Exception {
-        // Arrange
         when(productService.getProductById(999L)).thenThrow(new RuntimeException("Product not found"));
 
-        // Act & Assert
-        // Note: Without a global exception handler, the RuntimeException propagates as a ServletException
         try {
             mockMvc.perform(get("/api/products/999"));
-            // If we reach here, the test should fail
             throw new AssertionError("Expected RuntimeException to be thrown");
         } catch (Exception e) {
-            // Verify that the root cause is our RuntimeException
             assert e.getCause() != null;
             assert e.getCause().getMessage().contains("Product not found");
         }
@@ -131,7 +122,6 @@ class ProductControllerTest {
     @Test
     @WithMockUser
     void createProduct_ShouldReturnCreatedProduct() throws Exception {
-        // Arrange
         Product newProduct = Product.builder()
                 .name("New Product")
                 .price(new BigDecimal("100.00"))
@@ -145,7 +135,6 @@ class ProductControllerTest {
 
         when(productService.createProduct(any(Product.class))).thenReturn(savedProduct);
 
-        // Act & Assert
         mockMvc.perform(post("/api/products")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -161,7 +150,6 @@ class ProductControllerTest {
     @Test
     @WithMockUser
     void getProductsByCategory_ShouldReturnProductsInCategory() throws Exception {
-        // Arrange
         Product product2 = Product.builder()
                 .id(2L)
                 .name("Electrozi E7018")
@@ -171,7 +159,6 @@ class ProductControllerTest {
         List<Product> products = Arrays.asList(testProduct, product2);
         when(productService.getProductsByCategory(1L)).thenReturn(products);
 
-        // Act & Assert
         mockMvc.perform(get("/api/products/category/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_order") // order is a reserved keyword
+@Table(name = "_order")
 public class Order {
 
     @Id
@@ -35,9 +35,8 @@ public class Order {
     private OrderStatus status;
 
     @Column(unique = true)
-    private String orderCode; // Unique order number (e.g., ORD-20231211-001)
+    private String orderCode;
 
-    // Delivery Address Fields
     private String deliveryName;
     private String deliveryEmail;
     private String deliveryPhone;

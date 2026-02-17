@@ -29,7 +29,6 @@ class AuthenticationIntegrationTest {
 
     @Test
     void register_WithValidData_ShouldCreateUserAndReturnToken() throws Exception {
-        // Arrange
         RegisterRequest registerRequest = RegisterRequest.builder()
                 .firstName("John")
                 .lastName("Doe")
@@ -37,7 +36,6 @@ class AuthenticationIntegrationTest {
                 .password("password123")
                 .build();
 
-        // Act & Assert
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(registerRequest)))
@@ -48,7 +46,6 @@ class AuthenticationIntegrationTest {
 
     @Test
     void authenticate_WithValidCredentials_ShouldReturnToken() throws Exception {
-        // Arrange - First register a user
         RegisterRequest registerRequest = RegisterRequest.builder()
                 .firstName("Jane")
                 .lastName("Smith")
@@ -60,13 +57,11 @@ class AuthenticationIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(registerRequest)));
 
-        // Arrange - Create authentication request
         AuthenticationRequest authRequest = AuthenticationRequest.builder()
                 .email("jane.integration@example.com")
                 .password("password123")
                 .build();
 
-        // Act & Assert
         mockMvc.perform(post("/api/auth/authenticate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(authRequest)))
@@ -77,13 +72,11 @@ class AuthenticationIntegrationTest {
 
     @Test
     void authenticate_WithInvalidCredentials_ShouldReturnError() throws Exception {
-        // Arrange
         AuthenticationRequest authRequest = AuthenticationRequest.builder()
                 .email("nonexistent@example.com")
                 .password("wrongpassword")
                 .build();
 
-        // Act & Assert
         mockMvc.perform(post("/api/auth/authenticate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(authRequest)))
