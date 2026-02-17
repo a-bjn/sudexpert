@@ -78,14 +78,11 @@ class OrderServiceTest {
 
     @Test
     void getOrdersByUser_WhenUserExists_ShouldReturnOrders() {
-        // Arrange
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(testUser));
         when(orderRepository.findByUserId(1L)).thenReturn(Arrays.asList(testOrder));
 
-        // Act
         List<Order> orders = orderService.getOrdersByUser("test@example.com");
 
-        // Assert
         assertNotNull(orders);
         assertEquals(1, orders.size());
         assertEquals(testOrder.getId(), orders.get(0).getId());
@@ -95,10 +92,8 @@ class OrderServiceTest {
 
     @Test
     void getOrdersByUser_WhenUserDoesNotExist_ShouldThrowException() {
-        // Arrange
         when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             orderService.getOrdersByUser("nonexistent@example.com");
         });
@@ -109,7 +104,6 @@ class OrderServiceTest {
 
     @Test
     void createOrder_WhenUserExists_ShouldCreateOrderWithPendingStatus() {
-        // Arrange
         OrderRequest orderRequest = OrderRequest.builder()
                 .items(Arrays.asList(
                         OrderRequest.OrderItemRequest.builder()
@@ -132,10 +126,8 @@ class OrderServiceTest {
         when(orderRepository.save(any(Order.class))).thenReturn(testOrder);
         when(orderRepository.findAll()).thenReturn(Arrays.asList()); // For order code generation
 
-        // Act
         OrderResponse createdOrder = orderService.createOrder(orderRequest, "test@example.com");
 
-        // Assert
         assertNotNull(createdOrder);
         assertEquals(testOrder.getTotal(), createdOrder.getTotal());
         assertEquals(OrderStatus.PENDING, createdOrder.getStatus());
@@ -147,7 +139,6 @@ class OrderServiceTest {
 
     @Test
     void createOrder_WhenUserDoesNotExist_ShouldThrowException() {
-        // Arrange
         OrderRequest orderRequest = OrderRequest.builder()
                 .items(Arrays.asList(
                         OrderRequest.OrderItemRequest.builder()
@@ -161,7 +152,6 @@ class OrderServiceTest {
 
         when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             orderService.createOrder(orderRequest, "nonexistent@example.com");
         });
@@ -172,7 +162,6 @@ class OrderServiceTest {
 
     @Test
     void createOrder_ShouldSetUserAndStatus() {
-        // Arrange
         OrderRequest orderRequest = OrderRequest.builder()
                 .items(Arrays.asList(
                         OrderRequest.OrderItemRequest.builder()
@@ -199,10 +188,8 @@ class OrderServiceTest {
             return order;
         });
 
-        // Act
         OrderResponse createdOrder = orderService.createOrder(orderRequest, "test@example.com");
 
-        // Assert
         assertNotNull(createdOrder);
         assertEquals(new BigDecimal("600.00"), createdOrder.getTotal());
         assertEquals(OrderStatus.PENDING, createdOrder.getStatus());

@@ -32,7 +32,6 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void initializeData() {
-        // Create Categories
         Category electrozi = Category.builder()
                 .name("Electrozi")
                 .build();
@@ -50,9 +49,7 @@ public class DataInitializer implements CommandLineRunner {
                 electrozi, sarma, consumabile, echipamente
         ));
 
-        // Create Products
         List<Product> products = List.of(
-                // Electrozi
                 Product.builder()
                         .name("Electrod rutilic E6013 - 3.25mm")
                         .description("Electrod rutilic pentru sudare generală, diametru 3.25mm. Ideal pentru începători și sudare în toate pozițiile.")
@@ -77,8 +74,6 @@ public class DataInitializer implements CommandLineRunner {
                         .imageUrl("https://via.placeholder.com/300x300?text=Electrod+Inox")
                         .category(electrozi)
                         .build(),
-
-                // Sârmă de sudare
                 Product.builder()
                         .name("Sârmă MIG/MAG 0.8mm - 5kg")
                         .description("Sârmă de sudare MIG/MAG, diametru 0.8mm, bobină de 5kg. Pentru oțel carbon.")
@@ -103,8 +98,6 @@ public class DataInitializer implements CommandLineRunner {
                         .imageUrl("https://via.placeholder.com/300x300?text=Sarma+TIG+Inox")
                         .category(sarma)
                         .build(),
-
-                // Consumabile
                 Product.builder()
                         .name("Gaz protector CO2 - 10L")
                         .description("Gaz protector CO2 pentru sudare MIG/MAG, butelie de 10 litri.")
@@ -137,8 +130,6 @@ public class DataInitializer implements CommandLineRunner {
                         .imageUrl("https://via.placeholder.com/300x300?text=Manusi+Sudare")
                         .category(consumabile)
                         .build(),
-
-                // Echipamente
                 Product.builder()
                         .name("Aparat de sudare MIG 200A")
                         .description("Aparat de sudare MIG/MAG, 200A, pentru uz casnic și profesional.")
@@ -163,8 +154,6 @@ public class DataInitializer implements CommandLineRunner {
                         .imageUrl("https://via.placeholder.com/300x300?text=Torca+TIG")
                         .category(echipamente)
                         .build(),
-
-                // Additional Electrozi
                 Product.builder()
                         .name("Electrod celulozic E6010 - 3mm")
                         .description("Electrod celulozic pentru sudare verticală descendentă, diametru 3mm.")
@@ -181,8 +170,6 @@ public class DataInitializer implements CommandLineRunner {
                         .imageUrl("https://via.placeholder.com/300x300?text=Electrod+7024")
                         .category(electrozi)
                         .build(),
-
-                // Additional Sârmă
                 Product.builder()
                         .name("Sârmă MIG aluminiu 1.2mm - 2kg")
                         .description("Sârmă de sudare MIG pentru aluminiu, diametru 1.2mm.")
@@ -199,8 +186,6 @@ public class DataInitializer implements CommandLineRunner {
                         .imageUrl("https://via.placeholder.com/300x300?text=Sarma+Flux")
                         .category(sarma)
                         .build(),
-
-                // Additional Consumabile
                 Product.builder()
                         .name("Șort de protecție din piele")
                         .description("Șort de protecție din piele pentru sudori, rezistent la scântei.")
@@ -225,8 +210,6 @@ public class DataInitializer implements CommandLineRunner {
                         .imageUrl("https://via.placeholder.com/300x300?text=Perie+Sarma")
                         .category(consumabile)
                         .build(),
-
-                // Additional Echipamente
                 Product.builder()
                         .name("Aparat de sudare invertor 160A")
                         .description("Aparat de sudare invertor compact, 160A, pentru uz casnic.")

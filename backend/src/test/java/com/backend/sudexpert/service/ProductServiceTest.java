@@ -51,7 +51,6 @@ class ProductServiceTest {
 
     @Test
     void getAllProducts_ShouldReturnAllProducts() {
-        // Arrange
         Product product2 = Product.builder()
                 .id(2L)
                 .name("Sârmă sudură")
@@ -60,10 +59,8 @@ class ProductServiceTest {
         List<Product> expectedProducts = Arrays.asList(testProduct, product2);
         when(productRepository.findAll()).thenReturn(expectedProducts);
 
-        // Act
         List<Product> actualProducts = productService.getAllProducts();
 
-        // Assert
         assertNotNull(actualProducts);
         assertEquals(2, actualProducts.size());
         assertEquals(expectedProducts, actualProducts);
@@ -72,13 +69,10 @@ class ProductServiceTest {
 
     @Test
     void createProduct_ShouldSaveAndReturnProduct() {
-        // Arrange
         when(productRepository.save(any(Product.class))).thenReturn(testProduct);
 
-        // Act
         Product savedProduct = productService.createProduct(testProduct);
 
-        // Assert
         assertNotNull(savedProduct);
         assertEquals(testProduct.getName(), savedProduct.getName());
         assertEquals(testProduct.getPrice(), savedProduct.getPrice());
@@ -87,13 +81,10 @@ class ProductServiceTest {
 
     @Test
     void getProductById_WhenProductExists_ShouldReturnProduct() {
-        // Arrange
         when(productRepository.findById(1L)).thenReturn(Optional.of(testProduct));
 
-        // Act
         Product foundProduct = productService.getProductById(1L);
 
-        // Assert
         assertNotNull(foundProduct);
         assertEquals(testProduct.getId(), foundProduct.getId());
         assertEquals(testProduct.getName(), foundProduct.getName());
@@ -102,10 +93,8 @@ class ProductServiceTest {
 
     @Test
     void getProductById_WhenProductDoesNotExist_ShouldThrowException() {
-        // Arrange
         when(productRepository.findById(999L)).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             productService.getProductById(999L);
         });
@@ -115,7 +104,6 @@ class ProductServiceTest {
 
     @Test
     void getProductsByCategory_ShouldReturnProductsInCategory() {
-        // Arrange
         Product product2 = Product.builder()
                 .id(2L)
                 .name("Electrozi E7018")
@@ -124,10 +112,8 @@ class ProductServiceTest {
         List<Product> expectedProducts = Arrays.asList(testProduct, product2);
         when(productRepository.findByCategoryId(1L)).thenReturn(expectedProducts);
 
-        // Act
         List<Product> actualProducts = productService.getProductsByCategory(1L);
 
-        // Assert
         assertNotNull(actualProducts);
         assertEquals(2, actualProducts.size());
         assertTrue(actualProducts.stream().allMatch(p -> p.getCategory().equals(testCategory)));
@@ -136,13 +122,10 @@ class ProductServiceTest {
 
     @Test
     void getProductsByCategory_WhenNoCategoryProducts_ShouldReturnEmptyList() {
-        // Arrange
         when(productRepository.findByCategoryId(999L)).thenReturn(Arrays.asList());
 
-        // Act
         List<Product> actualProducts = productService.getProductsByCategory(999L);
 
-        // Assert
         assertNotNull(actualProducts);
         assertTrue(actualProducts.isEmpty());
         verify(productRepository, times(1)).findByCategoryId(999L);

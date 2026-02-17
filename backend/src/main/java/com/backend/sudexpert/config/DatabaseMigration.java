@@ -54,11 +54,8 @@ public class DatabaseMigration implements CommandLineRunner {
     }
 
     private String generateOrderCodeForMigration(Order order) {
-        // Use the order's creation date if available, otherwise use current date
         LocalDateTime dateTime = order.getCreatedAt() != null ? order.getCreatedAt() : LocalDateTime.now();
         String datePart = dateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        
-        // Use order ID as the sequence number for migration
         String sequencePart = String.format("%04d", order.getId());
         
         return "ORD-" + datePart + "-" + sequencePart;

@@ -30,8 +30,6 @@ public class PaymentController {
     public ResponseEntity<String> handleStripeWebhook(
             @RequestBody String payload,
             @RequestHeader("Stripe-Signature") String sigHeader) {
-        // Webhook handling for production
-        // For now, we'll handle payment status updates client-side
         return ResponseEntity.ok("Received");
     }
 

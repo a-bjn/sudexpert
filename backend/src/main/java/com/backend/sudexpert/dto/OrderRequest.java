@@ -16,8 +16,7 @@ public class OrderRequest {
     
     private List<OrderItemRequest> items;
     private BigDecimal total;
-    
-    // Delivery Information
+
     private String deliveryName;
     private String deliveryEmail;
     private String deliveryPhone;

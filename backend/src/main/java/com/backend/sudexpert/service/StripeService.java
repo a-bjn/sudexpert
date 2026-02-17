@@ -26,7 +26,6 @@ public class StripeService {
     private final EmailService emailService;
 
     public PaymentIntentResponse createPaymentIntent(PaymentIntentRequest request) throws StripeException {
-        // Convert amount to cents (Stripe uses smallest currency unit)
         long amountInCents = request.getAmount().multiply(new BigDecimal("100")).longValue();
 
         PaymentIntentCreateParams.Builder paramsBuilder = PaymentIntentCreateParams.builder()
@@ -38,7 +37,6 @@ public class StripeService {
                                 .build()
                 );
 
-        // Add metadata if orderId is present
         if (request.getOrderId() != null) {
             paramsBuilder.putMetadata("orderId", request.getOrderId().toString());
         }
@@ -68,8 +66,7 @@ public class StripeService {
                 orderRepository.save(order);
                 
                 log.info("Order {} marked as PROCESSING after successful payment", orderId);
-                
-                // Send order confirmation email
+
                 try {
                     com.backend.sudexpert.dto.OrderResponse orderResponse = 
                             orderService.getOrderById(orderId, order.getUser().getEmail());

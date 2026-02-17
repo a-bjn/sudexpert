@@ -71,16 +71,13 @@ class AuthenticationServiceTest {
 
     @Test
     void register_ShouldCreateUserAndReturnToken() {
-        // Arrange
         String expectedToken = "jwt.token.here";
         when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         when(jwtService.generateToken(any(User.class))).thenReturn(expectedToken);
 
-        // Act
         AuthenticationResponse response = authenticationService.register(registerRequest);
 
-        // Assert
         assertNotNull(response);
         assertEquals(expectedToken, response.getToken());
         verify(passwordEncoder, times(1)).encode("password123");
@@ -90,7 +87,6 @@ class AuthenticationServiceTest {
 
     @Test
     void register_ShouldSetUserRoleToUSER() {
-        // Arrange
         when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
             User user = invocation.getArgument(0);
@@ -99,16 +95,13 @@ class AuthenticationServiceTest {
         });
         when(jwtService.generateToken(any(User.class))).thenReturn("token");
 
-        // Act
         authenticationService.register(registerRequest);
 
-        // Assert
         verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
     void register_ShouldEncodePassword() {
-        // Arrange
         when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
             User user = invocation.getArgument(0);
@@ -117,26 +110,21 @@ class AuthenticationServiceTest {
         });
         when(jwtService.generateToken(any(User.class))).thenReturn("token");
 
-        // Act
         authenticationService.register(registerRequest);
 
-        // Assert
         verify(passwordEncoder, times(1)).encode("password123");
     }
 
     @Test
     void authenticate_WhenCredentialsValid_ShouldReturnToken() {
-        // Arrange
         String expectedToken = "jwt.token.here";
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(null);
         when(userRepository.findByEmail("john.doe@example.com")).thenReturn(Optional.of(testUser));
         when(jwtService.generateToken(testUser)).thenReturn(expectedToken);
 
-        // Act
         AuthenticationResponse response = authenticationService.authenticate(authenticationRequest);
 
-        // Assert
         assertNotNull(response);
         assertEquals(expectedToken, response.getToken());
         verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
@@ -146,16 +134,13 @@ class AuthenticationServiceTest {
 
     @Test
     void authenticate_ShouldCallAuthenticationManager() {
-        // Arrange
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(null);
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(testUser));
         when(jwtService.generateToken(any(User.class))).thenReturn("token");
 
-        // Act
         authenticationService.authenticate(authenticationRequest);
 
-        // Assert
         verify(authenticationManager, times(1)).authenticate(
                 argThat(auth -> 
                     auth.getPrincipal().equals("john.doe@example.com") &&
@@ -166,12 +151,10 @@ class AuthenticationServiceTest {
 
     @Test
     void authenticate_WhenUserNotFound_ShouldThrowException() {
-        // Arrange
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(null);
         when(userRepository.findByEmail("john.doe@example.com")).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(Exception.class, () -> {
             authenticationService.authenticate(authenticationRequest);
         });
