@@ -162,7 +162,7 @@ export default function HeroSection() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="space-y-8"
+            className="space-y-5 sm:space-y-8"
           >
             {/* Badge */}
             <motion.div variants={itemVariants}>
@@ -174,7 +174,7 @@ export default function HeroSection() {
 
             {/* Main Title - word-level animation (lighter than per-letter) */}
             <div className="overflow-hidden">
-              <h1 className="bebas-neue-regular text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-tight leading-[0.85]">
+              <h1 className="bebas-neue-regular text-8xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-tight leading-[0.85]">
                 {titleWords.map((word, i) => (
                   <motion.span
                     key={i}
@@ -203,7 +203,7 @@ export default function HeroSection() {
             {/* CTA Buttons */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
+              className="flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-4"
             >
               <Link href="/magazin" className="w-full sm:w-auto">
                 <motion.button
@@ -231,7 +231,7 @@ export default function HeroSection() {
             {/* Stats */}
             <motion.div
               variants={itemVariants}
-              className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8 border-t border-slate-200"
+              className="grid grid-cols-3 gap-3 sm:gap-6 pt-4 sm:pt-8 border-t border-slate-200"
             >
               {[
                 { value: 30, suffix: "+", label: "Ani Experiență" },
