@@ -96,7 +96,7 @@ function GridCard({ product, size = "default" }: { product: Product; size?: "def
               onClick={(e) => {
                 e.preventDefault();
               }}
-              className={`rounded-full flex items-center justify-center flex-shrink-0 bg-orange-500 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-shadow duration-300 ${isCompact ? "w-8 h-8" : "w-10 h-10"}`}
+              className={`rounded-full flex items-center justify-center flex-shrink-0 bg-orange-500 ${isCompact ? "w-8 h-8" : "w-10 h-10"}`}
             >
               <ShoppingCart className={isCompact ? "w-4 h-4 text-white" : "w-5 h-5 text-white"} />
             </motion.button>
@@ -171,10 +171,7 @@ function ListCard({ product, size = "default" }: { product: Product; size?: "def
                   e.preventDefault();
                 }}
                 className="hidden sm:flex w-10 h-10 rounded-full items-center justify-center flex-shrink-0
-                  bg-orange-500
-                  shadow-lg shadow-orange-500/25
-                  hover:shadow-orange-500/40
-                  transition-shadow duration-300"
+                  bg-orange-500"
               >
                 <ShoppingCart className="w-5 h-5 text-white" />
               </motion.button>
@@ -200,10 +197,7 @@ function ListCard({ product, size = "default" }: { product: Product; size?: "def
                 e.preventDefault();
               }}
               className="sm:hidden w-11 h-11 rounded-full flex items-center justify-center
-                bg-orange-500
-                shadow-lg shadow-orange-500/25
-                hover:shadow-orange-500/40
-                transition-shadow duration-300"
+                bg-orange-500"
             >
               <ShoppingCart className="w-5 h-5 text-white" />
             </motion.button>
