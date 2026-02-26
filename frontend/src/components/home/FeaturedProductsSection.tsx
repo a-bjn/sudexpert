@@ -43,7 +43,59 @@ export default function FeaturedProductsSection() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="sm:hidden overflow-x-auto scrollbar-hide -mx-4 px-4 flex gap-4 snap-x snap-mandatory pb-2">
+          {FEATURED_PRODUCTS.map((product, i) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="flex-shrink-0 w-[280px] snap-center"
+            >
+              <Link href={`/magazin/${product.id}`} className="group block">
+                <div className="relative bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-orange-200 hover:shadow-xl transition-all duration-300">
+                  {product.badge && (
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-orange-500 text-white rounded-full shadow-lg">
+                        {product.badge}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center overflow-hidden">
+                    <div className="w-32 h-32 bg-slate-200 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                      <Box className="w-12 h-12 text-slate-400" />
+                    </div>
+                  </div>
+
+                  <div className="p-5">
+                    <h3 className="font-semibold text-slate-800 group-hover:text-orange-600 transition-colors mb-1">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm text-slate-500 mb-4 line-clamp-2">
+                      {product.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl font-bold text-slate-800">
+                        {product.price}{" "}
+                        <span className="text-sm font-normal text-slate-500">RON</span>
+                      </span>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 group-hover:bg-orange-500 group-hover:text-white transition-all"
+                      >
+                        <ArrowRight className="w-4 h-4" />
+                      </motion.button>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {FEATURED_PRODUCTS.map((product, i) => (
             <motion.div
               key={product.id}
