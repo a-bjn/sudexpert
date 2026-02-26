@@ -41,7 +41,7 @@ public class OrderService {
 
         Order order = Order.builder()
                 .user(user)
-                .total(request.getTotal())
+                .total(BigDecimal.ZERO)
                 .status(OrderStatus.PENDING)
                 .orderCode(generateOrderCode())
                 .deliveryName(request.getDeliveryName())
@@ -58,15 +58,20 @@ public class OrderService {
         List<OrderItem> orderItems = request.getItems().stream().map(itemRequest -> {
             Product product = productRepository.findById(itemRequest.getProduct().getId())
                     .orElseThrow(() -> new RuntimeException("Product not found"));
-            
+            int quantity = itemRequest.getQuantity() != null && itemRequest.getQuantity() > 0
+                    ? itemRequest.getQuantity() : 1;
             return OrderItem.builder()
                     .order(order)
                     .product(product)
-                    .quantity(itemRequest.getQuantity())
-                    .price(itemRequest.getPrice())
+                    .quantity(quantity)
+                    .price(product.getPrice())
                     .build();
         }).collect(Collectors.toList());
-        
+
+        BigDecimal total = orderItems.stream()
+                .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        order.setTotal(total);
         order.setItems(orderItems);
         Order savedOrder = repository.save(order);
         

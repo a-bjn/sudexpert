@@ -1,19 +1,21 @@
 package com.backend.sudexpert.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentIntentRequest {
-    private BigDecimal amount;
-    private String currency;
+    @NotNull(message = "Order ID is required")
     private Long orderId;
+
+    @Size(max = 10)
+    private String currency;
 }
 
