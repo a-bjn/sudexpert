@@ -2,7 +2,7 @@ import { renderHook, act, waitFor } from '@testing-library/react'
 import { CartProvider, useCart } from '../cart-context'
 
 describe('CartContext', () => {
-  const mockLocalStorage = {
+  const mockSessionStorage = {
     getItem: jest.fn(),
     setItem: jest.fn(),
     removeItem: jest.fn(),
@@ -11,14 +11,14 @@ describe('CartContext', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    Object.defineProperty(window, 'localStorage', {
-      value: mockLocalStorage,
+    Object.defineProperty(window, 'sessionStorage', {
+      value: mockSessionStorage,
       writable: true,
     })
   })
 
   it('should initialize with empty cart', () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
+    mockSessionStorage.getItem.mockReturnValue(null)
 
     const { result } = renderHook(() => useCart(), {
       wrapper: CartProvider,
@@ -29,11 +29,11 @@ describe('CartContext', () => {
     expect(result.current.totalPrice).toBe(0)
   })
 
-  it('should load cart from localStorage on mount', async () => {
+  it('should load cart from sessionStorage on mount', async () => {
     const storedCart = [
       { id: 1, name: 'Product 1', price: 100, quantity: 2 },
     ]
-    mockLocalStorage.getItem.mockReturnValue(JSON.stringify(storedCart))
+    mockSessionStorage.getItem.mockReturnValue(JSON.stringify(storedCart))
 
     const { result } = renderHook(() => useCart(), {
       wrapper: CartProvider,
@@ -47,7 +47,7 @@ describe('CartContext', () => {
   })
 
   it('should add new item to cart', () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
+    mockSessionStorage.getItem.mockReturnValue(null)
 
     const { result } = renderHook(() => useCart(), {
       wrapper: CartProvider,
@@ -66,7 +66,7 @@ describe('CartContext', () => {
   })
 
   it('should increment quantity when adding existing item', () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
+    mockSessionStorage.getItem.mockReturnValue(null)
 
     const { result } = renderHook(() => useCart(), {
       wrapper: CartProvider,
@@ -86,7 +86,7 @@ describe('CartContext', () => {
   })
 
   it('should remove item from cart', () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
+    mockSessionStorage.getItem.mockReturnValue(null)
 
     const { result } = renderHook(() => useCart(), {
       wrapper: CartProvider,
@@ -110,7 +110,7 @@ describe('CartContext', () => {
   })
 
   it('should clear cart', () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
+    mockSessionStorage.getItem.mockReturnValue(null)
 
     const { result } = renderHook(() => useCart(), {
       wrapper: CartProvider,
@@ -133,7 +133,7 @@ describe('CartContext', () => {
   })
 
   it('should calculate total price correctly', () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
+    mockSessionStorage.getItem.mockReturnValue(null)
 
     const { result } = renderHook(() => useCart(), {
       wrapper: CartProvider,
@@ -149,8 +149,8 @@ describe('CartContext', () => {
     expect(result.current.totalPrice).toBe(250) // (100 * 2) + (50 * 1)
   })
 
-  it('should save cart to localStorage when items change', async () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
+  it('should save cart to sessionStorage when items change', async () => {
+    mockSessionStorage.getItem.mockReturnValue(null)
 
     const { result } = renderHook(() => useCart(), {
       wrapper: CartProvider,
@@ -161,7 +161,7 @@ describe('CartContext', () => {
     })
 
     await waitFor(() => {
-      expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
+      expect(mockSessionStorage.setItem).toHaveBeenCalledWith(
         'cart',
         expect.stringContaining('Product 1')
       )

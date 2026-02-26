@@ -1,18 +1,16 @@
 import '@testing-library/jest-dom'
 
-// Mock Next.js router
+const mockPush = jest.fn()
 jest.mock('next/navigation', () => ({
-  useRouter() {
-    return {
-      push: jest.fn(),
-      replace: jest.fn(),
-      prefetch: jest.fn(),
-      back: jest.fn(),
-      pathname: '/',
-      query: {},
-      asPath: '/',
-    }
-  },
+  useRouter: jest.fn(() => ({
+    push: mockPush,
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    back: jest.fn(),
+    pathname: '/',
+    query: {},
+    asPath: '/',
+  })),
   usePathname() {
     return '/'
   },
@@ -21,12 +19,12 @@ jest.mock('next/navigation', () => ({
   },
 }))
 
-// Mock window.localStorage
-const localStorageMock = {
+const storageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
 }
-global.localStorage = localStorageMock
+global.localStorage = storageMock
+global.sessionStorage = storageMock
 

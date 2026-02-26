@@ -25,14 +25,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const storedItems = localStorage.getItem("cart");
+    const storedItems = sessionStorage.getItem("cart");
     if (storedItems) {
-      setItems(JSON.parse(storedItems));
+      try {
+        setItems(JSON.parse(storedItems));
+      } catch {
+        sessionStorage.removeItem("cart");
+      }
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items));
+    sessionStorage.setItem("cart", JSON.stringify(items));
   }, [items]);
 
   const addItem = (product: Omit<CartItem, 'quantity'>) => {
