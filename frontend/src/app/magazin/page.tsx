@@ -350,7 +350,7 @@ export default function Magazin() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5"
+                className="grid grid-cols-2 gap-3 sm:gap-4"
               >
                 {filteredProducts.map((product, index) => (
                   <motion.div
@@ -359,7 +359,7 @@ export default function Magazin() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <ProductCard product={product} />
+                    <ProductCard product={product} size="compact" />
                   </motion.div>
                 ))}
               </motion.div>

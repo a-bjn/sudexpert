@@ -17,36 +17,39 @@ type Product = {
 type ProductCardProps = {
   product: Product;
   viewMode?: "grid" | "list";
+  size?: "default" | "compact";
 };
 
-export default function ProductCard({ product, viewMode = "grid" }: ProductCardProps) {
+export default function ProductCard({ product, viewMode = "grid", size = "default" }: ProductCardProps) {
   if (viewMode === "list") {
-    return <ListCard product={product} />;
+    return <ListCard product={product} size={size} />;
   }
 
-  return <GridCard product={product} />;
+  return <GridCard product={product} size={size} />;
 }
 
-function GridCard({ product }: { product: Product }) {
+function GridCard({ product, size = "default" }: { product: Product; size?: "default" | "compact" }) {
+  const isCompact = size === "compact";
+
   return (
     <Link href={`/magazin/${product.id}`} className="group block">
       <motion.div
         whileHover={{
-          y: -8,
+          y: isCompact ? -4 : -8,
           transition: { duration: 0.3, ease: "easeOut" }
         }}
-        className="relative overflow-hidden rounded-xl
+        className={`relative overflow-hidden rounded-xl
           bg-white/60 backdrop-blur-xl
           border border-white/80
           shadow-[0_6px_24px_rgba(0,0,0,0.04),0_1px_6px_rgba(0,0,0,0.02)]
           hover:shadow-[0_16px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(251,146,60,0.15)]
-          transition-shadow duration-500"
+          transition-shadow duration-500 ${isCompact ? "rounded-lg" : ""}`}
       >
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
 
         <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-orange-50/20 pointer-events-none" />
 
-        <div className="relative m-3 aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-slate-100 to-slate-200/80">
+        <div className={`relative aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-slate-100 to-slate-200/80 ${isCompact ? "m-2 rounded-md" : "m-3"}`}>
           <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/30 z-10 pointer-events-none" />
 
           {product.imageUrl && !product.imageUrl.includes("placeholder") ? (
@@ -59,35 +62,31 @@ function GridCard({ product }: { product: Product }) {
             />
           ) : (
             <div className="h-full w-full flex items-center justify-center text-slate-400">
-              <Package className="w-1/3 h-1/3" strokeWidth={1.25} />
+              <Package className={isCompact ? "w-1/4 h-1/4" : "w-1/3 h-1/3"} strokeWidth={1.25} />
             </div>
           )}
 
           {product.category && (
-            <div className="absolute top-1.5 left-1.5 z-20">
-              <span className="px-2 py-0.5 text-[10px] font-medium rounded-full
-                bg-white/80 backdrop-blur-md text-slate-600
-                border border-white/50 shadow-sm">
+            <div className={`absolute z-20 ${isCompact ? "top-1 left-1" : "top-1.5 left-1.5"}`}>
+              <span className={`font-medium rounded-full bg-white/80 backdrop-blur-md text-slate-600 border border-white/50 shadow-sm ${isCompact ? "px-1.5 py-0.5 text-[9px]" : "px-2 py-0.5 text-[10px]"}`}>
                 {product.category.name}
               </span>
             </div>
           )}
         </div>
 
-        <div className="relative px-3 pb-3 pt-1">
-          <h3 className="text-base font-semibold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-2">
+        <div className={`relative pt-1 ${isCompact ? "px-2 pb-2" : "px-3 pb-3"}`}>
+          <h3 className={`font-semibold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-2 ${isCompact ? "text-sm" : "text-base"}`}>
             {product.name}
           </h3>
-          <p className="mt-1 text-sm text-slate-500 line-clamp-2 leading-snug">
+          <p className={`mt-0.5 text-slate-500 line-clamp-2 leading-snug ${isCompact ? "text-xs" : "text-sm mt-1"}`}>
             {product.description}
           </p>
 
-          <div className="mt-3 flex items-center justify-between gap-2">
-            <div className="px-2.5 py-1.5 rounded-full
-              bg-orange-50
-              backdrop-blur-sm border border-orange-200/50">
-              <span className="text-base font-bold text-orange-600">
-                {product.price} <span className="text-xs font-semibold">RON</span>
+          <div className={`flex items-center justify-between gap-1.5 ${isCompact ? "mt-2" : "mt-3"}`}>
+            <div className={`rounded-full bg-orange-50 backdrop-blur-sm border border-orange-200/50 ${isCompact ? "px-1.5 py-1" : "px-2.5 py-1.5"}`}>
+              <span className={`font-bold text-orange-600 ${isCompact ? "text-sm" : "text-base"}`}>
+                {product.price} <span className={`font-semibold ${isCompact ? "text-[10px]" : "text-xs"}`}>RON</span>
               </span>
             </div>
 
@@ -97,13 +96,9 @@ function GridCard({ product }: { product: Product }) {
               onClick={(e) => {
                 e.preventDefault();
               }}
-              className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0
-                bg-orange-500
-                shadow-lg shadow-orange-500/25
-                hover:shadow-orange-500/40
-                transition-shadow duration-300"
+              className={`rounded-full flex items-center justify-center flex-shrink-0 bg-orange-500 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-shadow duration-300 ${isCompact ? "w-8 h-8" : "w-10 h-10"}`}
             >
-              <ShoppingCart className="w-5 h-5 text-white" />
+              <ShoppingCart className={isCompact ? "w-4 h-4 text-white" : "w-5 h-5 text-white"} />
             </motion.button>
           </div>
         </div>
@@ -114,7 +109,7 @@ function GridCard({ product }: { product: Product }) {
   );
 }
 
-function ListCard({ product }: { product: Product }) {
+function ListCard({ product, size = "default" }: { product: Product; size?: "default" | "compact" }) {
   return (
     <Link href={`/magazin/${product.id}`} className="group block">
       <motion.div
