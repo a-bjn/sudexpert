@@ -32,13 +32,13 @@ function GridCard({ product, size = "default" }: { product: Product; size?: "def
   const isCompact = size === "compact";
 
   return (
-    <Link href={`/magazin/${product.id}`} className="group block">
+    <Link href={`/magazin/${product.id}`} className="group block h-full">
       <motion.div
         whileHover={{
           y: isCompact ? -4 : -8,
           transition: { duration: 0.3, ease: "easeOut" }
         }}
-        className={`relative overflow-hidden rounded-xl
+        className={`relative overflow-hidden rounded-xl h-full flex flex-col
           bg-white/60 backdrop-blur-xl
           border border-white/80
           shadow-[0_6px_24px_rgba(0,0,0,0.04),0_1px_6px_rgba(0,0,0,0.02)]
@@ -75,15 +75,15 @@ function GridCard({ product, size = "default" }: { product: Product; size?: "def
           )}
         </div>
 
-        <div className={`relative pt-1 ${isCompact ? "px-2 pb-2" : "px-3 pb-3"}`}>
+        <div className={`relative pt-1 flex-1 flex flex-col min-h-0 ${isCompact ? "px-2 pb-2" : "px-3 pb-3"}`}>
           <h3 className={`font-semibold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-2 ${isCompact ? "text-sm" : "text-base"}`}>
             {product.name}
           </h3>
-          <p className={`mt-0.5 text-slate-500 line-clamp-2 leading-snug ${isCompact ? "text-xs" : "text-sm mt-1"}`}>
+          <p className={`mt-0.5 text-slate-500 line-clamp-2 leading-snug flex-1 min-h-0 ${isCompact ? "text-xs" : "text-sm mt-1"}`}>
             {product.description}
           </p>
 
-          <div className={`flex items-center justify-between gap-1.5 ${isCompact ? "mt-2" : "mt-3"}`}>
+          <div className={`flex items-center justify-between gap-1.5 mt-auto ${isCompact ? "pt-2" : "pt-3"}`}>
             <div className={`rounded-full bg-orange-50 backdrop-blur-sm border border-orange-200/50 ${isCompact ? "px-1.5 py-1" : "px-2.5 py-1.5"}`}>
               <span className={`font-bold text-orange-600 ${isCompact ? "text-sm" : "text-base"}`}>
                 {product.price} <span className={`font-semibold ${isCompact ? "text-[10px]" : "text-xs"}`}>RON</span>
