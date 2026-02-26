@@ -109,10 +109,8 @@ class OrderServiceTest {
                         OrderRequest.OrderItemRequest.builder()
                                 .product(OrderRequest.ProductReference.builder().id(1L).build())
                                 .quantity(2)
-                                .price(new BigDecimal("150.00"))
                                 .build()
                 ))
-                .total(new BigDecimal("300.00"))
                 .deliveryName("John Doe")
                 .deliveryEmail("test@example.com")
                 .deliveryPhone("0712345678")
@@ -129,7 +127,7 @@ class OrderServiceTest {
         OrderResponse createdOrder = orderService.createOrder(orderRequest, "test@example.com");
 
         assertNotNull(createdOrder);
-        assertEquals(testOrder.getTotal(), createdOrder.getTotal());
+        assertEquals(new BigDecimal("300.00"), createdOrder.getTotal());
         assertEquals(OrderStatus.PENDING, createdOrder.getStatus());
         assertNotNull(createdOrder.getOrderCode());
         verify(userRepository, times(1)).findByEmail("test@example.com");
@@ -144,10 +142,14 @@ class OrderServiceTest {
                         OrderRequest.OrderItemRequest.builder()
                                 .product(OrderRequest.ProductReference.builder().id(1L).build())
                                 .quantity(2)
-                                .price(new BigDecimal("150.00"))
                                 .build()
                 ))
-                .total(new BigDecimal("300.00"))
+                .deliveryName("John Doe")
+                .deliveryEmail("test@example.com")
+                .deliveryPhone("0712345678")
+                .deliveryAddress("Strada Test 123")
+                .deliveryCity("București")
+                .deliveryCountry("Romania")
                 .build();
 
         when(userRepository.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
@@ -167,10 +169,8 @@ class OrderServiceTest {
                         OrderRequest.OrderItemRequest.builder()
                                 .product(OrderRequest.ProductReference.builder().id(1L).build())
                                 .quantity(3)
-                                .price(new BigDecimal("200.00"))
                                 .build()
                 ))
-                .total(new BigDecimal("600.00"))
                 .deliveryName("John Doe")
                 .deliveryEmail("test@example.com")
                 .deliveryPhone("0712345678")
@@ -191,7 +191,7 @@ class OrderServiceTest {
         OrderResponse createdOrder = orderService.createOrder(orderRequest, "test@example.com");
 
         assertNotNull(createdOrder);
-        assertEquals(new BigDecimal("600.00"), createdOrder.getTotal());
+        assertEquals(new BigDecimal("450.00"), createdOrder.getTotal());
         assertEquals(OrderStatus.PENDING, createdOrder.getStatus());
         assertNotNull(createdOrder.getOrderCode());
     }
