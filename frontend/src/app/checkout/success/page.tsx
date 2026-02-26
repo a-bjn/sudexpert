@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "@/lib/auth-context";
+import { useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 import Link from "next/link";
 
@@ -31,9 +30,7 @@ interface OrderDetails {
 }
 
 function CheckoutSuccessContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const { token } = useAuth();
   const [order, setOrder] = useState<OrderDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -41,34 +38,16 @@ function CheckoutSuccessContent() {
   const orderCode = searchParams.get("orderCode");
 
   useEffect(() => {
-    // Don't redirect to login - show success page even without token
-    // Just try to fetch order details if we have token and orderCode
-    
     if (!orderCode) {
-      console.log("No order code in URL - showing generic success");
       setLoading(false);
       return;
     }
 
-    // Wait a bit for auth context to load, then try to fetch order
     const fetchOrder = async () => {
-      // Check both context token and localStorage as fallback
-      const storedToken = localStorage.getItem("token");
-      const authToken = token || storedToken;
-      
-      if (!authToken) {
-        console.log("No token available - showing success without order details");
-        setLoading(false);
-        return;
-      }
-
       try {
-        console.log("Fetching order with code:", orderCode);
-        const orderData = await api.orders.getByCode(orderCode, authToken) as OrderDetails;
-        console.log("Order fetched successfully:", orderData);
+        const orderData = await api.orders.getByCode(orderCode) as OrderDetails;
         setOrder(orderData);
       } catch (err) {
-        console.error("Error fetching order:", err);
         const errorMessage = err instanceof Error ? err.message : "Nu s-a putut încărca comanda";
         setError(errorMessage);
       } finally {
@@ -76,12 +55,10 @@ function CheckoutSuccessContent() {
       }
     };
 
-    // Small delay to allow auth context to initialize
     const timer = setTimeout(fetchOrder, 100);
     return () => clearTimeout(timer);
-  }, [orderCode, token, router]);
+  }, [orderCode]);
 
-  // Show loading while fetching order details
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -93,12 +70,10 @@ function CheckoutSuccessContent() {
     );
   }
 
-  // Show success page even if order details can't be loaded
   if (!order) {
     return (
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-3xl mx-auto px-4">
-          {/* Success Header - Always show success even without order details */}
           <div className="bg-white p-8 rounded-lg shadow-lg text-center mb-8">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +99,6 @@ function CheckoutSuccessContent() {
             )}
           </div>
 
-          {/* Next Steps */}
           <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg mb-8">
             <h3 className="font-semibold text-blue-900 mb-2">Ce urmează?</h3>
             <ul className="space-y-2 text-sm text-blue-800">
@@ -149,7 +123,6 @@ function CheckoutSuccessContent() {
             </ul>
           </div>
 
-          {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/magazin"
@@ -166,7 +139,6 @@ function CheckoutSuccessContent() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-3xl mx-auto px-4">
-        {/* Success Header */}
         <div className="bg-white p-8 rounded-lg shadow-lg text-center mb-8">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -185,7 +157,6 @@ function CheckoutSuccessContent() {
           </div>
         </div>
 
-        {/* Order Details */}
         <div className="bg-white p-8 rounded-lg shadow mb-8">
           <h2 className="text-xl font-semibold mb-4">Detalii Comandă</h2>
           
@@ -211,7 +182,6 @@ function CheckoutSuccessContent() {
           </div>
         </div>
 
-        {/* Delivery Information */}
         <div className="bg-white p-8 rounded-lg shadow mb-8">
           <h2 className="text-xl font-semibold mb-4">Informații Livrare</h2>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -252,7 +222,6 @@ function CheckoutSuccessContent() {
           </div>
         </div>
 
-        {/* Next Steps */}
         <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg mb-8">
           <h3 className="font-semibold text-blue-900 mb-2">Ce urmează?</h3>
           <ul className="space-y-2 text-sm text-blue-800">
@@ -283,7 +252,6 @@ function CheckoutSuccessContent() {
           </ul>
         </div>
 
-        {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/magazin"

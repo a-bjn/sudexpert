@@ -6,7 +6,6 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
 
 interface CheckoutFormProps {
@@ -18,7 +17,6 @@ interface CheckoutFormProps {
 export default function CheckoutForm({ orderCode, onSuccess }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
-  const { token } = useAuth();
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,49 +45,23 @@ export default function CheckoutForm({ orderCode, onSuccess }: CheckoutFormProps
         return;
       }
 
-      console.log("Payment result:", { 
-        paymentIntent: paymentIntent ? {
-          id: paymentIntent.id,
-          status: paymentIntent.status,
-          amount: paymentIntent.amount
-        } : null
-      });
-
       if (paymentIntent && paymentIntent.status === "succeeded") {
-        console.log("✅ Payment succeeded! Order code:", orderCode);
-        
-        // Confirm with backend in parallel (don't wait)
-        if (token && paymentIntent.id) {
-          api.payments.confirmSuccess(paymentIntent.id, token)
-            .then(() => console.log("✅ Payment confirmed with backend"))
-            .catch(err => console.error("⚠️ Backend confirmation failed:", err));
+        if (paymentIntent.id) {
+          api.payments.confirmSuccess(paymentIntent.id).catch(() => {});
         }
-        
-        // Clear cart from localStorage before redirect
-        console.log("🛒 Clearing cart...");
-        localStorage.removeItem("cart");
-        
-        // Call onSuccess callback (for any additional cleanup)
+        sessionStorage.removeItem("cart");
         onSuccess();
-        
-        // Redirect IMMEDIATELY - no delay
-        const successUrl = orderCode 
+        const successUrl = orderCode
           ? `/checkout/success?orderCode=${orderCode}`
           : `/checkout/success`;
-        console.log("🔄 Redirecting immediately to:", successUrl);
-        
-        // Use window.location for instant redirect (no React router delay)
         window.location.href = successUrl;
       } else if (paymentIntent) {
-        console.log("⚠️ Payment status:", paymentIntent.status);
         setMessage(`Payment status: ${paymentIntent.status}. Please contact support if payment was processed.`);
         setIsLoading(false);
       } else {
-        console.log("⚠️ No payment intent returned");
         setIsLoading(false);
       }
     } catch (err: unknown) {
-      console.error("Payment error:", err);
       const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred during payment.";
       setMessage(errorMessage);
       setIsLoading(false);

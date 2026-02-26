@@ -2,6 +2,16 @@ import { api } from '../api'
 
 global.fetch = jest.fn()
 
+function mockFetchResponse(data: unknown, ok = true) {
+  return {
+    ok,
+    status: ok ? 200 : 404,
+    headers: new Headers({ 'content-length': JSON.stringify(data).length.toString() }),
+    json: async () => data,
+    text: async () => JSON.stringify(data),
+  }
+}
+
 describe('API Utility', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -9,11 +19,8 @@ describe('API Utility', () => {
 
   describe('auth', () => {
     it('should register a user', async () => {
-      const mockResponse = { token: 'test-token' }
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockResponse,
-      })
+      const mockResponse = { email: 'john@example.com' }
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockFetchResponse(mockResponse))
 
       const data = {
         firstName: 'John',
@@ -30,17 +37,15 @@ describe('API Utility', () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
+          credentials: 'include',
         })
       )
       expect(result).toEqual(mockResponse)
     })
 
     it('should login a user', async () => {
-      const mockResponse = { token: 'test-token' }
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockResponse,
-      })
+      const mockResponse = { email: 'john@example.com' }
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockFetchResponse(mockResponse))
 
       const data = {
         email: 'john@example.com',
@@ -54,6 +59,7 @@ describe('API Utility', () => {
         expect.objectContaining({
           method: 'POST',
           body: JSON.stringify(data),
+          credentials: 'include',
         })
       )
       expect(result).toEqual(mockResponse)
@@ -66,10 +72,7 @@ describe('API Utility', () => {
         { id: 1, name: 'Product 1', price: 100 },
         { id: 2, name: 'Product 2', price: 200 },
       ]
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockProducts,
-      })
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockFetchResponse(mockProducts))
 
       const result = await api.products.getAll()
 
@@ -84,10 +87,7 @@ describe('API Utility', () => {
 
     it('should get product by id', async () => {
       const mockProduct = { id: 1, name: 'Product 1', price: 100 }
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockProduct,
-      })
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockFetchResponse(mockProduct))
 
       const result = await api.products.getById('1')
 
@@ -102,10 +102,7 @@ describe('API Utility', () => {
 
     it('should get products by category', async () => {
       const mockProducts = [{ id: 1, name: 'Product 1', price: 100 }]
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockProducts,
-      })
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockFetchResponse(mockProducts))
 
       const result = await api.products.getByCategory('1')
 
@@ -125,10 +122,7 @@ describe('API Utility', () => {
         { id: 1, name: 'Category 1' },
         { id: 2, name: 'Category 2' },
       ]
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockCategories,
-      })
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockFetchResponse(mockCategories))
 
       const result = await api.categories.getAll()
 
@@ -143,49 +137,37 @@ describe('API Utility', () => {
   })
 
   describe('orders', () => {
-    it('should create an order with token', async () => {
+    it('should create an order with credentials', async () => {
       const mockOrder = { id: 1, total: 300, status: 'PENDING' }
-      const token = 'test-token'
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockOrder,
-      })
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockFetchResponse(mockOrder))
 
       const orderData = { items: [], total: 300 }
-      const result = await api.orders.create(orderData, token)
+      const result = await api.orders.create(orderData)
 
       expect(global.fetch).toHaveBeenCalledWith(
         'http://localhost:8080/api/orders',
         expect.objectContaining({
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(orderData),
+          credentials: 'include',
         })
       )
       expect(result).toEqual(mockOrder)
     })
 
-    it('should get user orders with token', async () => {
+    it('should get user orders with credentials', async () => {
       const mockOrders = [{ id: 1, total: 300, status: 'PENDING' }]
-      const token = 'test-token'
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockOrders,
-      })
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockFetchResponse(mockOrders))
 
-      const result = await api.orders.getMyOrders(token)
+      const result = await api.orders.getMyOrders()
 
       expect(global.fetch).toHaveBeenCalledWith(
         'http://localhost:8080/api/orders',
         expect.objectContaining({
           method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
         })
       )
       expect(result).toEqual(mockOrders)
@@ -194,11 +176,9 @@ describe('API Utility', () => {
 
   describe('error handling', () => {
     it('should throw error on failed request', async () => {
-      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-        ok: false,
-        status: 404,
-        json: async () => ({ message: 'Not found' }),
-      })
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce(
+        mockFetchResponse({ message: 'Not found' }, false)
+      )
 
       await expect(api.products.getById('999')).rejects.toThrow('Not found')
     })
@@ -207,6 +187,7 @@ describe('API Utility', () => {
       ;(global.fetch as jest.Mock).mockResolvedValueOnce({
         ok: false,
         status: 500,
+        headers: new Headers(),
         json: async () => {
           throw new Error('Invalid JSON')
         },
@@ -221,6 +202,9 @@ describe('API Utility', () => {
       ;(global.fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
         status: 204,
+        headers: new Headers({ 'content-length': '0' }),
+        json: async () => ({}),
+        text: async () => '',
       })
 
       const result = await api.products.getAll()

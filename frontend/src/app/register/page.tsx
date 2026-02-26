@@ -18,7 +18,6 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
 
-  // Password validation
   const passwordValidation = useMemo(() => ({
     minLength: password.length >= 8,
     hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
@@ -44,7 +43,7 @@ export default function Register() {
         email,
         password,
       });
-      login(response.token, email);
+      login(response.email);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Înregistrare eșuată. Încearcă din nou.";
       setError(errorMessage);
@@ -55,10 +54,8 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 via-white to-orange-50/30 px-4 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Decorative Orbs */}
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-orange-200/30 rounded-full blur-3xl" />
       <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
 
@@ -68,9 +65,7 @@ export default function Register() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md relative z-10"
       >
-        {/* Card */}
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-100 p-8 md:p-10">
-          {/* Logo */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -88,7 +83,6 @@ export default function Register() {
             </div>
           </motion.div>
 
-          {/* Title */}
           <div className="text-center mb-8">
             <h1 className="bebas-neue-regular text-3xl md:text-4xl text-slate-800 mb-2">
               Creează un Cont
@@ -98,7 +92,6 @@ export default function Register() {
             </p>
           </div>
 
-          {/* Tab Switcher */}
           <div className="flex bg-slate-100 rounded-xl p-1 mb-8">
             <div className="flex-1">
               <div className="py-3 text-center rounded-lg bg-white text-slate-800 font-semibold shadow-sm">
@@ -112,9 +105,7 @@ export default function Register() {
             </Link>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-slate-700 mb-2">
@@ -149,7 +140,6 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                 Email
@@ -168,7 +158,6 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
                 Parolă
@@ -193,7 +182,6 @@ export default function Register() {
                 </button>
               </div>
 
-              {/* Password Requirements */}
               {password && (
                 <div className="mt-3 space-y-2">
                   <div className="flex items-center gap-2 text-sm">
@@ -220,7 +208,6 @@ export default function Register() {
               )}
             </div>
 
-            {/* Error Message */}
             {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -231,7 +218,6 @@ export default function Register() {
               </motion.div>
             )}
 
-            {/* Submit Button */}
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
@@ -249,7 +235,6 @@ export default function Register() {
               )}
             </motion.button>
 
-            {/* Divider */}
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-slate-200" />
@@ -259,7 +244,6 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Google Sign Up */}
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
@@ -288,7 +272,6 @@ export default function Register() {
             </motion.button>
           </form>
 
-          {/* Footer Link */}
           <p className="mt-8 text-center text-slate-500">
             Ai deja un cont?{" "}
             <Link href="/login" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
@@ -297,7 +280,6 @@ export default function Register() {
           </p>
         </div>
 
-        {/* Back to Home */}
         <Link
           href="/"
           className="flex items-center justify-center gap-2 mt-6 text-slate-500 hover:text-slate-700 transition-colors"

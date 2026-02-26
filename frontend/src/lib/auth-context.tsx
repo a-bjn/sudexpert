@@ -2,62 +2,63 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { api } from "./api";
 
 type User = {
     email: string;
-    // Add other user fields if needed (e.g. role, name)
 };
 
 type AuthContextType = {
     user: User | null;
-    token: string | null;
-    login: (token: string, email: string) => void;
+    login: (email: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    isLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
-        // Load from localStorage on mount
-        const storedToken = localStorage.getItem("token");
-        const storedEmail = localStorage.getItem("email");
-
-        if (storedToken && storedEmail) {
-            setToken(storedToken);
-            setUser({ email: storedEmail });
-        }
+        api.auth
+            .me()
+            .then((res) => {
+                setUser({ email: res.email });
+            })
+            .catch(() => {
+                setUser(null);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }, []);
 
-    const login = (newToken: string, email: string) => {
-        setToken(newToken);
+    const login = (email: string) => {
         setUser({ email });
-        localStorage.setItem("token", newToken);
-        localStorage.setItem("email", email);
         router.push("/");
     };
 
-    const logout = () => {
-        setToken(null);
-        setUser(null);
-        localStorage.removeItem("token");
-        localStorage.removeItem("email");
-        router.push("/login");
+    const logout = async () => {
+        try {
+            await api.auth.logout();
+        } finally {
+            setUser(null);
+            router.push("/login");
+        }
     };
 
     return (
         <AuthContext.Provider
             value={{
                 user,
-                token,
                 login,
                 logout,
-                isAuthenticated: !!token,
+                isAuthenticated: !!user,
+                isLoading,
             }}
         >
             {children}

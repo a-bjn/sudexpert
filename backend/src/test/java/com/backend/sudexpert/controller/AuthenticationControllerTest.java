@@ -56,11 +56,12 @@ class AuthenticationControllerTest {
 
         authenticationResponse = AuthenticationResponse.builder()
                 .token("jwt.token.here")
+                .email("john.doe@example.com")
                 .build();
     }
 
     @Test
-    void register_ShouldReturnTokenWhenSuccessful() throws Exception {
+    void register_ShouldReturnEmailAndSetCookieWhenSuccessful() throws Exception {
         when(authenticationService.register(any(RegisterRequest.class)))
                 .thenReturn(authenticationResponse);
 
@@ -69,7 +70,8 @@ class AuthenticationControllerTest {
                         .content(objectMapper.writeValueAsString(registerRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.token").value("jwt.token.here"));
+                .andExpect(jsonPath("$.email").value("john.doe@example.com"))
+                .andExpect(header().exists("Set-Cookie"));
 
         verify(authenticationService, times(1)).register(any(RegisterRequest.class));
     }
@@ -93,7 +95,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void authenticate_ShouldReturnTokenWhenCredentialsValid() throws Exception {
+    void authenticate_ShouldReturnEmailAndSetCookieWhenCredentialsValid() throws Exception {
         when(authenticationService.authenticate(any(AuthenticationRequest.class)))
                 .thenReturn(authenticationResponse);
 
@@ -102,7 +104,8 @@ class AuthenticationControllerTest {
                         .content(objectMapper.writeValueAsString(authenticationRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.token").value("jwt.token.here"));
+                .andExpect(jsonPath("$.email").value("john.doe@example.com"))
+                .andExpect(header().exists("Set-Cookie"));
 
         verify(authenticationService, times(1)).authenticate(any(AuthenticationRequest.class));
     }

@@ -1,101 +1,91 @@
 import { renderHook, act, waitFor } from '@testing-library/react'
 import { AuthProvider, useAuth } from '../auth-context'
 import { useRouter } from 'next/navigation'
+import { api } from '../api'
 
-jest.mock('next/navigation')
+jest.mock('../api', () => ({
+  api: {
+    auth: {
+      me: jest.fn(),
+      logout: jest.fn(),
+    },
+  },
+}))
 
 describe('AuthContext', () => {
   const mockPush = jest.fn()
-  const mockLocalStorage = {
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-    removeItem: jest.fn(),
-    clear: jest.fn(),
-  }
 
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useRouter as jest.Mock).mockReturnValue({ push: mockPush })
-    Object.defineProperty(window, 'localStorage', {
-      value: mockLocalStorage,
-      writable: true,
-    })
+    ;(useRouter as jest.Mock).mockReturnValue({ push: mockPush, replace: jest.fn(), prefetch: jest.fn(), back: jest.fn(), pathname: '/', query: {}, asPath: '/' })
+    ;(api.auth.me as jest.Mock).mockRejectedValue(new Error('Unauthorized'))
   })
 
-  it('should initialize with no user', () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
-
+  it('should initialize with no user when /me fails', async () => {
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     })
 
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false)
+    })
+
     expect(result.current.user).toBeNull()
-    expect(result.current.token).toBeNull()
     expect(result.current.isAuthenticated).toBe(false)
   })
 
-  it('should load user from localStorage on mount', async () => {
-    mockLocalStorage.getItem.mockImplementation((key: string) => {
-      if (key === 'token') return 'test-token'
-      if (key === 'email') return 'test@example.com'
-      return null
-    })
+  it('should load user from /me on mount', async () => {
+    ;(api.auth.me as jest.Mock).mockResolvedValueOnce({ email: 'test@example.com' })
 
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     })
 
     await waitFor(() => {
-      expect(result.current.token).toBe('test-token')
       expect(result.current.user?.email).toBe('test@example.com')
       expect(result.current.isAuthenticated).toBe(true)
     })
   })
 
-  it('should login user and save to localStorage', () => {
-    mockLocalStorage.getItem.mockReturnValue(null)
+  it('should login user with email', () => {
+    ;(api.auth.me as jest.Mock).mockRejectedValue(new Error('Unauthorized'))
 
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     })
 
     act(() => {
-      result.current.login('new-token', 'user@example.com')
+      result.current.login('user@example.com')
     })
 
-    expect(result.current.token).toBe('new-token')
     expect(result.current.user?.email).toBe('user@example.com')
     expect(result.current.isAuthenticated).toBe(true)
-    expect(mockLocalStorage.setItem).toHaveBeenCalledWith('token', 'new-token')
-    expect(mockLocalStorage.setItem).toHaveBeenCalledWith('email', 'user@example.com')
     expect(mockPush).toHaveBeenCalledWith('/')
   })
 
-  it('should logout user and clear localStorage', () => {
-    mockLocalStorage.getItem.mockImplementation((key: string) => {
-      if (key === 'token') return 'test-token'
-      if (key === 'email') return 'test@example.com'
-      return null
-    })
+  it('should logout user and call api', async () => {
+    ;(api.auth.me as jest.Mock).mockResolvedValueOnce({ email: 'test@example.com' })
+    ;(api.auth.logout as jest.Mock).mockResolvedValueOnce(undefined)
 
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     })
 
-    act(() => {
-      result.current.logout()
+    await waitFor(() => {
+      expect(result.current.isAuthenticated).toBe(true)
     })
 
-    expect(result.current.token).toBeNull()
+    await act(async () => {
+      await result.current.logout()
+    })
+
     expect(result.current.user).toBeNull()
     expect(result.current.isAuthenticated).toBe(false)
-    expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('token')
-    expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('email')
+    expect(api.auth.logout).toHaveBeenCalled()
     expect(mockPush).toHaveBeenCalledWith('/login')
   })
 
   it('should throw error when useAuth is used outside AuthProvider', () => {
-    // Suppress console.error for this test
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
 
     expect(() => {
@@ -105,4 +95,3 @@ describe('AuthContext', () => {
     consoleSpy.mockRestore()
   })
 })
-

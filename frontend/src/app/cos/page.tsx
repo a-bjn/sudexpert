@@ -9,16 +9,15 @@ import { useRouter } from "next/navigation";
 
 export default function Cart() {
   const { items, removeItem, totalPrice } = useCart();
-  const { isAuthenticated, token } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
 
   const handleCheckout = async () => {
-    if (!isAuthenticated || !token) {
+    if (!isAuthenticated) {
       router.push("/login?redirect=/cos");
       return;
     }
 
-    // Redirect to checkout page with Stripe integration
     router.push("/checkout");
   };
 
@@ -105,7 +104,6 @@ export default function Cart() {
             </ul>
           </section>
 
-          {/* Order summary */}
           <section
             aria-labelledby="summary-heading"
             className="mt-6 sm:mt-8 lg:mt-0 rounded-xl bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:p-8 sticky top-20 sm:top-24 lg:top-28"

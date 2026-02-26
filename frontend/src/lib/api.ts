@@ -2,52 +2,69 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
 
 type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
 
+let csrfTokenFromResponse: string | null = null;
+
+function getCsrfToken(): string | null {
+  if (typeof document !== "undefined") {
+    const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+    if (match) return decodeURIComponent(match[1]);
+  }
+  return csrfTokenFromResponse;
+}
+
 async function request<T>(
   endpoint: string,
   method: RequestMethod = "GET",
-  body?: unknown,
-  token?: string
+  body?: unknown
 ): Promise<T> {
   const headers: HeadersInit = {
     "Content-Type": "application/json",
   };
 
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
+  const csrfToken = getCsrfToken();
+  if (csrfToken && method !== "GET") {
+    headers["X-XSRF-TOKEN"] = csrfToken;
   }
-
-  // Debug logging
-  console.log('API Request:', {
-    endpoint: `${API_URL}${endpoint}`,
-    method,
-    hasToken: !!token,
-    tokenPreview: token ? `${token.substring(0, 20)}...` : 'none'
-  });
 
   const config: RequestInit = {
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
+    credentials: "include",
   };
 
-  const response = await fetch(`${API_URL}${endpoint}`, config);
+  let response = await fetch(`${API_URL}${endpoint}`, config);
 
-  if (!response.ok) {
-    console.error('API Error Response:', {
-      status: response.status,
-      statusText: response.statusText,
-      endpoint: `${API_URL}${endpoint}`
+  const newToken = response.headers.get("X-CSRF-TOKEN");
+  if (newToken) csrfTokenFromResponse = newToken;
+
+  if (response.status === 403 && method !== "GET" && !csrfToken) {
+    const retryResponse = await fetch(`${API_URL}/auth/me`, {
+      method: "GET",
+      credentials: "include",
     });
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || `Request failed with status ${response.status}`);
+    const retryToken = retryResponse.headers.get("X-CSRF-TOKEN");
+    if (retryToken) {
+      csrfTokenFromResponse = retryToken;
+      const retryHeaders: HeadersInit = { ...headers, "X-XSRF-TOKEN": retryToken };
+      response = await fetch(`${API_URL}${endpoint}`, {
+        ...config,
+        headers: retryHeaders,
+      });
+      const retryNewToken = response.headers.get("X-CSRF-TOKEN");
+      if (retryNewToken) csrfTokenFromResponse = retryNewToken;
+    }
   }
 
-  // Handle empty responses (e.g. 204 No Content or empty body)
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error((errorData as { message?: string }).message || `Request failed with status ${response.status}`);
+  }
+
   if (response.status === 204 || response.headers.get('content-length') === '0') {
     return {} as T;
   }
 
-  // Check if response has content before parsing JSON
   const text = await response.text();
   if (!text || text.trim() === '') {
     return {} as T;
@@ -57,15 +74,17 @@ async function request<T>(
 }
 
 interface AuthResponse {
-  token: string;
+  email: string;
 }
 
 export const api = {
   auth: {
-    register: (data: { firstName: string; lastName: string; email: string; password: string }) => 
+    register: (data: { firstName: string; lastName: string; email: string; password: string }) =>
       request<AuthResponse>("/auth/register", "POST", data),
-    login: (data: { email: string; password: string }) => 
+    login: (data: { email: string; password: string }) =>
       request<AuthResponse>("/auth/authenticate", "POST", data),
+    me: () => request<AuthResponse>("/auth/me", "GET"),
+    logout: () => request("/auth/logout", "POST"),
   },
   products: {
     getAll: () => request("/products"),
@@ -76,17 +95,17 @@ export const api = {
     getAll: () => request("/categories"),
   },
   orders: {
-    create: (data: unknown, token: string) => request("/orders", "POST", data, token),
-    getMyOrders: (token: string) => request("/orders", "GET", undefined, token),
-    getById: (id: number, token: string) => request(`/orders/${id}`, "GET", undefined, token),
-    getByCode: (orderCode: string, token: string) => request(`/orders/code/${orderCode}`, "GET", undefined, token),
+    create: (data: unknown) => request("/orders", "POST", data),
+    getMyOrders: () => request("/orders", "GET"),
+    getById: (id: number) => request(`/orders/${id}`, "GET"),
+    getByCode: (orderCode: string) => request(`/orders/code/${orderCode}`, "GET"),
   },
   payments: {
-    createPaymentIntent: (data: { orderId: number; amount: number; currency?: string }, token: string) => 
-      request("/payments/create-payment-intent", "POST", data, token),
-    confirmSuccess: (paymentIntentId: string, token: string) => 
-      request(`/payments/success?paymentIntentId=${paymentIntentId}`, "POST", undefined, token),
-    confirmFailure: (paymentIntentId: string, token: string) => 
-      request(`/payments/failure?paymentIntentId=${paymentIntentId}`, "POST", undefined, token),
+    createPaymentIntent: (data: { orderId: number; currency?: string }) =>
+      request("/payments/create-payment-intent", "POST", data),
+    confirmSuccess: (paymentIntentId: string) =>
+      request(`/payments/success?paymentIntentId=${paymentIntentId}`, "POST"),
+    confirmFailure: (paymentIntentId: string) =>
+      request(`/payments/failure?paymentIntentId=${paymentIntentId}`, "POST"),
   },
 };

@@ -9,7 +9,6 @@ import { useCart } from "@/lib/cart-context";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
 import { api } from "@/lib/api";
 
-// Replace with your Stripe publishable key
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "pk_test_your_publishable_key_here");
 
 interface DeliveryInfo {
@@ -39,7 +38,7 @@ interface PaymentIntentResponse {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { user, token } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const { items, totalPrice, clearCart } = useCart();
   const [clientSecret, setClientSecret] = useState("");
   const [orderId, setOrderId] = useState<number | null>(null);
@@ -61,56 +60,29 @@ export default function CheckoutPage() {
   });
 
   useEffect(() => {
-    // If cart is empty, redirect to shop (no need to check auth)
     if (items.length === 0) {
       router.push("/magazin");
       return;
     }
 
-    // Wait a moment for auth context to load token from localStorage
-    const checkAuth = () => {
-      // Check both context token and localStorage as fallback
-      const storedToken = localStorage.getItem("token");
-      const storedEmail = localStorage.getItem("email");
-      const authToken = token || storedToken;
-      const authUser = user || (storedEmail ? { email: storedEmail } : null);
-      
-      if (!authUser || !authToken) {
-        // Only redirect if we're sure there's no token after a delay
-        // This prevents false redirects when token is still loading
-        setTimeout(() => {
-          const finalToken = localStorage.getItem("token");
-          const finalEmail = localStorage.getItem("email");
-          if (!finalToken || !finalEmail) {
-            console.log("No auth found after delay, redirecting to login");
-            router.push("/login?redirect=/checkout");
-          }
-        }, 500);
-        return;
-      }
-    };
-
-    checkAuth();
-  }, [user, token, items, router]);
+    if (!isLoading && !isAuthenticated) {
+      router.push("/login?redirect=/checkout");
+    }
+  }, [items, isLoading, isAuthenticated, router]);
 
   const handleDeliverySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    if (!isAuthenticated) {
+      setError("Trebuie să fii autentificat pentru a plasa comanda.");
+      router.push("/login?redirect=/checkout");
+      return;
+    }
+
     try {
       setLoading(true);
       setError("");
 
-      // Debug: Check if token exists
-      console.log('Checkout - Token exists:', !!token);
-      console.log('Checkout - User:', user);
-      
-      if (!token) {
-        setError("You must be logged in to place an order. Redirecting to login...");
-        setTimeout(() => router.push("/login?redirect=/checkout"), 2000);
-        return;
-      }
-
-      // Create order with delivery information
       const orderData = {
         items: items.map((item) => ({
           product: { id: item.id },
@@ -121,41 +93,22 @@ export default function CheckoutPage() {
         ...deliveryInfo,
       };
 
-      console.log('Creating order with data:', orderData);
-      const order = await api.orders.create(orderData, token) as OrderResponse;
-      console.log('Order created:', order);
-      console.log('Order code:', order.orderCode);
+      const order = await api.orders.create(orderData) as OrderResponse;
       setOrderId(order.id);
       setOrderCode(order.orderCode);
-      
-      if (!order.orderCode) {
-        console.warn('Warning: Order created but orderCode is missing!');
-      }
 
-      // Create payment intent
-      const paymentIntent = await api.payments.createPaymentIntent(
-        {
-          amount: totalPrice,
-          currency: "ron",
-          orderId: order.id,
-        },
-        token!
-      ) as PaymentIntentResponse;
+      const paymentIntent = await api.payments.createPaymentIntent({
+        orderId: order.id,
+        currency: "ron",
+      }) as PaymentIntentResponse;
 
       setClientSecret(paymentIntent.clientSecret);
       setStep("payment");
     } catch (err: unknown) {
-      console.error("Checkout initialization error:", err);
       const errorMessage = err instanceof Error ? err.message : "Failed to initialize checkout";
-      
-      // Check if it's an authentication error
       if (errorMessage.includes("403") || errorMessage.includes("Forbidden")) {
-        setError("Authentication failed. Please log in again.");
-        setTimeout(() => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("email");
-          router.push("/login?redirect=/checkout");
-        }, 2000);
+        setError("Autentificare eșuată. Te rugăm să te autentifici din nou.");
+        router.push("/login?redirect=/checkout");
       } else {
         setError(errorMessage);
       }
@@ -176,7 +129,6 @@ export default function CheckoutPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900">Finalizare Comandă</h1>
 
-        {/* Progress Steps */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
           <div className="flex items-center gap-2">
             <div className={`flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full flex-shrink-0 ${step === "delivery" ? "bg-blue-600 text-white" : "bg-green-600 text-white"}`}>
@@ -200,7 +152,6 @@ export default function CheckoutPage() {
         )}
 
         <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
-          {/* Order Summary - Always visible */}
           <div className="lg:col-span-1 order-2 lg:order-1">
             <div className="bg-white p-4 sm:p-6 rounded-xl shadow sticky top-20 sm:top-24 lg:top-8">
               <h2 className="text-xl font-semibold mb-4 text-gray-900">Sumar Comandă</h2>
@@ -226,10 +177,8 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="lg:col-span-2 order-1 lg:order-2">
             {step === "delivery" ? (
-              /* Delivery Form */
               <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow">
                 <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gray-900">Informații Livrare</h2>
                 <form onSubmit={handleDeliverySubmit} className="space-y-4">
@@ -352,7 +301,6 @@ export default function CheckoutPage() {
                 </form>
               </div>
             ) : (
-              /* Payment Form */
               <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow">
                 <div className="mb-6">
                   <h2 className="text-2xl font-semibold mb-2 text-gray-900">Plată</h2>
@@ -363,27 +311,18 @@ export default function CheckoutPage() {
                       orderId={orderId}
                       orderCode={orderCode}
                       onSuccess={() => {
-                        console.log('✅ onSuccess called! Order code:', orderCode);
                         clearCart();
-                        const redirectUrl = orderCode 
+                        const redirectUrl = orderCode
                           ? `/checkout/success?orderCode=${orderCode}`
                           : `/checkout/success`;
-                        console.log('🔄 Attempting redirect to:', redirectUrl);
-                        
-                        // Try router.push first
                         try {
                           router.push(redirectUrl);
-                          console.log('✅ router.push called');
-                          
-                          // Fallback: if router.push doesn't work, use window.location after a delay
                           setTimeout(() => {
                             if (window.location.pathname !== '/checkout/success') {
-                              console.log('⚠️ router.push may have failed, using window.location');
                               window.location.href = redirectUrl;
                             }
                           }, 500);
-                        } catch (err) {
-                          console.error('❌ Error with router.push, using window.location:', err);
+                        } catch {
                           window.location.href = redirectUrl;
                         }
                       }}

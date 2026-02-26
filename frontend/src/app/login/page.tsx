@@ -24,7 +24,7 @@ export default function Login() {
 
     try {
       const response = await api.auth.login({ email, password });
-      login(response.token, email);
+      login(response.email);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Autentificare eșuată. Verifică datele și încearcă din nou.";
       setError(errorMessage);
@@ -35,10 +35,8 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 via-white to-orange-50/30 px-4 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Decorative Orbs */}
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-orange-200/30 rounded-full blur-3xl" />
       <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
 
@@ -48,9 +46,7 @@ export default function Login() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md relative z-10"
       >
-        {/* Card */}
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-100 p-8 md:p-10">
-          {/* Logo */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -68,7 +64,6 @@ export default function Login() {
             </div>
           </motion.div>
 
-          {/* Title */}
           <div className="text-center mb-8">
             <h1 className="bebas-neue-regular text-3xl md:text-4xl text-slate-800 mb-2">
               Autentificare
@@ -78,7 +73,6 @@ export default function Login() {
             </p>
           </div>
 
-          {/* Tab Switcher */}
           <div className="flex bg-slate-100 rounded-xl p-1 mb-8">
             <Link href="/register" className="flex-1">
               <div className="py-3 text-center rounded-lg text-slate-500 font-medium transition-all hover:text-slate-700">
@@ -92,9 +86,7 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                 Email
@@ -113,7 +105,6 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
                 Parolă
@@ -139,7 +130,6 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -158,7 +148,6 @@ export default function Login() {
               </Link>
             </div>
 
-            {/* Error Message */}
             {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -169,7 +158,6 @@ export default function Login() {
               </motion.div>
             )}
 
-            {/* Submit Button */}
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
@@ -187,7 +175,6 @@ export default function Login() {
               )}
             </motion.button>
 
-            {/* Divider */}
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-slate-200" />
@@ -197,7 +184,6 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Google Sign In */}
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
@@ -226,7 +212,6 @@ export default function Login() {
             </motion.button>
           </form>
 
-          {/* Footer Link */}
           <p className="mt-8 text-center text-slate-500">
             Nu ai un cont?{" "}
             <Link href="/register" className="font-semibold text-orange-600 hover:text-orange-500 transition-colors">
@@ -235,7 +220,6 @@ export default function Login() {
           </p>
         </div>
 
-        {/* Back to Home */}
         <Link
           href="/"
           className="flex items-center justify-center gap-2 mt-6 text-slate-500 hover:text-slate-700 transition-colors"
