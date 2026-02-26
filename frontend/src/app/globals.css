@@ -21,7 +21,6 @@
 
 html {
   overflow-x: hidden;
-  /* Scale up on large viewports (1920px+) so 2560x1440 doesn’t look smaller than 1080p */
   font-size: 14px;
 }
 
@@ -39,16 +38,12 @@ body {
   -webkit-tap-highlight-color: rgba(249, 115, 22, 0.15);
 }
 
-/* Bebas Neue utility class */
 .bebas-neue-regular {
   font-family: var(--font-bebas-neue), sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-/* ===== HERO ANIMATIONS ===== */
-
-/* Floating animation */
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(2deg); }
@@ -85,7 +80,6 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Hero orb animations - GPU-friendly, replaces GSAP */
 @keyframes orb-float-1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(50px, -30px) scale(1.2); }
@@ -102,7 +96,6 @@ body {
 .animate-orb-2 { animation: orb-float-2 10s ease-in-out infinite; }
 .animate-orb-3 { animation: orb-float-3 12s ease-in-out infinite; }
 
-/* Right-to-left infinite marquee (e.g. partner logos) */
 @keyframes marquee-rtl {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -134,7 +127,6 @@ body {
   }
 }
 
-/* Utility classes */
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -170,7 +162,6 @@ body {
   animation: gradient-shift 4s ease infinite;
 }
 
-/* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%);
   -webkit-background-clip: text;
@@ -187,7 +178,6 @@ body {
   animation: shimmer 3s linear infinite;
 }
 
-/* Glass effect */
 .glass {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
@@ -202,7 +192,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Soft shadows */
 .shadow-soft {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 8px 40px rgba(0, 0, 0, 0.04);
 }
@@ -215,7 +204,6 @@ body {
   box-shadow: 0 10px 40px rgba(249, 115, 22, 0.3), 0 20px 60px rgba(249, 115, 22, 0.15);
 }
 
-/* Image mask for creative shapes */
 .mask-blob {
   mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000' d='M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87,14.6,81.4,29.2,73.1,42.2C64.8,55.2,53.8,66.7,40.7,74.6C27.6,82.5,12.3,86.8,-2.7,90.6C-17.7,94.4,-35.4,97.7,-50.3,91.5C-65.2,85.3,-77.3,69.6,-84.1,52.6C-90.9,35.6,-92.4,17.8,-89.3,1.8C-86.2,-14.2,-78.5,-28.4,-69.3,-41.1C-60.1,-53.8,-49.4,-65,-37,-73.2C-24.6,-81.4,-10.3,-86.6,2.8,-91.4C15.9,-96.2,31.8,-100.6,44.7,-76.4Z' transform='translate(100 100)'/%3E%3C/svg%3E");
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23000' d='M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87,14.6,81.4,29.2,73.1,42.2C64.8,55.2,53.8,66.7,40.7,74.6C27.6,82.5,12.3,86.8,-2.7,90.6C-17.7,94.4,-35.4,97.7,-50.3,91.5C-65.2,85.3,-77.3,69.6,-84.1,52.6C-90.9,35.6,-92.4,17.8,-89.3,1.8C-86.2,-14.2,-78.5,-28.4,-69.3,-41.1C-60.1,-53.8,-49.4,-65,-37,-73.2C-24.6,-81.4,-10.3,-86.6,2.8,-91.4C15.9,-96.2,31.8,-100.6,44.7,-76.4Z' transform='translate(100 100)'/%3E%3C/svg%3E");
@@ -227,7 +215,6 @@ body {
   -webkit-mask-position: center;
 }
 
-/* Hover lift effect */
 .hover-lift {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -237,7 +224,6 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Button shine effect */
 .btn-shine {
   position: relative;
   overflow: hidden;
@@ -264,7 +250,6 @@ body {
   transform: rotate(45deg) translateX(100%);
 }
 
-/* Spark particle */
 .spark-particle {
   position: absolute;
   width: 4px;
@@ -274,13 +259,11 @@ body {
   pointer-events: none;
 }
 
-/* Selection */
 ::selection {
   background: rgba(249, 115, 22, 0.2);
   color: #c2410c;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -299,13 +282,11 @@ body {
   background: #94a3b8;
 }
 
-/* Focus */
 :focus-visible {
   outline: 2px solid #f97316;
   outline-offset: 2px;
 }
 
-/* Hide scrollbar but keep scroll (e.g. for horizontal breadcrumb on mobile) */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;

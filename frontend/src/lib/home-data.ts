@@ -1,9 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { Zap, Box, Wrench, Shield, Award, Truck, Clock } from "lucide-react";
 
-// ============================================
-// Partners / Trusted By
-// ============================================
 export const PARTNERS = [
   { name: "ESAB", logo: "ESAB" },
   { name: "Lincoln Electric", logo: "LINCOLN" },
@@ -13,9 +10,6 @@ export const PARTNERS = [
   { name: "Bohler", logo: "BÖHLER" },
 ] as const;
 
-// ============================================
-// Featured Products
-// ============================================
 export const FEATURED_PRODUCTS = [
   {
     id: 1,
@@ -51,9 +45,6 @@ export const FEATURED_PRODUCTS = [
   },
 ] as const;
 
-// ============================================
-// Categories
-// ============================================
 export type CategoryItem = {
   name: string;
   description: string;
@@ -98,9 +89,6 @@ export const CATEGORIES: CategoryItem[] = [
   },
 ];
 
-// ============================================
-// Features / Benefits
-// ============================================
 export type FeatureItem = {
   icon: LucideIcon;
   title: string;
@@ -140,9 +128,6 @@ export const FEATURES: FeatureItem[] = [
   },
 ];
 
-// ============================================
-// About / Stats
-// ============================================
 export const ABOUT_STATS = [
   { value: "30+", label: "Ani Experiență" },
   { value: "500+", label: "Produse în Stoc" },
@@ -157,9 +142,6 @@ export const ABOUT_CHECKMARKS = [
   "Livrare națională",
 ] as const;
 
-// ============================================
-// Testimonials
-// ============================================
 export const TESTIMONIALS = [
   {
     name: "Mihai Popescu",

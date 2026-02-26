@@ -76,7 +76,6 @@ export default function ShopSidebar({
 
   return (
     <>
-      {/* Mobile Overlay */}
       {isOpen && onClose && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -87,7 +86,6 @@ export default function ShopSidebar({
         />
       )}
 
-      {/* Sidebar */}
       <motion.aside
         initial={{ x: -300, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -101,7 +99,6 @@ export default function ShopSidebar({
         style={{ top: "var(--header-height, 0px)" }}
       >
         <div className="p-6 space-y-6">
-          {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-orange-50 rounded-lg">
@@ -121,7 +118,6 @@ export default function ShopSidebar({
             )}
           </div>
 
-          {/* Clear Filters */}
           {hasActiveFilters && (
             <motion.button
               initial={{ opacity: 0, y: -10 }}
@@ -134,7 +130,6 @@ export default function ShopSidebar({
             </motion.button>
           )}
 
-          {/* Categories Section */}
           <div className="space-y-3">
             <button
               type="button"
@@ -163,7 +158,6 @@ export default function ShopSidebar({
                   className="overflow-hidden"
                 >
                   <div className="pl-4 pr-2 space-y-1">
-                    {/* All Categories Option */}
                     <button
                       type="button"
                       onClick={() => onCategoryChange(null)}
@@ -183,7 +177,6 @@ export default function ShopSidebar({
                       )}
                     </button>
 
-                    {/* Category List */}
                     {categories.map((category) => (
                       <button
                         key={category.id}
@@ -211,7 +204,6 @@ export default function ShopSidebar({
             </AnimatePresence>
           </div>
 
-          {/* Price Range Section */}
           <div className="space-y-3 pt-4 border-t border-slate-100">
             <button
               type="button"
@@ -240,7 +232,6 @@ export default function ShopSidebar({
                   className="overflow-hidden"
                 >
                   <div className="pl-4 pr-2 space-y-1">
-                    {/* All Prices Option */}
                     <button
                       type="button"
                       onClick={() => onPriceRangeChange(null)}
@@ -260,7 +251,6 @@ export default function ShopSidebar({
                       )}
                     </button>
 
-                    {/* Price Range List */}
                     {priceRanges.map((range, index) => {
                       const isSelected =
                         priceRange &&
@@ -295,7 +285,6 @@ export default function ShopSidebar({
             </AnimatePresence>
           </div>
 
-          {/* Stock Status Section */}
           <div className="space-y-3 pt-4 border-t border-slate-100">
             <button
               type="button"
@@ -351,7 +340,6 @@ export default function ShopSidebar({
             </AnimatePresence>
           </div>
 
-          {/* Info Box */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

@@ -23,11 +23,9 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-slate-50 border-t border-slate-200">
-      {/* Decorative top border gradient */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-orange-500" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-12 sm:pt-14 md:pt-16 pb-6 sm:pb-8 lg:px-8">
-        {/* Main Footer Content */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -35,7 +33,6 @@ export default function Footer() {
           viewport={{ once: true }}
           className="grid grid-cols-1 gap-8 sm:gap-10 md:gap-12 md:grid-cols-2 lg:grid-cols-4"
         >
-          {/* Company Info */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <Link href="/" className="group mb-6 block">
               <div className="relative">
@@ -52,7 +49,6 @@ export default function Footer() {
               Furnizor de încredere pentru electrozi și sârmă de sudură de calitate superioară din 1994.
             </p>
             <div className="flex gap-3">
-              {/* Social Media Links */}
               {[
                 {
                   name: "Facebook",
@@ -98,7 +94,6 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Quick Links */}
           <motion.div variants={itemVariants}>
             <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 sm:mb-6">
               Link-uri Rapide
@@ -123,7 +118,6 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Categories */}
           <motion.div variants={itemVariants}>
             <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 sm:mb-6">
               Categorii
@@ -148,7 +142,6 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Contact Info */}
           <motion.div variants={itemVariants}>
             <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-6">
               Contact
@@ -195,7 +188,6 @@ export default function Footer() {
           </motion.div>
         </motion.div>
 
-        {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-slate-200">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-slate-500">

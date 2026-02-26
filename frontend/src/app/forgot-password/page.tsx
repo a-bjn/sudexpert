@@ -17,7 +17,6 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      // Simulate API call - replace with actual password reset logic
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setSuccess(true);
     } catch (err: unknown) {
@@ -30,10 +29,8 @@ export default function ForgotPassword() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 via-white to-orange-50/30 px-4 py-12 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Decorative Orbs */}
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-orange-200/30 rounded-full blur-3xl" />
       <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
 
@@ -43,9 +40,7 @@ export default function ForgotPassword() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md relative z-10"
       >
-        {/* Card */}
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-100 p-8 md:p-10">
-          {/* Icon */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -60,7 +55,6 @@ export default function ForgotPassword() {
           </motion.div>
 
           {success ? (
-            // Success State
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -96,9 +90,7 @@ export default function ForgotPassword() {
               </Link>
             </motion.div>
           ) : (
-            // Form State
             <>
-              {/* Title */}
               <div className="text-center mb-8">
                 <h1 className="bebas-neue-regular text-3xl md:text-4xl text-slate-800 mb-2">
                   Ai uitat parola?
@@ -108,9 +100,7 @@ export default function ForgotPassword() {
                 </p>
               </div>
 
-              {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Email Field */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                     Email
@@ -129,7 +119,6 @@ export default function ForgotPassword() {
                   </div>
                 </div>
 
-                {/* Error Message */}
                 {error && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
@@ -140,7 +129,6 @@ export default function ForgotPassword() {
                   </motion.div>
                 )}
 
-                {/* Submit Button */}
                 <motion.button
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
@@ -159,7 +147,6 @@ export default function ForgotPassword() {
                 </motion.button>
               </form>
 
-              {/* Back to Login Link */}
               <Link
                 href="/login"
                 className="flex items-center justify-center gap-2 mt-8 text-slate-500 hover:text-orange-600 transition-colors font-medium"
@@ -171,7 +158,6 @@ export default function ForgotPassword() {
           )}
         </div>
 
-        {/* Back to Home */}
         <Link
           href="/"
           className="flex items-center justify-center gap-2 mt-6 text-slate-500 hover:text-slate-700 transition-colors"

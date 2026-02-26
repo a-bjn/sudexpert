@@ -22,7 +22,6 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      // Simulate API call - replace with actual contact form logic
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setSuccess(true);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
@@ -83,15 +82,12 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Decorative Orbs */}
       <div className="absolute top-20 -right-40 w-96 h-96 bg-orange-200/30 rounded-full blur-3xl" />
       <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
       <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-amber-100/20 rounded-full blur-3xl" />
 
-      {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -117,7 +113,6 @@ export default function Contact() {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Contact Info Cards */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -163,7 +158,6 @@ export default function Contact() {
               </motion.div>
             ))}
 
-            {/* Map Placeholder */}
             <motion.div
               variants={itemVariants}
               className="bg-white/80 backdrop-blur-xl rounded-2xl border border-slate-100 shadow-sm overflow-hidden"
@@ -177,7 +171,6 @@ export default function Contact() {
             </motion.div>
           </motion.div>
 
-          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -221,7 +214,6 @@ export default function Contact() {
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Name & Email Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
@@ -261,7 +253,6 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Phone & Subject Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
@@ -305,7 +296,6 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Message */}
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
                         Mesaj
@@ -322,7 +312,6 @@ export default function Contact() {
                       />
                     </div>
 
-                    {/* Error Message */}
                     {error && (
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
@@ -333,7 +322,6 @@ export default function Contact() {
                       </motion.div>
                     )}
 
-                    {/* Submit Button */}
                     <motion.button
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.99 }}

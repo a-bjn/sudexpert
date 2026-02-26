@@ -46,9 +46,6 @@ describe('ProductCard', () => {
 
     const addButton = screen.getByRole('button', { name: /adaugă în coș|add to cart/i })
     fireEvent.click(addButton)
-
-    // The cart context should have been called
-    // This is a basic test - you might want to verify cart state changes
   })
 
   it('should render without image when imageUrl is not provided', () => {

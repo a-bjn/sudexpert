@@ -71,7 +71,6 @@ export default function ProductDetails() {
 
     setIsAdding(true);
 
-    // Add item multiple times based on quantity
     for (let i = 0; i < quantity; i++) {
       addItem({
         id: product.id,
@@ -151,14 +150,11 @@ export default function ProductDetails() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Decorative Orbs */}
       <div className="absolute top-40 -right-40 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl" />
       <div className="absolute bottom-40 -left-40 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl" />
 
-      {/* Breadcrumb */}
       <div className="relative bg-white/80 backdrop-blur-sm border-b border-slate-100 pt-24 sm:pt-28 lg:pt-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center gap-2 text-sm flex-wrap overflow-x-auto">
@@ -189,7 +185,6 @@ export default function ProductDetails() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-12 lg:py-16 sm:px-6 lg:px-8">
-        {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -203,7 +198,6 @@ export default function ProductDetails() {
         </motion.button>
 
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-16 xl:gap-x-20">
-          {/* Image Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -226,7 +220,6 @@ export default function ProductDetails() {
                   </div>
                 )}
 
-                {/* Badges */}
                 <div className="absolute top-6 left-6 flex flex-col gap-3">
                   {isNew && (
                     <motion.span
@@ -249,7 +242,6 @@ export default function ProductDetails() {
                   )}
                 </div>
 
-                {/* Category Badge */}
                 {product.category && (
                   <div className="absolute top-6 right-6">
                     <span className="px-4 py-2 text-xs font-medium bg-white/90 backdrop-blur-sm text-slate-800 rounded-full border border-slate-200 shadow-sm">
@@ -261,14 +253,12 @@ export default function ProductDetails() {
             </div>
           </motion.div>
 
-          {/* Details Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-10 lg:mt-0"
           >
-            {/* Category */}
             {product.category && (
               <Link
                 href={`/magazin?category=${product.category.id}`}
@@ -278,12 +268,10 @@ export default function ProductDetails() {
               </Link>
             )}
 
-            {/* Title */}
             <h1 className="bebas-neue-regular text-4xl sm:text-5xl lg:text-6xl text-slate-800 tracking-tight leading-tight mb-6">
               {product.name}
             </h1>
 
-            {/* Price */}
             <div className="flex items-baseline gap-3 pb-8 border-b border-slate-200">
               <span className="text-5xl font-bold text-slate-800">
                 {product.price.toFixed(2)}
@@ -291,7 +279,6 @@ export default function ProductDetails() {
               <span className="text-xl text-slate-500 font-medium">RON</span>
             </div>
 
-            {/* Stock Status */}
             <div className="mt-8">
               {isOutOfStock ? (
                 <motion.div
@@ -323,7 +310,6 @@ export default function ProductDetails() {
               )}
             </div>
 
-            {/* Description */}
             <div className="mt-10">
               <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">
                 Descriere
@@ -333,9 +319,7 @@ export default function ProductDetails() {
               </p>
             </div>
 
-            {/* Quantity & Add to Cart */}
             <div className="mt-12 space-y-5">
-              {/* Quantity Selector */}
               <div className="flex items-center gap-5">
                 <span className="text-sm font-medium text-slate-700">
                   Cantitate:
@@ -363,7 +347,6 @@ export default function ProductDetails() {
                 </div>
               </div>
 
-              {/* Add to Cart Button */}
               <motion.button
                 whileHover={!isOutOfStock ? { scale: 1.02 } : {}}
                 whileTap={!isOutOfStock ? { scale: 0.98 } : {}}
@@ -391,7 +374,6 @@ export default function ProductDetails() {
                 )}
               </motion.button>
 
-              {/* Subtotal Preview */}
               {!isOutOfStock && quantity > 1 && (
                 <motion.p
                   initial={{ opacity: 0, y: -10 }}
@@ -403,7 +385,6 @@ export default function ProductDetails() {
               )}
             </div>
 
-            {/* Features */}
             <div className="mt-12 pt-12 border-t border-slate-200">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <motion.div
@@ -469,7 +450,6 @@ export default function ProductDetails() {
   );
 }
 
-// Helper function to check if a date is within X days
 function isWithinDays(date: Date, days: number): boolean {
   const now = new Date();
   const diffTime = now.getTime() - date.getTime();

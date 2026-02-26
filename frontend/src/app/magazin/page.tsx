@@ -31,7 +31,6 @@ export default function Magazin() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Filter states
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("default");
@@ -60,11 +59,9 @@ export default function Magazin() {
     fetchData();
   }, []);
 
-  // Filter and sort products
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
-    // Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       result = result.filter(
@@ -74,24 +71,20 @@ export default function Magazin() {
       );
     }
 
-    // Filter by category
     if (selectedCategory !== null) {
       result = result.filter((p) => p.category?.id === selectedCategory);
     }
 
-    // Filter by price range
     if (priceRange !== null) {
       result = result.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1]);
     }
 
-    // Filter by stock status
     if (stockFilter === "in-stock") {
       result = result.filter((p) => p.stock && p.stock > 5);
     } else if (stockFilter === "low-stock") {
       result = result.filter((p) => p.stock && p.stock > 0 && p.stock <= 5);
     }
 
-    // Sort products
     switch (sortBy) {
       case "price-asc":
         result.sort((a, b) => a.price - b.price);
@@ -173,14 +166,11 @@ export default function Magazin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Decorative Orbs */}
       <div className="absolute top-40 -right-40 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl" />
       <div className="absolute bottom-40 -left-40 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl" />
 
-      {/* Hero Section */}
       <div className="relative pt-28 sm:pt-32 lg:pt-36 pb-6 sm:pb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -208,7 +198,6 @@ export default function Magazin() {
                   Echipamente profesionale de sudură pentru toate nevoile tale. Calitate garantată și prețuri competitive.
                 </p>
               </div>
-              {/* Mobile Filter Button */}
               <button
                 type="button"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -223,10 +212,8 @@ export default function Magazin() {
         </div>
       </div>
 
-      {/* Main Content with Sidebar */}
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <div className="flex gap-8">
-          {/* Sidebar */}
           <ShopSidebar
             categories={categories}
             selectedCategory={selectedCategory}
@@ -239,9 +226,7 @@ export default function Magazin() {
             onClose={() => setSidebarOpen(false)}
           />
 
-          {/* Main Content Area */}
           <div className="flex-1 min-w-0">
-            {/* Filters Bar */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -249,7 +234,6 @@ export default function Magazin() {
               className="sticky top-16 sm:top-20 lg:top-24 z-30 py-3 sm:py-4 bg-white/80 backdrop-blur-xl border-b border-slate-200 -mx-4 px-4 sm:-mx-6 sm:px-6 mb-6"
             >
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-between">
-                {/* Search */}
                 <div className="relative flex-1 w-full min-w-0">
                   <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400 pointer-events-none" />
                   <input
@@ -272,7 +256,6 @@ export default function Magazin() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                  {/* Sort */}
                   <div className="relative flex-1 sm:flex-initial min-w-0 sm:min-w-[180px]">
                     <select
                       value={sortBy}
@@ -289,7 +272,6 @@ export default function Magazin() {
                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
                   </div>
 
-                  {/* View Mode Toggle */}
                   <div className="flex items-center bg-slate-100 rounded-xl p-1 flex-shrink-0">
                     <button
                       type="button"
@@ -320,7 +302,6 @@ export default function Magazin() {
               </div>
             </motion.div>
 
-            {/* Results Info */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -340,7 +321,6 @@ export default function Magazin() {
               </p>
             </motion.div>
 
-            {/* Products Grid/List */}
             {filteredProducts.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

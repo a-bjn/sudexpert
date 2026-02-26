@@ -83,14 +83,11 @@ export default function Despre() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-orange-50/30 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      {/* Decorative Orbs */}
       <div className="absolute top-40 -right-40 w-96 h-96 bg-orange-200/30 rounded-full blur-3xl" />
       <div className="absolute top-1/2 -left-40 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl" />
 
-      {/* Hero Section */}
       <div className="relative pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -122,7 +119,6 @@ export default function Despre() {
         </div>
       </div>
 
-      {/* Stats Section */}
       <div ref={statsRef} className="relative py-10 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -152,7 +148,6 @@ export default function Despre() {
         </div>
       </div>
 
-      {/* Story Section */}
       <div className="relative py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -215,7 +210,6 @@ export default function Despre() {
                   quality={90}
                 />
               </div>
-              {/* Floating badges */}
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -239,7 +233,6 @@ export default function Despre() {
         </div>
       </div>
 
-      {/* Values Section */}
       <div className="relative py-16 md:py-24 bg-slate-50/50">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.01)_1px,transparent_1px)] bg-[size:40px_40px]" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -288,7 +281,6 @@ export default function Despre() {
         </div>
       </div>
 
-      {/* Timeline Section */}
       <div className="relative py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -307,7 +299,6 @@ export default function Despre() {
           </motion.div>
 
           <div className="relative">
-            {/* Timeline line */}
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-orange-500 via-amber-500 to-orange-500" />
 
             {milestones.map((milestone, index) => (
@@ -330,7 +321,6 @@ export default function Despre() {
                     <p className="text-slate-500">{milestone.description}</p>
                   </div>
                 </div>
-                {/* Timeline dot */}
                 <div className="absolute left-4 md:left-1/2 w-4 h-4 bg-orange-500 rounded-full -translate-x-1/2 ring-4 ring-white shadow-lg" />
                 <div className="flex-1 hidden md:block" />
               </motion.div>
@@ -339,7 +329,6 @@ export default function Despre() {
         </div>
       </div>
 
-      {/* CTA Section */}
       <div className="relative py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -348,7 +337,6 @@ export default function Despre() {
             viewport={{ once: true }}
             className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12 overflow-hidden"
           >
-            {/* Background decoration */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/20 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/20 rounded-full blur-3xl" />
 

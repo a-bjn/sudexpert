@@ -27,7 +27,6 @@ export default function ProductCard({ product, viewMode = "grid" }: ProductCardP
   return <GridCard product={product} />;
 }
 
-// Grid View - Liquid Glass Card
 function GridCard({ product }: { product: Product }) {
   return (
     <Link href={`/magazin/${product.id}`} className="group block">
@@ -43,15 +42,11 @@ function GridCard({ product }: { product: Product }) {
           hover:shadow-[0_16px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(251,146,60,0.15)]
           transition-shadow duration-500"
       >
-        {/* Top light reflection */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
 
-        {/* Inner glow effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-orange-50/20 pointer-events-none" />
 
-        {/* Image Container */}
         <div className="relative m-3 aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-slate-100 to-slate-200/80">
-          {/* Image highlight overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/30 z-10 pointer-events-none" />
 
           {product.imageUrl && !product.imageUrl.includes("placeholder") ? (
@@ -68,7 +63,6 @@ function GridCard({ product }: { product: Product }) {
             </div>
           )}
 
-          {/* Category badge */}
           {product.category && (
             <div className="absolute top-1.5 left-1.5 z-20">
               <span className="px-2 py-0.5 text-[10px] font-medium rounded-full
@@ -80,7 +74,6 @@ function GridCard({ product }: { product: Product }) {
           )}
         </div>
 
-        {/* Content */}
         <div className="relative px-3 pb-3 pt-1">
           <h3 className="text-base font-semibold text-slate-800 group-hover:text-orange-600 transition-colors line-clamp-2">
             {product.name}
@@ -90,7 +83,6 @@ function GridCard({ product }: { product: Product }) {
           </p>
 
           <div className="mt-3 flex items-center justify-between gap-2">
-            {/* Price Badge */}
             <div className="px-2.5 py-1.5 rounded-full
               bg-orange-50
               backdrop-blur-sm border border-orange-200/50">
@@ -99,13 +91,11 @@ function GridCard({ product }: { product: Product }) {
               </span>
             </div>
 
-            {/* Cart Button */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={(e) => {
                 e.preventDefault();
-                // Add to cart logic
               }}
               className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0
                 bg-orange-500
@@ -118,14 +108,12 @@ function GridCard({ product }: { product: Product }) {
           </div>
         </div>
 
-        {/* Bottom edge highlight */}
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-200/40 to-transparent" />
       </motion.div>
     </Link>
   );
 }
 
-// List View
 function ListCard({ product }: { product: Product }) {
   return (
     <Link href={`/magazin/${product.id}`} className="group block">
@@ -142,15 +130,11 @@ function ListCard({ product }: { product: Product }) {
           transition-shadow duration-300
           flex flex-col sm:flex-row"
       >
-        {/* Top light reflection */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
 
-        {/* Inner glow effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-orange-50/10 pointer-events-none" />
 
-        {/* Image Container */}
         <div className="relative m-3 sm:m-4 w-full sm:w-44 h-44 sm:h-auto sm:aspect-square flex-shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-100 to-slate-200/80">
-          {/* Image highlight overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/20 z-10 pointer-events-none" />
 
           {product.imageUrl && !product.imageUrl.includes("placeholder") ? (
@@ -167,7 +151,6 @@ function ListCard({ product }: { product: Product }) {
             </div>
           )}
 
-          {/* Category badge */}
           {product.category && (
             <div className="absolute top-2 left-2 z-20">
               <span className="px-2 py-0.5 text-xs font-medium rounded-full
@@ -179,7 +162,6 @@ function ListCard({ product }: { product: Product }) {
           )}
         </div>
 
-        {/* Content */}
         <div className="relative flex-1 p-4 sm:py-5 sm:pr-5 sm:pl-1 flex flex-col justify-between">
           <div>
             <div className="flex items-start justify-between gap-4">
@@ -187,13 +169,11 @@ function ListCard({ product }: { product: Product }) {
                 {product.name}
               </h3>
 
-              {/* Cart Button - Desktop */}
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  // Add to cart logic
                 }}
                 className="hidden sm:flex w-10 h-10 rounded-full items-center justify-center flex-shrink-0
                   bg-orange-500
@@ -210,7 +190,6 @@ function ListCard({ product }: { product: Product }) {
           </div>
 
           <div className="mt-4 flex items-center justify-between">
-            {/* Price Badge */}
             <div className="px-4 py-2 rounded-full
               bg-orange-50
               backdrop-blur-sm border border-orange-200/50">
@@ -219,13 +198,11 @@ function ListCard({ product }: { product: Product }) {
               </span>
             </div>
 
-            {/* Cart Button - Mobile */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={(e) => {
                 e.preventDefault();
-                // Add to cart logic
               }}
               className="sm:hidden w-11 h-11 rounded-full flex items-center justify-center
                 bg-orange-500
@@ -238,7 +215,6 @@ function ListCard({ product }: { product: Product }) {
           </div>
         </div>
 
-        {/* Left edge highlight for list view */}
         <div className="absolute left-0 inset-y-0 w-px bg-gradient-to-b from-transparent via-orange-300/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </motion.div>
     </Link>

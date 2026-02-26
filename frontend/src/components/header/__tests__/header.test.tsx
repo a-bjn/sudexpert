@@ -55,15 +55,12 @@ describe('Header', () => {
       </CartProvider>
     )
 
-    // Mobile menu should not be visible initially
     const mobileLinks = screen.queryAllByText('Acasă')
     expect(mobileLinks.length).toBeGreaterThan(0)
 
-    // Click menu button
     const menuButton = screen.getByRole('button', { name: /menu/i })
     fireEvent.click(menuButton)
 
-    // Mobile menu should be visible
     expect(screen.getAllByText('Acasă').length).toBeGreaterThan(1)
   })
 

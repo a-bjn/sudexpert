@@ -22,7 +22,6 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 sm:h-20 lg:h-24 items-center justify-between gap-2">
-          {/* Logo */}
           <Link href="/" className="group flex-shrink-0 min-w-0 block w-[110px] sm:w-[130px] lg:w-[150px]">
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -41,7 +40,6 @@ export default function Header() {
             </motion.div>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             {[
               { href: "/", label: "Acasă" },
@@ -60,9 +58,7 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Actions */}
           <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-            {/* Search - Desktop */}
             <div className="hidden md:flex items-center">
               <div className="relative group">
                 <input
@@ -74,7 +70,6 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Cart */}
             <Link href="/cos" className="flex items-center justify-center min-h-[44px] min-w-[44px]">
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -97,7 +92,6 @@ export default function Header() {
               </motion.div>
             </Link>
 
-            {/* Auth */}
             {isAuthenticated ? (
               <div className="hidden md:flex items-center gap-2 ml-1">
                 <span className="text-sm text-slate-500 max-w-[120px] truncate">
@@ -126,7 +120,6 @@ export default function Header() {
               </Link>
             )}
 
-            {/* Mobile Menu Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -140,7 +133,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -173,7 +165,6 @@ export default function Header() {
                 </motion.div>
               ))}
 
-              {/* Mobile Search */}
               <div className="px-4 py-3">
                 <div className="relative">
                   <input
@@ -185,7 +176,6 @@ export default function Header() {
                 </div>
               </div>
 
-              {/* Mobile Auth */}
               {!isAuthenticated && (
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
